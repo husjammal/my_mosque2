@@ -32,14 +32,19 @@ class _QuranState extends State<Quran> {
   String _duaaScore = "0";
   String _prayScore = "0";
   String _quranScore = "0";
+  String _activityScore = "0";
+
   var dt = DateTime.now();
   save_quran(String user_id) async {
     // calculate the quranScore
     quranScore = (int.parse(_quranRead.text)) +
         (int.parse(_quranLearn.text)) +
         (int.parse(_quranListen.text));
-    _score =
-        (int.parse(_prayScore) + quranScore + int.parse(_duaaScore)).toString();
+    _score = (int.parse(_prayScore) +
+            quranScore +
+            int.parse(_duaaScore) +
+            int.parse(_activityScore))
+        .toString();
     print('_score $_score');
     // save the database
     isLoading = true;
@@ -79,6 +84,7 @@ class _QuranState extends State<Quran> {
     _duaaScore = response['data'][0]['duaaScore'].toString();
     _prayScore = response['data'][0]['prayScore'].toString();
     _quranScore = response['data'][0]['quranScore'].toString();
+    _activityScore = response['data'][0]['activityScore'].toString();
 
     setState(() {});
     return response;

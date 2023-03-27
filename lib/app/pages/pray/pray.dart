@@ -30,6 +30,7 @@ class _PrayState extends State<Pray> {
   String _duaaScore = "0";
   String _prayScore = "0";
   String _quranScore = "0";
+  String _activityScore = "0";
 
   save_prayers(String user_id) async {
     // calculate the prayScore
@@ -39,8 +40,11 @@ class _PrayState extends State<Pray> {
         (_magrib ? 1 : 0) +
         (_zhur ? 1 : 0);
     print('prayScore is $prayScore');
-    _score =
-        (int.parse(_duaaScore) + prayScore + int.parse(_quranScore)).toString();
+    _score = (int.parse(_duaaScore) +
+            prayScore +
+            int.parse(_quranScore) +
+            int.parse(_activityScore))
+        .toString();
     print('_score $_score');
     // save the dat_duaaScore_quranScore+
     isLoading = true;
@@ -85,6 +89,7 @@ class _PrayState extends State<Pray> {
     _duaaScore = response['data'][0]['duaaScore'].toString();
     _prayScore = response['data'][0]['prayScore'].toString();
     _quranScore = response['data'][0]['quranScore'].toString();
+    _activityScore = response['data'][0]['activityScore'].toString();
 
     setState(() {});
     return response;

@@ -31,18 +31,23 @@ class _ActivityState extends State<Activity> {
 
 // Fuction to save prayers
   bool isLoading = false;
-  int quranScore = 0;
+  int activityScore = 0;
   String _score = "0";
   String _duaaScore = "0";
   String _prayScore = "0";
   String _quranScore = "0";
+  String _activityScore = "0";
+
   var dt = DateTime.now();
 
   save_activity(String user_id) async {
     // calculate the quranScore
-    quranScore = 0;
-    _score =
-        (int.parse(_prayScore) + quranScore + int.parse(_duaaScore)).toString();
+    activityScore = 0;
+    _score = (int.parse(_prayScore) +
+            int.parse(_quranScore) +
+            activityScore +
+            int.parse(_duaaScore))
+        .toString();
     print('_score $_score');
     // save the database
     isLoading = true;
@@ -53,7 +58,8 @@ class _ActivityState extends State<Activity> {
       "score": _score,
       "duaaScore": _duaaScore,
       "prayScore": _prayScore,
-      "quranScore": quranScore.toString()
+      "quranScore": _quranScore.toString(),
+      "activityScore": activityScore.toString()
     });
     isLoading = false;
     setState(() {});
@@ -76,6 +82,7 @@ class _ActivityState extends State<Activity> {
     _duaaScore = response['data'][0]['duaaScore'].toString();
     _prayScore = response['data'][0]['prayScore'].toString();
     _quranScore = response['data'][0]['quranScore'].toString();
+    _activityScore = response['data'][0]['activityScore'].toString();
 
     setState(() {});
     return response;
@@ -328,8 +335,8 @@ class _ActivityState extends State<Activity> {
                                 : RichText(
                                     text: TextSpan(
                                         text: "نشاطاتي هي :\n",
-                                        style:
-                                            DefaultTextStyle.of(context).style,
+                                        // style:
+                                        //     DefaultTextStyle.of(context).style,
                                         children: <TextSpan>[
                                         TextSpan(
                                             text: '${_list.toString()} ',
