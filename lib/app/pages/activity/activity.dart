@@ -174,7 +174,7 @@ class _ActivityState extends State<Activity> {
                                 onChanged: (value) {
                                   setState(() {
                                     _isFootBall = value;
-                                    String selectVal = "FootBall";
+                                    String selectVal = "جيد رضى الوالدين";
                                     value!
                                         ? _list.add(selectVal)
                                         : _list.remove(selectVal);
@@ -198,7 +198,7 @@ class _ActivityState extends State<Activity> {
                                 onChanged: (value) {
                                   setState(() {
                                     _isBaseball = value;
-                                    String selectVal = "Baseball";
+                                    String selectVal = "صيام اليوم";
                                     value!
                                         ? _list.add(selectVal)
                                         : _list.remove(selectVal);
@@ -218,7 +218,7 @@ class _ActivityState extends State<Activity> {
                                 onChanged: (value) {
                                   setState(() {
                                     _isCricket = value;
-                                    String selectVal = "Cricket";
+                                    String selectVal = "صدقة";
                                     value!
                                         ? _list.add(selectVal)
                                         : _list.remove(selectVal);
@@ -242,7 +242,7 @@ class _ActivityState extends State<Activity> {
                                 onChanged: (value) {
                                   setState(() {
                                     _isKabaddi = value;
-                                    String selectVal = "Kabaddi";
+                                    String selectVal = "مئة تسابيح";
                                     value!
                                         ? _list.add(selectVal)
                                         : _list.remove(selectVal);
@@ -264,7 +264,7 @@ class _ActivityState extends State<Activity> {
                                 onChanged: (value) {
                                   setState(() {
                                     _isBasketBall = value;
-                                    String selectVal = "BasketBall";
+                                    String selectVal = "مئة استغفار";
                                     value!
                                         ? _list.add(selectVal)
                                         : _list.remove(selectVal);
@@ -288,7 +288,7 @@ class _ActivityState extends State<Activity> {
                                 onChanged: (value) {
                                   setState(() {
                                     _isVolleyBall = value;
-                                    String selectVal = "VolleyBall";
+                                    String selectVal = "مئة صلاة على النبي";
                                     value!
                                         ? _list.add(selectVal)
                                         : _list.remove(selectVal);
@@ -297,7 +297,7 @@ class _ActivityState extends State<Activity> {
                               ),
                               CheckboxListTile(
                                 title: Text(
-                                  "Other Games",
+                                  "عبدات اخرى",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,
@@ -307,11 +307,12 @@ class _ActivityState extends State<Activity> {
                                 secondary: Icon(Icons.offline_bolt),
                                 activeColor: Colors.red,
                                 checkColor: Colors.yellow,
-                                subtitle: Text("If any other than above"),
+                                subtitle: Text("نشطات غير المذكورة في الاعلى",
+                                    style: TextStyle(color: Colors.grey)),
                                 onChanged: (value) {
                                   setState(() {
                                     _isOther = value;
-                                    String selectVal = "Other Games";
+                                    String selectVal = "عبدات اخرى";
                                     value!
                                         ? _list.add(selectVal)
                                         : _list.remove(selectVal);
@@ -326,7 +327,7 @@ class _ActivityState extends State<Activity> {
                                 ? Text("")
                                 : RichText(
                                     text: TextSpan(
-                                        text: "Selected Games:\n",
+                                        text: "نشاطاتي هي :\n",
                                         style:
                                             DefaultTextStyle.of(context).style,
                                         children: <TextSpan>[
