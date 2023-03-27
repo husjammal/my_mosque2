@@ -1,9 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
-import 'package:mymosque/app/inistialScreen.dart';
+import 'package:mymosque/app/version.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 
 class SplashPage extends StatefulWidget {
@@ -43,11 +41,9 @@ class _SplashPageState extends State<SplashPage> {
     });
     Timer(Duration(milliseconds: 3850), () {
       setState(() {
-        Navigator.of(context).pushReplacement(
-          ThisIsFadeRoute(
-            route: InitialScreen(),
-          ),
-        );
+        Navigator.of(context).pushReplacement(ThisIsFadeRoute(
+          route: Version(),
+        ));
       });
     });
   }
@@ -155,3 +151,5 @@ class ThisIsFadeRoute extends PageRouteBuilder {
           ),
         );
 }
+
+/// the code of check version

@@ -137,24 +137,24 @@ class _ActivityState extends State<Activity> {
                       color: buttonColor,
                     ),
                     child: Image.asset(
-                      'images/BasmAllah.png',
+                      'images/activity.jpg',
                       width: double.infinity,
-                      height: 50,
-                      fit: BoxFit.cover,
+                      height: 150,
+                      fit: BoxFit.fill,
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height - 80,
+                    height: MediaQuery.of(context).size.height - 120,
                     width: double.infinity,
                     padding: EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.0),
                       color: buttonColor,
                       image: const DecorationImage(
-                        image: AssetImage('images/Quran_layout.png'),
+                        image: AssetImage('images/avtivity_layout.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),
