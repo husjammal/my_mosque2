@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mymosque/components/customtextform.dart';
-import 'package:mymosque/components/valid.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/main.dart';
-
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant//linkapi.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:mymosque/constant/colorConfig.dart';
 
 // Creating a stateful widget to manage
 // the state of the app
@@ -23,9 +19,15 @@ class _ActivityState extends State<Activity> {
   GlobalKey<FormState> formstate = GlobalKey();
   String? user_id;
 
-  TextEditingController _quranRead = TextEditingController();
-  TextEditingController _quranLearn = TextEditingController();
-  TextEditingController _quranListen = TextEditingController();
+  List<String> _list = [];
+
+  bool? _isFootBall = false;
+  bool? _isCricket = false;
+  bool? _isVolleyBall = false;
+  bool? _isKabaddi = false;
+  bool? _isBaseball = false;
+  bool? _isBasketBall = false;
+  bool? _isOther = false;
 
 // Fuction to save prayers
   bool isLoading = false;
@@ -35,11 +37,10 @@ class _ActivityState extends State<Activity> {
   String _prayScore = "0";
   String _quranScore = "0";
   var dt = DateTime.now();
-  save_quran(String user_id) async {
+
+  save_activity(String user_id) async {
     // calculate the quranScore
-    quranScore = (int.parse(_quranRead.text)) +
-        (int.parse(_quranLearn.text)) +
-        (int.parse(_quranListen.text));
+    quranScore = 0;
     _score =
         (int.parse(_prayScore) + quranScore + int.parse(_duaaScore)).toString();
     print('_score $_score');
@@ -50,9 +51,6 @@ class _ActivityState extends State<Activity> {
       "user_id": user_id,
       "day_number": dt.weekday.toString(),
       "score": _score,
-      "quranRead": _quranRead.text,
-      "quranLearn": _quranLearn.text,
-      "quranListen": _quranListen.text,
       "duaaScore": _duaaScore,
       "prayScore": _prayScore,
       "quranScore": quranScore.toString()
@@ -74,9 +72,6 @@ class _ActivityState extends State<Activity> {
       "day_number": dt.weekday.toString(),
     });
     print(response);
-    _quranRead.text = response['data'][0]['quranRead'].toString();
-    _quranLearn.text = response['data'][0]['quranLearn'].toString();
-    _quranListen.text = response['data'][0]['quranListen'].toString();
     _score = response['data'][0]['score'].toString();
     _duaaScore = response['data'][0]['duaaScore'].toString();
     _prayScore = response['data'][0]['prayScore'].toString();
@@ -104,7 +99,7 @@ class _ActivityState extends State<Activity> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('حصتي من القران'),
+          title: Text('بعض من نشاطاتي'),
           centerTitle: true,
           backgroundColor: buttonColor,
           leading: IconButton(
@@ -161,238 +156,184 @@ class _ActivityState extends State<Activity> {
                     /////////////////////////////////////////////
                     // the code of the imput form of the Activity///
                     ////////////////////////////////////////////
-                    child: ListView(
-                      children: [
-                        Form(
-                          key: formstate,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                          child: ListView(
                             children: <Widget>[
-                              Text(
-                                'قراءة',
-                                style: TextStyle(
-                                    fontSize: 22.0, color: Colors.grey[400]),
+                              CheckboxListTile(
+                                title: Text(
+                                  "جيد رضى الوالدين",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                value: _isFootBall,
+                                secondary: Icon(Icons.animation),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isFootBall = value;
+                                    String selectVal = "FootBall";
+                                    value!
+                                        ? _list.add(selectVal)
+                                        : _list.remove(selectVal);
+                                  });
+                                },
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(
-                                    width: (MediaQuery.of(context).size.width *
-                                            3 /
-                                            4) -
-                                        20,
-                                    child: CustomTextFormSign(
-                                      valid: (val) {
-                                        return validInput(val!, 1, 3);
-                                      },
-                                      mycontroller: _quranRead,
-                                      hint: "عدد صفحات القراءة",
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 15.0,
-                                  ),
-                                  InkWell(
-                                    child: Container(
-                                      width:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
-                                                  4) -
-                                              50,
-                                      height:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
-                                                  4) -
-                                              50,
-                                      padding: EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                        color: buttonColor,
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black,
-                                            offset: const Offset(
-                                              3.0,
-                                              3.0,
-                                            ), //Offset
-                                            blurRadius: 10.0,
-                                            spreadRadius: 2.0,
-                                          ), //BoxShadow
-                                          BoxShadow(
-                                            color: Colors.white,
-                                            offset: const Offset(0.0, 0.0),
-                                            blurRadius: 0.0,
-                                            spreadRadius: 0.0,
-                                          ), //BoxShadow
-                                        ],
-                                      ),
-                                      child: Image.asset(
-                                        'images/praying.png',
-                                        width: 30,
-                                        height: 30,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    onTap: (() {
-                                      // Navigator.of(context).push(
-                                      //     MaterialPageRoute(builder: (context) => Pray()));
-                                    }),
-                                  ),
-                                ],
+                              CheckboxListTile(
+                                title: Text(
+                                  "صيام اليوم",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                value: _isBaseball,
+                                secondary: Icon(Icons.animation),
+                                activeColor: Colors.green,
+                                checkColor: Colors.white,
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isBaseball = value;
+                                    String selectVal = "Baseball";
+                                    value!
+                                        ? _list.add(selectVal)
+                                        : _list.remove(selectVal);
+                                  });
+                                },
                               ),
-                              Text(
-                                'حفظ',
-                                style: TextStyle(
-                                    fontSize: 22.0, color: Colors.grey[400]),
+                              CheckboxListTile(
+                                title: Text(
+                                  "صدقة",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                value: _isCricket,
+                                secondary: Icon(Icons.animation),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isCricket = value;
+                                    String selectVal = "Cricket";
+                                    value!
+                                        ? _list.add(selectVal)
+                                        : _list.remove(selectVal);
+                                  });
+                                },
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(
-                                    width: (MediaQuery.of(context).size.width *
-                                            3 /
-                                            4) -
-                                        20,
-                                    child: CustomTextFormSign(
-                                      valid: (val) {
-                                        return validInput(val!, 1, 3);
-                                      },
-                                      mycontroller: _quranLearn,
-                                      hint: "عدد صفحات الحفظ",
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 15.0,
-                                  ),
-                                  InkWell(
-                                    child: Container(
-                                      width:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
-                                                  4) -
-                                              50,
-                                      height:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
-                                                  4) -
-                                              50,
-                                      padding: EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                        color: buttonColor,
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black,
-                                            offset: const Offset(
-                                              3.0,
-                                              3.0,
-                                            ), //Offset
-                                            blurRadius: 10.0,
-                                            spreadRadius: 2.0,
-                                          ), //BoxShadow
-                                          BoxShadow(
-                                            color: Colors.white,
-                                            offset: const Offset(0.0, 0.0),
-                                            blurRadius: 0.0,
-                                            spreadRadius: 0.0,
-                                          ), //BoxShadow
-                                        ],
-                                      ),
-                                      child: Image.asset(
-                                        'images/praying.png',
-                                        width: 30,
-                                        height: 30,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    onTap: (() {
-                                      // Navigator.of(context).push(
-                                      //     MaterialPageRoute(builder: (context) => Pray()));
-                                    }),
-                                  ),
-                                ],
+                              CheckboxListTile(
+                                title: Text(
+                                  "مئة تسابيح",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                value: _isKabaddi,
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                                secondary: Icon(Icons.animation),
+                                activeColor: Colors.green,
+                                checkColor: Colors.white,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isKabaddi = value;
+                                    String selectVal = "Kabaddi";
+                                    value!
+                                        ? _list.add(selectVal)
+                                        : _list.remove(selectVal);
+                                  });
+                                },
                               ),
-                              Text(
-                                'استماع',
-                                style: TextStyle(
-                                    fontSize: 22.0, color: Colors.grey[400]),
+                              CheckboxListTile(
+                                title: Text(
+                                  "مئة استغفار",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                value: _isBasketBall,
+                                controlAffinity:
+                                    ListTileControlAffinity.platform,
+                                secondary: Icon(Icons.animation),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isBasketBall = value;
+                                    String selectVal = "BasketBall";
+                                    value!
+                                        ? _list.add(selectVal)
+                                        : _list.remove(selectVal);
+                                  });
+                                },
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(
-                                    width: (MediaQuery.of(context).size.width *
-                                            3 /
-                                            4) -
-                                        20,
-                                    child: CustomTextFormSign(
-                                      valid: (val) {
-                                        return validInput(val!, 1, 3);
-                                      },
-                                      mycontroller: _quranListen,
-                                      hint: "عدد صفحات الاستماع",
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 15.0,
-                                  ),
-                                  InkWell(
-                                    child: Container(
-                                      width:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
-                                                  4) -
-                                              50,
-                                      height:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
-                                                  4) -
-                                              50,
-                                      padding: EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                        color: buttonColor,
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black,
-                                            offset: const Offset(
-                                              3.0,
-                                              3.0,
-                                            ), //Offset
-                                            blurRadius: 10.0,
-                                            spreadRadius: 2.0,
-                                          ), //BoxShadow
-                                          BoxShadow(
-                                            color: Colors.white,
-                                            offset: const Offset(0.0, 0.0),
-                                            blurRadius: 0.0,
-                                            spreadRadius: 0.0,
-                                          ), //BoxShadow
-                                        ],
-                                      ),
-                                      child: Image.asset(
-                                        'images/praying.png',
-                                        width: 30,
-                                        height: 30,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    onTap: (() {
-                                      // Navigator.of(context).push(
-                                      //     MaterialPageRoute(builder: (context) => Pray()));
-                                    }),
-                                  ),
-                                ],
+                              CheckboxListTile(
+                                title: Text(
+                                  "مئة صلاة على النبي",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                value: _isVolleyBall,
+                                secondary: Icon(Icons.animation),
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                                activeColor: Colors.green,
+                                checkColor: Colors.amber,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isVolleyBall = value;
+                                    String selectVal = "VolleyBall";
+                                    value!
+                                        ? _list.add(selectVal)
+                                        : _list.remove(selectVal);
+                                  });
+                                },
+                              ),
+                              CheckboxListTile(
+                                title: Text(
+                                  "Other Games",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                value: _isOther,
+                                secondary: Icon(Icons.offline_bolt),
+                                activeColor: Colors.red,
+                                checkColor: Colors.yellow,
+                                subtitle: Text("If any other than above"),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isOther = value;
+                                    String selectVal = "Other Games";
+                                    value!
+                                        ? _list.add(selectVal)
+                                        : _list.remove(selectVal);
+                                  });
+                                },
                               ),
                             ],
                           ),
                         ),
+                        Center(
+                            child: _list.isEmpty
+                                ? Text("")
+                                : RichText(
+                                    text: TextSpan(
+                                        text: "Selected Games:\n",
+                                        style:
+                                            DefaultTextStyle.of(context).style,
+                                        children: <TextSpan>[
+                                        TextSpan(
+                                            text: '${_list.toString()} ',
+                                            style: TextStyle(fontSize: 16)),
+                                      ]))),
                       ],
                     ),
                   ),
@@ -406,7 +347,7 @@ class _ActivityState extends State<Activity> {
             //() => setState(() => _count++),
             String? user_id = sharedPref.getString("id");
             print("user is is $user_id");
-            await save_quran(user_id.toString());
+            await save_activity(user_id.toString());
             Navigator.of(context)
                 .pushNamedAndRemoveUntil("initialScreen", (route) => false);
           },
