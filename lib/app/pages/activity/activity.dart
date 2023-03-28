@@ -170,7 +170,7 @@ class _ActivityState extends State<Activity> {
                             children: <Widget>[
                               CheckboxListTile(
                                 title: Text(
-                                  "جيد رضى الوالدين",
+                                  " رضى الوالدين جيد",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,
@@ -181,7 +181,7 @@ class _ActivityState extends State<Activity> {
                                 onChanged: (value) {
                                   setState(() {
                                     _isFootBall = value;
-                                    String selectVal = "جيد رضى الوالدين";
+                                    String selectVal = " رضى الوالدين جيد";
                                     value!
                                         ? _list.add(selectVal)
                                         : _list.remove(selectVal);
@@ -234,7 +234,7 @@ class _ActivityState extends State<Activity> {
                               ),
                               CheckboxListTile(
                                 title: Text(
-                                  "مئة تسابيح",
+                                  "مئة تسبيح",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,
