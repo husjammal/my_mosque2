@@ -108,7 +108,7 @@ class _SplashPageState extends State<SplashPage> {
                         totalRepeatCount: 1,
                         animatedTexts: [
                           FadeAnimatedText(
-                            'تطبيق جامعي',
+                            'تطبيق جامعّي',
                             duration: Duration(milliseconds: 1700),
                             textStyle: TextStyle(
                                 fontSize: 30,

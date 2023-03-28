@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
                   child: isLoading
                       ? Text("تحميل ...")
                       : Text(
-                          'مجموعك لليوم هو $_TodayScore الموافق ل ${dt.day}/${dt.month}/${dt.year} و المجوع الاسبوع هو $_TotalScore',
+                          'مجموعك لليوم هو $_TodayScore الموافق ل ${dt.day}/${dt.month}/${dt.year} و مجموع الاسبوع هو $_TotalScore',
                           style: TextStyle(
                               fontSize: 12.0,
                               fontWeight: FontWeight.bold,
@@ -202,7 +202,7 @@ class _HomeState extends State<Home> {
                         }),
                       ),
                       Text(
-                        'قراني',
+                        'قرآني',
                         style:
                             TextStyle(fontSize: 22.0, color: Colors.grey[400]),
                       ),
@@ -297,7 +297,7 @@ class _HomeState extends State<Home> {
                       }),
                     ),
                     Text(
-                      'اذكاري',
+                      'أذكاري',
                       style: TextStyle(fontSize: 22.0, color: Colors.grey[400]),
                     ),
                   ]),

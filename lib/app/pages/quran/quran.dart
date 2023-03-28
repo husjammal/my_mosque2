@@ -108,7 +108,7 @@ class _QuranState extends State<Quran> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('حصتي من القران'),
+          title: Text('حصّتي من القران'),
           centerTitle: true,
           backgroundColor: buttonColor,
           leading: IconButton(

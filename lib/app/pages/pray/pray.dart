@@ -113,7 +113,7 @@ class _PrayState extends State<Pray> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('جدول صلاواتي'),
+          title: Text('جدول صلاتي'),
           centerTitle: true,
           backgroundColor: buttonColor,
           leading: IconButton(
