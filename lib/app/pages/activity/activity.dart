@@ -367,8 +367,7 @@ class _ActivityState extends State<Activity> {
                             child: _list.isEmpty
                                 ? Text("")
                                 : RichText(
-                                    text: TextSpan(
-                                        text: "نشاطاتي هي :\n",
+                                    text: TextSpan(text: "نشاطاتي هي :\n",
                                         // style:
                                         //     DefaultTextStyle.of(context).style,
                                         children: <TextSpan>[
@@ -393,7 +392,7 @@ class _ActivityState extends State<Activity> {
             Navigator.of(context)
                 .pushNamedAndRemoveUntil("initialScreen", (route) => false);
           },
-          tooltip: 'حفظ تلاواتي',
+          tooltip: 'حفظ نشاطاتي',
           // label: Text('حفظ صلاواتي'),
           child: Icon(
             Icons.thumb_up,

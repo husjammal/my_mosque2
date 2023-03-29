@@ -24,7 +24,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController phone = TextEditingController();
-
+  bool ischanged = false;
   bool isLoading = false;
   List<UserModel> userData = [];
 
@@ -130,12 +130,19 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       SizedBox(
                           child: ClipRRect(
                         borderRadius: BorderRadius.circular(100.0),
-                        child: Image.network(
-                          "$linkImageRoot/${widget.user['image'].toString()}",
-                          width: 120,
-                          height: 120,
-                          fit: BoxFit.fill,
-                        ),
+                        child: ischanged
+                            ? Image.file(
+                                myfile!,
+                                width: 120,
+                                height: 120,
+                                fit: BoxFit.fill,
+                              )
+                            : Image.network(
+                                "$linkImageRoot/${widget.user['image'].toString()}",
+                                width: 120,
+                                height: 120,
+                                fit: BoxFit.fill,
+                              ),
                       )),
                       Positioned(
                         bottom: 0,
@@ -143,6 +150,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         child: InkWell(
                           onTap: () {
                             showModalBottomSheet(
+                              elevation: 200.0,
                               context: context,
                               builder: (context) => Directionality(
                                 textDirection: TextDirection.rtl,
@@ -166,10 +174,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                           XFile? xfile = await ImagePicker()
                                               .pickImage(
                                                   source: ImageSource.gallery);
-                                          Navigator.of(context).pop;
+                                          Navigator.pop(context);
                                           myfile = File(xfile!.path);
                                           print("xfile $xfile");
                                           print("myyyfile $myfile");
+                                          ischanged = true;
                                           setState(() {});
                                         },
                                         child: Container(
@@ -188,7 +197,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                           XFile? xfile = await ImagePicker()
                                               .pickImage(
                                                   source: ImageSource.camera);
-                                          Navigator.of(context).pop;
+                                          Navigator.pop(context);
                                           myfile = File(xfile!.path);
                                           print("xfile $xfile");
                                           print("myyyfile $myfile");
@@ -299,8 +308,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 backgroundColor: buttonColor,
                                 side: BorderSide.none,
                                 shape: const StadiumBorder()),
-                            child: const Text("تعديل معلوماتي",
-                                style: TextStyle(color: Colors.grey)),
+                            child: isLoading
+                                ? Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : const Text("تعديل معلوماتي",
+                                    style: TextStyle(color: Colors.grey)),
                           ),
                         ),
                         const SizedBox(height: 30),

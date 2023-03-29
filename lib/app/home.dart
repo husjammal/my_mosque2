@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/pages/activity/activity.dart';
 import 'package:mymosque/app/pages/duaa/duaa.dart';
+import 'package:mymosque/app/pages/duaa/initialduaa.dart';
+import 'package:mymosque/app/pages/pray/initialpray.dart';
 import 'package:mymosque/app/pages/pray/pray.dart';
 import 'package:mymosque/app/pages/quran/quran.dart';
 import 'package:mymosque/components/crud.dart';
@@ -250,8 +252,8 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         onTap: (() {
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => Pray()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => InitialPray()));
                         }),
                       ),
                       Text(
@@ -391,8 +393,8 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       onTap: (() {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Duaa()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => InitialDuaa()));
                       }),
                     ),
                     Text(

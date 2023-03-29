@@ -7,13 +7,13 @@ import 'package:mymosque/main.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant//linkapi.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:mymosque/constant/colorConfig.dart';
-
 import 'package:carousel_slider/carousel_slider.dart';
 
 // Creating a stateful widget to manage
 // the state of the app
 class Duaa extends StatefulWidget {
+  const Duaa({super.key});
+
   @override
   _DuaaState createState() => _DuaaState();
 }
@@ -115,26 +115,6 @@ class _DuaaState extends State<Duaa> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('قائمة الادعية'),
-          centerTitle: true,
-          backgroundColor: buttonColor,
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            tooltip: 'قائمة',
-            onPressed: () {},
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil("initialScreen", (route) => false);
-              },
-              icon: Icon(Icons.exit_to_app),
-              tooltip: 'رجوع',
-            )
-          ], //IconButton
-        ), //AppBar
         body: isLoading == true
             ? Scaffold(
                 backgroundColor: backgroundColor,

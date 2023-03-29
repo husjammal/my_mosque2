@@ -24,8 +24,8 @@ class CardUsers extends StatelessWidget {
                   borderRadius: BorderRadius.circular(100.0),
                   child: Image.network(
                     "$linkImageRoot/${usermodel!.usersImage}",
-                    width: 70,
-                    height: 100,
+                    width: 100,
+                    height: 120,
                     fit: BoxFit.fill,
                   ),
                 )),
@@ -52,7 +52,6 @@ class CardUsers extends StatelessWidget {
                   ),
                   subtitle: Text("المجموع الكلي ${usermodel!.userTotalScore}"),
                   trailing: Container(
-                    height: 150,
                     padding: EdgeInsets.symmetric(horizontal: 5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),

@@ -112,26 +112,6 @@ class _PrayState extends State<Pray> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('جدول صلاتي'),
-          centerTitle: true,
-          backgroundColor: buttonColor,
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            tooltip: 'قائمة',
-            onPressed: () {},
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil("initialScreen", (route) => false);
-              },
-              icon: Icon(Icons.exit_to_app),
-              tooltip: 'رجوع',
-            )
-          ], //IconButton
-        ), //AppBar
         body: isLoading == true
             ? Scaffold(
                 backgroundColor: backgroundColor,
