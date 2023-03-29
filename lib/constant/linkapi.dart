@@ -6,6 +6,8 @@ const String linkSignUp = '$linkServerName/auth/signup.php';
 const String linkLogin = '$linkServerName/auth/login.php';
 // initual values for all actions
 const String linkInitual = '$linkServerName/actions/ini_val.php';
+const String linkReset = '$linkServerName/actions/reset.php';
+const String linkWeek = '$linkServerName/actions/week.php';
 const String linkVersion = '$linkServerName/actions/version.php';
 
 // crud links

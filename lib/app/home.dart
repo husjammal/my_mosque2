@@ -18,9 +18,14 @@ class _HomeState extends State<Home> {
   String? user_name = sharedPref.getString("username");
   String? _TodayScore = "0";
   String? _FinalScore = "0";
-  String? _TotalScore;
+  String? _TotalScore = "0";
+  String _userWeek = "0";
+  List<UserModel> userData = [];
+  List userDataList = [];
+  String? newTotalScore = "0";
 
   /// day and date
+  String weekNumber = "0";
   var dt = DateTime.now();
   bool isLoading = false;
 
@@ -37,54 +42,117 @@ class _HomeState extends State<Home> {
     return response;
   }
 
-  getFinalScore() async {
-    isLoading = true;
-    setState(() {});
-    var response = await postRequest(linkViewNotes,
-        {"user_id": sharedPref.getString("id"), "day_number": "ALL"});
-    List totalScore = response['data'];
-    _FinalScore = (int.parse(totalScore[0]['score']) +
-            int.parse(totalScore[1]['score']) +
-            int.parse(totalScore[2]['score']) +
-            int.parse(totalScore[3]['score']) +
-            int.parse(totalScore[4]['score']) +
-            int.parse(totalScore[5]['score']) +
-            int.parse(totalScore[6]['score']))
-        .toString();
-    print('the response of total $_FinalScore');
-    sharedPref.setString("finalScore", _FinalScore.toString());
-    isLoading = false;
-    setState(() {});
-    return response;
+  int weeksBetween(DateTime from, DateTime to) {
+    from = DateTime.utc(from.year, from.month, from.day);
+    to = DateTime.utc(to.year, to.month, to.day);
+    return (to.difference(from).inDays / 7).ceil();
   }
 
-  List<UserModel> userData = [];
-  List userDataList = [];
-  String? newTotalScore = "0";
+  final now = DateTime.now();
 
-  void getOneUser() async {
+  getFinalScore() async {
+    final firstJan = DateTime(now.year, 1, 1);
+    weekNumber = (weeksBetween(firstJan, now)).toString();
+    print("weekNumber $weekNumber");
     isLoading = true;
-    var response = await postRequest(linkViewOneUser, {
-      "id": sharedPref.getString("id"),
-    });
-    userDataList = response['data'] as List;
-    userData = userDataList
-        .map<UserModel>((json) => UserModel.fromJson(json))
-        .toList();
-    // userData = response['data'];
-    isLoading = false;
-    print("Share final score ${sharedPref.getString("finalScore")}");
-    print("_FinalScore $_FinalScore");
-    var totalScore = userData[0].userTotalScore;
-    sharedPref.getString("finalScore") == _FinalScore.toString()
-        ? newTotalScore = totalScore
-        : newTotalScore = (int.parse(totalScore!) +
-                int.parse(sharedPref.getString('finalScore').toString()))
-            .toString();
-    sharedPref.setString("totalScore", newTotalScore!);
     setState(() {});
-    print("newTotalScore $newTotalScore");
-    print("userOneData ${userData[0].userTotalScore}");
+    var response1 = await postRequest(linkViewNotes,
+        {"user_id": sharedPref.getString("id"), "day_number": "ALL"});
+    if (response1['status'] == "success") {
+      List totalScore = response1['data'];
+      _FinalScore = (int.parse(totalScore[0]['score']) +
+              int.parse(totalScore[1]['score']) +
+              int.parse(totalScore[2]['score']) +
+              int.parse(totalScore[3]['score']) +
+              int.parse(totalScore[4]['score']) +
+              int.parse(totalScore[5]['score']) +
+              int.parse(totalScore[6]['score']))
+          .toString();
+      print('the response of total $_FinalScore');
+      sharedPref.setString("finalScore", _FinalScore.toString());
+      ////////////////
+
+      var response = await postRequest(linkViewOneUser, {
+        "id": sharedPref.getString("id"),
+      });
+      userDataList = response['data'] as List;
+      userData = userDataList
+          .map<UserModel>((json) => UserModel.fromJson(json))
+          .toList();
+
+      /// the rest of the week
+      _userWeek = userData[0].userWeek.toString();
+      if (int.parse(weekNumber.toString()) > int.parse(_userWeek.toString())) {
+        print("delete the old week score");
+        reset_val(sharedPref.getString("id")!);
+        save_Week();
+        print("init done");
+      }
+
+      //// the total score
+      _TotalScore = userData[0].userTotalScore.toString();
+      var oldFinalScore = userData[0].userFinalScore.toString();
+      if (oldFinalScore == _FinalScore) {
+        newTotalScore = _TotalScore;
+      } else {
+        newTotalScore = (int.parse(_TotalScore!) +
+                int.parse(_FinalScore!) -
+                int.parse(oldFinalScore))
+            .toString();
+      }
+      sharedPref.setString("totalScore", newTotalScore!);
+      isLoading = false;
+      setState(() {});
+      return response;
+    } else {
+      print("failed");
+      return [];
+    }
+  }
+
+  reset_val(String user_id) async {
+    isLoading = true;
+    setState(() {});
+
+    var response = await postRequest(linkReset, {
+      "user_id": user_id,
+      "score": "0",
+      "subuh": "0",
+      "zhur": "0",
+      "asr": "0",
+      "magrib": "0",
+      "isyah": "0",
+      "quranRead": "0",
+      "quranLearn": "0",
+      "quranListen": "0",
+      "duaaScore": "0",
+      "prayScore": "0",
+      "quranScore": "0",
+      "activityScore": "0",
+    });
+    isLoading = false;
+    setState(() {});
+    if (response['status'] == "success") {
+      // close sign up
+      print("init success");
+    } else {
+      print("init Fail");
+    }
+  }
+
+  save_Week() async {
+    // calculate the total score
+    // save the database
+    isLoading = true;
+    setState(() {});
+    var response = await postRequest(linkWeek, {
+      "user_id": sharedPref.getString("id"),
+      "finalScore": "0",
+      "week": weekNumber.toString(),
+      "totalScore": sharedPref.getString('totalScore'),
+    });
+    isLoading = false;
+    setState(() {});
   }
 
   @override
@@ -94,7 +162,7 @@ class _HomeState extends State<Home> {
     print('home initState');
     getTodayScore();
     var dt = DateTime.now();
-    getOneUser();
+    //getOneUser();
     getFinalScore();
 
     setState(() {});
