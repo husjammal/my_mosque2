@@ -5,7 +5,8 @@ class UserModel {
   String? usersPassword;
   String? usersPhone;
   String? usersImage;
-  String? userScore;
+  String? userFinalScore;
+  String? userTotalScore;
   String? subGroup;
   String? myGroup;
 
@@ -14,7 +15,8 @@ class UserModel {
     this.usersName,
     this.usersEmail,
     this.usersImage,
-    this.userScore,
+    this.userFinalScore,
+    this.userTotalScore,
     this.subGroup,
     this.myGroup,
   });
@@ -26,7 +28,8 @@ class UserModel {
     usersPassword = json['password'];
     usersPhone = json['phone'];
     usersImage = json['image'];
-    userScore = json['finalScore'];
+    userFinalScore = json['finalScore'];
+    userTotalScore = json['totalScore'];
     subGroup = json['subGroup'];
     myGroup = json['myGroup'];
   }
@@ -39,7 +42,8 @@ class UserModel {
     data['password'] = this.usersPassword;
     data['phone'] = this.usersPhone;
     data['image'] = this.usersImage;
-    data['finalScore'] = this.userScore;
+    data['finalScore'] = this.userFinalScore;
+    data['totalScore'] = this.userTotalScore;
     data['subGroup'] = this.subGroup;
     data['myGroup'] = this.myGroup;
     return data;

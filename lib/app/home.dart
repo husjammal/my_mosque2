@@ -1,4 +1,3 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/pages/activity/activity.dart';
 import 'package:mymosque/app/pages/duaa/duaa.dart';
@@ -8,7 +7,7 @@ import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
 import 'package:mymosque/main.dart';
-import 'package:marquee/marquee.dart';
+import 'package:mymosque/model/usermodel.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,7 +17,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String? user_name = sharedPref.getString("username");
   String? _TodayScore = "0";
-  String? _TotalScore = "0";
+  String? _FinalScore = "0";
+  String? _TotalScore;
 
   /// day and date
   var dt = DateTime.now();
@@ -37,13 +37,13 @@ class _HomeState extends State<Home> {
     return response;
   }
 
-  getTotalScore() async {
+  getFinalScore() async {
     isLoading = true;
     setState(() {});
     var response = await postRequest(linkViewNotes,
         {"user_id": sharedPref.getString("id"), "day_number": "ALL"});
     List totalScore = response['data'];
-    _TotalScore = (int.parse(totalScore[0]['score']) +
+    _FinalScore = (int.parse(totalScore[0]['score']) +
             int.parse(totalScore[1]['score']) +
             int.parse(totalScore[2]['score']) +
             int.parse(totalScore[3]['score']) +
@@ -51,11 +51,40 @@ class _HomeState extends State<Home> {
             int.parse(totalScore[5]['score']) +
             int.parse(totalScore[6]['score']))
         .toString();
-    print('the response of total $_TotalScore');
-    sharedPref.setString("finalScore", _TotalScore.toString());
+    print('the response of total $_FinalScore');
+    sharedPref.setString("finalScore", _FinalScore.toString());
     isLoading = false;
     setState(() {});
     return response;
+  }
+
+  List<UserModel> userData = [];
+  List userDataList = [];
+  String? newTotalScore = "0";
+
+  void getOneUser() async {
+    isLoading = true;
+    var response = await postRequest(linkViewOneUser, {
+      "id": sharedPref.getString("id"),
+    });
+    userDataList = response['data'] as List;
+    userData = userDataList
+        .map<UserModel>((json) => UserModel.fromJson(json))
+        .toList();
+    // userData = response['data'];
+    isLoading = false;
+    print("Share final score ${sharedPref.getString("finalScore")}");
+    print("_FinalScore $_FinalScore");
+    var totalScore = userData[0].userTotalScore;
+    sharedPref.getString("finalScore") == _FinalScore.toString()
+        ? newTotalScore = totalScore
+        : newTotalScore = (int.parse(totalScore!) +
+                int.parse(sharedPref.getString('finalScore').toString()))
+            .toString();
+    sharedPref.setString("totalScore", newTotalScore!);
+    setState(() {});
+    print("newTotalScore $newTotalScore");
+    print("userOneData ${userData[0].userTotalScore}");
   }
 
   @override
@@ -65,7 +94,9 @@ class _HomeState extends State<Home> {
     print('home initState');
     getTodayScore();
     var dt = DateTime.now();
-    getTotalScore();
+    getOneUser();
+    getFinalScore();
+
     setState(() {});
   }
 
@@ -90,7 +121,7 @@ class _HomeState extends State<Home> {
                   child: isLoading
                       ? Text("تحميل ...")
                       : Text(
-                          'مجموعك لليوم هو $_TodayScore الموافق ل ${dt.day}/${dt.month}/${dt.year} و مجموع الاسبوع هو $_TotalScore',
+                          'مجموعك لليوم هو $_TodayScore الموافق ل ${dt.day}/${dt.month}/${dt.year} و مجموع الاسبوع هو $_FinalScore',
                           style: TextStyle(
                               fontSize: 12.0,
                               fontWeight: FontWeight.bold,

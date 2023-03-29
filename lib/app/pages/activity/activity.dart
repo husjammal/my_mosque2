@@ -21,12 +21,12 @@ class _ActivityState extends State<Activity> {
 
   List<String> _list = [];
 
-  bool? _isFootBall = false;
-  bool? _isCricket = false;
-  bool? _isVolleyBall = false;
-  bool? _isKabaddi = false;
-  bool? _isBaseball = false;
-  bool? _isBasketBall = false;
+  bool? _parent = false;
+  bool? _charity = false;
+  bool? _prayerProphet = false;
+  bool? _praise = false;
+  bool? _fasting = false;
+  bool? _askForgiveness = false;
   bool? _isOther = false;
 
 // Fuction to save prayers
@@ -42,7 +42,7 @@ class _ActivityState extends State<Activity> {
 
   save_activity(String user_id) async {
     // calculate the quranScore
-    activityScore = 0;
+
     _score = (int.parse(_prayScore) +
             int.parse(_quranScore) +
             activityScore +
@@ -56,9 +56,6 @@ class _ActivityState extends State<Activity> {
       "user_id": user_id,
       "day_number": dt.weekday.toString(),
       "score": _score,
-      "duaaScore": _duaaScore,
-      "prayScore": _prayScore,
-      "quranScore": _quranScore.toString(),
       "activityScore": activityScore.toString()
     });
     isLoading = false;
@@ -176,15 +173,19 @@ class _ActivityState extends State<Activity> {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                value: _isFootBall,
+                                value: _parent,
                                 secondary: Icon(Icons.animation),
                                 onChanged: (value) {
                                   setState(() {
-                                    _isFootBall = value;
+                                    _parent = value;
                                     String selectVal = " رضى الوالدين جيد";
-                                    value!
-                                        ? _list.add(selectVal)
-                                        : _list.remove(selectVal);
+                                    if (value == true) {
+                                      _list.add(selectVal);
+                                      activityScore++;
+                                    } else {
+                                      _list.remove(selectVal);
+                                      activityScore--;
+                                    }
                                   });
                                 },
                               ),
@@ -196,7 +197,7 @@ class _ActivityState extends State<Activity> {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                value: _isBaseball,
+                                value: _fasting,
                                 secondary: Icon(Icons.animation),
                                 activeColor: Colors.green,
                                 checkColor: Colors.white,
@@ -204,11 +205,15 @@ class _ActivityState extends State<Activity> {
                                     ListTileControlAffinity.leading,
                                 onChanged: (value) {
                                   setState(() {
-                                    _isBaseball = value;
+                                    _fasting = value;
                                     String selectVal = "صيام اليوم";
-                                    value!
-                                        ? _list.add(selectVal)
-                                        : _list.remove(selectVal);
+                                    if (value == true) {
+                                      _list.add(selectVal);
+                                      activityScore++;
+                                    } else {
+                                      _list.remove(selectVal);
+                                      activityScore--;
+                                    }
                                   });
                                 },
                               ),
@@ -220,15 +225,19 @@ class _ActivityState extends State<Activity> {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                value: _isCricket,
+                                value: _charity,
                                 secondary: Icon(Icons.animation),
                                 onChanged: (value) {
                                   setState(() {
-                                    _isCricket = value;
+                                    _charity = value;
                                     String selectVal = "صدقة";
-                                    value!
-                                        ? _list.add(selectVal)
-                                        : _list.remove(selectVal);
+                                    if (value == true) {
+                                      _list.add(selectVal);
+                                      activityScore++;
+                                    } else {
+                                      _list.remove(selectVal);
+                                      activityScore--;
+                                    }
                                   });
                                 },
                               ),
@@ -240,7 +249,7 @@ class _ActivityState extends State<Activity> {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                value: _isKabaddi,
+                                value: _praise,
                                 controlAffinity:
                                     ListTileControlAffinity.leading,
                                 secondary: Icon(Icons.animation),
@@ -248,11 +257,15 @@ class _ActivityState extends State<Activity> {
                                 checkColor: Colors.white,
                                 onChanged: (value) {
                                   setState(() {
-                                    _isKabaddi = value;
+                                    _praise = value;
                                     String selectVal = "مئة تسابيح";
-                                    value!
-                                        ? _list.add(selectVal)
-                                        : _list.remove(selectVal);
+                                    if (value == true) {
+                                      _list.add(selectVal);
+                                      activityScore++;
+                                    } else {
+                                      _list.remove(selectVal);
+                                      activityScore--;
+                                    }
                                   });
                                 },
                               ),
@@ -264,17 +277,21 @@ class _ActivityState extends State<Activity> {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                value: _isBasketBall,
+                                value: _askForgiveness,
                                 controlAffinity:
                                     ListTileControlAffinity.platform,
                                 secondary: Icon(Icons.animation),
                                 onChanged: (value) {
                                   setState(() {
-                                    _isBasketBall = value;
+                                    _askForgiveness = value;
                                     String selectVal = "مئة استغفار";
-                                    value!
-                                        ? _list.add(selectVal)
-                                        : _list.remove(selectVal);
+                                    if (value == true) {
+                                      _list.add(selectVal);
+                                      activityScore++;
+                                    } else {
+                                      _list.remove(selectVal);
+                                      activityScore--;
+                                    }
                                   });
                                 },
                               ),
@@ -286,7 +303,7 @@ class _ActivityState extends State<Activity> {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                value: _isVolleyBall,
+                                value: _prayerProphet,
                                 secondary: Icon(Icons.animation),
                                 controlAffinity:
                                     ListTileControlAffinity.leading,
@@ -294,17 +311,21 @@ class _ActivityState extends State<Activity> {
                                 checkColor: Colors.amber,
                                 onChanged: (value) {
                                   setState(() {
-                                    _isVolleyBall = value;
+                                    _prayerProphet = value;
                                     String selectVal = "مئة صلاة على النبي";
-                                    value!
-                                        ? _list.add(selectVal)
-                                        : _list.remove(selectVal);
+                                    if (value == true) {
+                                      _list.add(selectVal);
+                                      activityScore++;
+                                    } else {
+                                      _list.remove(selectVal);
+                                      activityScore--;
+                                    }
                                   });
                                 },
                               ),
                               CheckboxListTile(
                                 title: Text(
-                                  "عبدات اخرى",
+                                  "عبادات أخرى",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,
@@ -320,12 +341,25 @@ class _ActivityState extends State<Activity> {
                                   setState(() {
                                     _isOther = value;
                                     String selectVal = "عبدات اخرى";
-                                    value!
-                                        ? _list.add(selectVal)
-                                        : _list.remove(selectVal);
+                                    if (value == true) {
+                                      _list.add(selectVal);
+                                      activityScore++;
+                                    } else {
+                                      _list.remove(selectVal);
+                                      activityScore--;
+                                    }
                                   });
                                 },
                               ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("مجموع نقاط نشاطاتي"),
+                                    Text("  "),
+                                    Text("$activityScore")
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),

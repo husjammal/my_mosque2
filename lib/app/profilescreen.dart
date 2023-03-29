@@ -25,10 +25,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isLoading = false;
   TooltipBehavior? _tooltipBehavior;
 
-  void getOneUser() async {
+  void getOneUser(String userID) async {
     isLoading = true;
     var response = await postRequest(linkViewOneUser, {
-      "id": sharedPref.getString("id"),
+      "id": userID,
     });
     userDataList = response['data'] as List;
     userData = userDataList
@@ -40,12 +40,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     print("userOneData $userData");
   }
 
-  void getScore() async {
+  void getScore(String userID) async {
     isLoading = true;
     setState(() {});
     print("getScore");
-    var response = await postRequest(linkViewNotes,
-        {"user_id": sharedPref.getString("id"), "day_number": "ALL"});
+    var response = await postRequest(
+        linkViewNotes, {"user_id": userID, "day_number": "ALL"});
     print("getScore response:  $response");
 
     var scorelist = response['data'] as List;
@@ -66,8 +66,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     print('profile initState');
     dt = DateTime.now();
     _tooltipBehavior = TooltipBehavior(enable: true);
-    getOneUser();
-    getScore();
+    getOneUser(sharedPref.getString("id").toString());
+    getScore(sharedPref.getString("id").toString());
     print("List Size: ${score.length}");
     setState(() {});
   }
@@ -155,24 +155,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 10),
 
                     /// -- MENU
-                    SfCartesianChart(
-                        // Initialize category axis
-                        primaryXAxis: CategoryAxis(),
-                        // Chart title
-                        title: ChartTitle(text: 'مجموعي اليومي هذا الاسبوع'),
-                        // Enable legend
-                        // legend: Legend(isVisible: true),
-                        // Enable tooltip
-                        tooltipBehavior: _tooltipBehavior,
-                        series: <LineSeries<ScoreModel, String>>[
-                          LineSeries<ScoreModel, String>(
-                              // Bind data source
-                              dataSource: score,
-                              xValueMapper: (ScoreModel score, _) =>
-                                  score.day_number,
-                              yValueMapper: (ScoreModel score, _) =>
-                                  int.parse(score.score!))
-                        ]),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xfff3c8fb),
+                        borderRadius: BorderRadius.circular(15.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            offset: const Offset(
+                              3.0,
+                              3.0,
+                            ), //Offset
+                            blurRadius: 10.0,
+                            spreadRadius: 2.0,
+                          ), //BoxShadow
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: const Offset(0.0, 0.0),
+                            blurRadius: 0.0,
+                            spreadRadius: 0.0,
+                          ), //BoxShadow
+                        ],
+                      ),
+                      child: SfCartesianChart(
+                          // Initialize category axis
+                          primaryXAxis: CategoryAxis(),
+                          // Chart title
+                          title: ChartTitle(text: 'مجموعي اليومي هذا الاسبوع'),
+                          // Enable legend
+                          // legend: Legend(isVisible: true),
+                          // Enable tooltip
+                          tooltipBehavior: _tooltipBehavior,
+                          series: <LineSeries<ScoreModel, String>>[
+                            LineSeries<ScoreModel, String>(
+                                // Bind data source
+                                dataSource: score,
+                                xValueMapper: (ScoreModel score, _) =>
+                                    score.day_number,
+                                yValueMapper: (ScoreModel score, _) =>
+                                    int.parse(score.score!)),
+                          ]),
+                    ),
                   ],
                 ),
               ),

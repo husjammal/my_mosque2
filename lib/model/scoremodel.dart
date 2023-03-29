@@ -5,14 +5,17 @@ class ScoreModel {
   String? duaaScore;
   String? prayScore;
   String? quranScore;
+  String? activityScore;
 
-  ScoreModel(
-      {this.usersId,
-      this.day_number,
-      this.score,
-      this.duaaScore,
-      this.prayScore,
-      this.quranScore});
+  ScoreModel({
+    this.usersId,
+    this.day_number,
+    this.score,
+    this.duaaScore,
+    this.prayScore,
+    this.quranScore,
+    this.activityScore,
+  });
 
   ScoreModel.fromJson(Map<String, dynamic> json) {
     usersId = json['user_id'];
@@ -21,6 +24,7 @@ class ScoreModel {
     duaaScore = json['duaaScore'];
     prayScore = json['prayScore'];
     quranScore = json['quranScore'];
+    activityScore = json['activityScore'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +35,7 @@ class ScoreModel {
     data['duaaScore'] = this.duaaScore;
     data['prayScore'] = this.prayScore;
     data['quranScore'] = this.quranScore;
+    data['activityScore'] = this.activityScore;
     return data;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymosque/app/compare.dart';
 import 'package:mymosque/components/carduser.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -25,14 +26,14 @@ class _RankState extends State<Rank> {
   bool isLoading = false;
 
   save_TotalScore() async {
-    // calculate the quranScore
-
+    // calculate the total score
     // save the database
     isLoading = true;
     setState(() {});
     var response = await postRequest(linkScoreUsers, {
       "user_id": sharedPref.getString("id"),
-      "finalScore": sharedPref.getString('finalScore')
+      "finalScore": sharedPref.getString('finalScore'),
+      "totalScore": sharedPref.getString('totalScore'),
     });
     isLoading = false;
     setState(() {});
@@ -83,35 +84,18 @@ class _RankState extends State<Rank> {
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, i) {
                             return CardUsers(
-                                onDelete: () async {
-                                  // var response =
-                                  //     await postRequest(linkDeleteUsers, {
-                                  //   "noteid": snapshot.data['data'][i]
-                                  //           ['notes_id']
-                                  //       .toString(),
-                                  //   "imagename": snapshot.data['data'][i]
-                                  //           ['notes_image']
-                                  //       .toString()
-                                  // });
-                                  // print('linkDeleteUsers $linkDeleteUsers');
-                                  // print(
-                                  //     "note.id ${snapshot.data['data'][i]['notes_id'].toString()}");
-                                  // print(response);
-                                  // if (response['status'] == 'success') {
-                                  //   Navigator.of(context)
-                                  //       .pushReplacementNamed("home");
-                                  // } else {
-                                  //   //add
-                                  // }
-                                },
-                                ontap: () {
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (context) => EditUsers(
-                                  //           note: snapshot.data['data'][i],
-                                  //         )));
-                                },
-                                usermodel: UserModel.fromJson(
-                                    snapshot.data['data'][i]));
+                              ontap: () {
+                                print(snapshot.data['data'][i]['id']);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CompareScreen(
+                                          userID2: snapshot.data['data'][i]
+                                              ['id'],
+                                        )));
+                              },
+                              usermodel:
+                                  UserModel.fromJson(snapshot.data['data'][i]),
+                              rank_index: i,
+                            );
                           });
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {

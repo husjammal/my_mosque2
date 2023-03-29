@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 class CardUsers extends StatelessWidget {
   final void Function()? ontap;
   final UserModel? usermodel;
-  final void Function()? onDelete;
-  const CardUsers({Key? key, this.ontap, this.usermodel, this.onDelete})
+  final int? rank_index;
+
+  const CardUsers({Key? key, this.ontap, this.usermodel, this.rank_index})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -31,13 +32,27 @@ class CardUsers extends StatelessWidget {
             Expanded(
                 flex: 2,
                 child: ListTile(
-                  title: Text(
-                    "${usermodel!.usersName}",
-                    style:
-                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                  title: Row(
+                    children: [
+                      Text(
+                        "${usermodel!.usersName}",
+                        style: TextStyle(
+                            fontSize: 25.0, fontWeight: FontWeight.bold),
+                      ),
+                      Text("  "),
+                      Text(
+                        rank_index! <= 2 ? " ترتيب " : "",
+                        style: TextStyle(fontSize: 20.0, color: Colors.yellow),
+                      ),
+                      Text(
+                        rank_index! <= 2 ? (rank_index! + 1).toString() : "",
+                        style: TextStyle(fontSize: 20.0, color: Colors.yellow),
+                      ),
+                    ],
                   ),
-                  subtitle: Text("${usermodel!.usersEmail}"),
+                  subtitle: Text("المجموع الكلي ${usermodel!.userTotalScore}"),
                   trailing: Container(
+                    height: 150,
                     padding: EdgeInsets.symmetric(horizontal: 5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
@@ -46,12 +61,15 @@ class CardUsers extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "score",
-                          style: TextStyle(color: Colors.white),
+                          "مجموع",
+                          style: TextStyle(color: Colors.white, fontSize: 10.0),
                         ),
                         // Text(""),
-                        Text("${usermodel!.userScore}",
+                        Text("${usermodel!.userFinalScore}",
                             style: TextStyle(color: Colors.white)),
+
+                        // Text((rank_index! + 1).toString(),
+                        //     style: TextStyle(color: Colors.white)),
                       ],
                     ),
                   ),
