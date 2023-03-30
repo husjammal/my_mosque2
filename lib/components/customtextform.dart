@@ -14,20 +14,21 @@ class CustomTextFormSign extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       child: TextFormField(
         validator: valid,
         controller: mycontroller,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           labelText: hint,
-          labelStyle: TextStyle(color: Colors.deepPurple),
+          labelStyle: const TextStyle(color: Colors.deepPurple),
           hintText: hint,
-          errorStyle: TextStyle(color: Colors.amber),
-          enabledBorder: OutlineInputBorder(
+          errorStyle: const TextStyle(color: Colors.amber),
+          enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.deepPurple, width: 1),
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.purpleAccent, width: 1),
               borderRadius: BorderRadius.all(Radius.circular(10))),
         ),

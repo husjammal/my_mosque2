@@ -66,7 +66,8 @@ class _QuranState extends State<Quran> {
       Navigator.of(context)
           .pushNamedAndRemoveUntil("initialScreen", (route) => false);
     } else {
-      AwesomeDialog(context: context, title: "تنبيه", body: Text("يوجد خطأ"))
+      AwesomeDialog(
+          context: context, title: "تنبيه", body: const Text("يوجد خطأ"))
         ..show();
     }
   }
@@ -108,11 +109,11 @@ class _QuranState extends State<Quran> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('حصّتي من القران'),
+          title: const Text('حصّتي من القران'),
           centerTitle: true,
           backgroundColor: buttonColor,
           leading: IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             tooltip: 'قائمة',
             onPressed: () {},
           ),
@@ -122,7 +123,7 @@ class _QuranState extends State<Quran> {
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
               },
-              icon: Icon(Icons.exit_to_app),
+              icon: const Icon(Icons.exit_to_app),
               tooltip: 'رجوع',
             )
           ], //IconButton
@@ -147,13 +148,13 @@ class _QuranState extends State<Quran> {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height - 80,
                     width: double.infinity,
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.0),
                       color: buttonColor,
@@ -194,7 +195,7 @@ class _QuranState extends State<Quran> {
                                       hint: "عدد صفحات القراءة",
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 15.0,
                                   ),
                                   InkWell(
@@ -209,24 +210,24 @@ class _QuranState extends State<Quran> {
                                                   1 /
                                                   4) -
                                               50,
-                                      padding: EdgeInsets.all(5.0),
+                                      padding: const EdgeInsets.all(5.0),
                                       decoration: BoxDecoration(
                                         color: buttonColor,
                                         borderRadius:
                                             BorderRadius.circular(15.0),
                                         boxShadow: [
-                                          BoxShadow(
+                                          const BoxShadow(
                                             color: Colors.black,
-                                            offset: const Offset(
+                                            offset: Offset(
                                               3.0,
                                               3.0,
                                             ), //Offset
                                             blurRadius: 10.0,
                                             spreadRadius: 2.0,
                                           ), //BoxShadow
-                                          BoxShadow(
+                                          const BoxShadow(
                                             color: Colors.white,
-                                            offset: const Offset(0.0, 0.0),
+                                            offset: Offset(0.0, 0.0),
                                             blurRadius: 0.0,
                                             spreadRadius: 0.0,
                                           ), //BoxShadow
@@ -268,7 +269,7 @@ class _QuranState extends State<Quran> {
                                       hint: "عدد صفحات الحفظ",
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 15.0,
                                   ),
                                   InkWell(
@@ -283,24 +284,24 @@ class _QuranState extends State<Quran> {
                                                   1 /
                                                   4) -
                                               50,
-                                      padding: EdgeInsets.all(5.0),
+                                      padding: const EdgeInsets.all(5.0),
                                       decoration: BoxDecoration(
                                         color: buttonColor,
                                         borderRadius:
                                             BorderRadius.circular(15.0),
                                         boxShadow: [
-                                          BoxShadow(
+                                          const BoxShadow(
                                             color: Colors.black,
-                                            offset: const Offset(
+                                            offset: Offset(
                                               3.0,
                                               3.0,
                                             ), //Offset
                                             blurRadius: 10.0,
                                             spreadRadius: 2.0,
                                           ), //BoxShadow
-                                          BoxShadow(
+                                          const BoxShadow(
                                             color: Colors.white,
-                                            offset: const Offset(0.0, 0.0),
+                                            offset: Offset(0.0, 0.0),
                                             blurRadius: 0.0,
                                             spreadRadius: 0.0,
                                           ), //BoxShadow
@@ -342,7 +343,7 @@ class _QuranState extends State<Quran> {
                                       hint: "عدد صفحات الاستماع",
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 15.0,
                                   ),
                                   InkWell(
@@ -357,24 +358,24 @@ class _QuranState extends State<Quran> {
                                                   1 /
                                                   4) -
                                               50,
-                                      padding: EdgeInsets.all(5.0),
+                                      padding: const EdgeInsets.all(5.0),
                                       decoration: BoxDecoration(
                                         color: buttonColor,
                                         borderRadius:
                                             BorderRadius.circular(15.0),
                                         boxShadow: [
-                                          BoxShadow(
+                                          const BoxShadow(
                                             color: Colors.black,
-                                            offset: const Offset(
+                                            offset: Offset(
                                               3.0,
                                               3.0,
                                             ), //Offset
                                             blurRadius: 10.0,
                                             spreadRadius: 2.0,
                                           ), //BoxShadow
-                                          BoxShadow(
+                                          const BoxShadow(
                                             color: Colors.white,
-                                            offset: const Offset(0.0, 0.0),
+                                            offset: Offset(0.0, 0.0),
                                             blurRadius: 0.0,
                                             spreadRadius: 0.0,
                                           ), //BoxShadow
@@ -416,7 +417,7 @@ class _QuranState extends State<Quran> {
           },
           tooltip: 'حفظ تلاواتي',
           // label: Text('حفظ صلاواتي'),
-          child: Icon(
+          child: const Icon(
             Icons.thumb_up,
             color: Colors.yellow,
           ),

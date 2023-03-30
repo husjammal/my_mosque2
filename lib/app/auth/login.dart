@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
         AwesomeDialog(
             context: context,
             title: "تنبيه",
-            body: Text(
+            body: const Text(
                 "البريد الالكتروني او كلمة المرور خطأ او الحساب غير موجود"))
           ..show();
       }
@@ -53,7 +53,7 @@ class _LoginState extends State<Login> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         body: isLoading == true
-            ? Scaffold(
+            ? const Scaffold(
                 backgroundColor: backgroundColor,
                 body: Center(
                     child: CircularProgressIndicator(
@@ -62,12 +62,12 @@ class _LoginState extends State<Login> {
                 )))
             : Container(
                 color: backgroundColor,
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: ListView(children: [
                   Form(
                     key: formstate,
                     child: Column(children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                       Image.asset(
@@ -75,7 +75,7 @@ class _LoginState extends State<Login> {
                         width: 200,
                         height: 200,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                       TextFormField(
@@ -87,7 +87,7 @@ class _LoginState extends State<Login> {
                             label: Text("الايميل"),
                             prefixIcon: Icon(LineAwesomeIcons.envelope_1)),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       TextFormField(
@@ -101,8 +101,8 @@ class _LoginState extends State<Login> {
                           prefixIcon: const Icon(Icons.fingerprint),
                           suffixIcon: IconButton(
                             icon: pinWasObscured
-                                ? Icon(Icons.visibility_off_outlined)
-                                : Icon(Icons.visibility_outlined),
+                                ? const Icon(Icons.visibility_off_outlined)
+                                : const Icon(Icons.visibility_outlined),
                             onPressed: () {
                               setState(() {
                                 pinWasObscured = !pinWasObscured;
@@ -111,25 +111,25 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       MaterialButton(
                           color: buttonColor,
                           textColor: Colors.white,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 70),
                           onPressed: () async {
                             await login();
                           },
-                          child: Text("تسجيل دخول",
+                          child: const Text("تسجيل دخول",
                               style: TextStyle(
                                   color: Colors.white, fontSize: 18.0))),
                       Container(
                         height: 10,
                       ),
                       InkWell(
-                        child: Text("انشاء حساب",
+                        child: const Text("انشاء حساب",
                             style: TextStyle(color: Colors.black)),
                         onTap: () {
                           Navigator.of(context).pushNamed("signup");

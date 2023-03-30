@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 
@@ -11,7 +9,6 @@ getRequest(String url) async {
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var responsebody = jsonDecode(response.body);
-      //var responsebody = jsonDecode(response.body).cast<Map<String, dynamic>>();
       return responsebody;
     } else {
       print("Error ${response.statusCode}");
@@ -23,18 +20,18 @@ getRequest(String url) async {
 
 postRequest(String url, Map data) async {
   try {
-    print(data);
-    print(json.encode(data));
-    print('Uri ${Uri.parse(url)}');
-    print('today is ${data['day_number']}');
+    // print(data);
+    // print(json.encode(data));
+    // print('Uri ${Uri.parse(url)}');
+    // print('today is ${data['day_number']}');
     var response = await http.post(Uri.parse(url), body: data);
     // print(response.body);
     // print('response statusCode ${response.statusCode}');
     if (response.statusCode == 200) {
       var responsebody = jsonDecode(response.body);
       //var responsebody = jsonDecode(response.body).cast<Map<String, dynamic>>();
-      print('response statusCode ${response.statusCode}');
-      print('responsebody $responsebody');
+      // print('response statusCode ${response.statusCode}');
+      // print('responsebody $responsebody');
 
       return responsebody;
     } else {
@@ -46,20 +43,20 @@ postRequest(String url, Map data) async {
 }
 
 postRequestWithFile(String url, Map data, File file) async {
-  print("postRequestWithFile");
-  print(Uri.parse(url));
-  print(data);
-  print("the file is : $file");
+  // print("postRequestWithFile");
+  // print(Uri.parse(url));
+  // print(data);
+  // print("the file is : $file");
   var request = http.MultipartRequest("POST", Uri.parse(url));
-  print('request $request');
+  // print('request $request');
   var stream = http.ByteStream(file.openRead());
-  print("stream $stream");
+  // print("stream $stream");
   var myFileName = basename(file.path);
-  print("myFileName $myFileName");
+  // print("myFileName $myFileName");
 
-  print("length began ...");
+  // print("length began ...");
   var length = await file.length();
-  print("length $length");
+  // print("length $length");
   var multiRequestFile =
       http.MultipartFile("file", stream, length, filename: basename(file.path));
   // var multiRequestFile =
@@ -68,7 +65,7 @@ postRequestWithFile(String url, Map data, File file) async {
   data.forEach((key, value) {
     request.fields[key] = value;
   });
-  print("data $data");
+  // print("data $data");
   var myrequest = await request.send();
   var response = await http.Response.fromStream(myrequest);
 

@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mymosque/app/updateprofilescreen.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
 import 'package:mymosque/main.dart';
-import 'package:mymosque/model/profilemenuwidget.dart';
 import 'package:mymosque/model/scoremodel.dart';
 import 'package:mymosque/model/usermodel.dart';
-
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -37,47 +33,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // userData = response['data'];
     isLoading = false;
     setState(() {});
-    print("userOneData $userData");
+    // print("userOneData $userData");
   }
 
   void getScore(String userID) async {
     isLoading = true;
     setState(() {});
-    print("getScore");
+    // print("getScore");
     var response = await postRequest(
         linkViewNotes, {"user_id": userID, "day_number": "ALL"});
-    print("getScore response:  $response");
+    // print("getScore response:  $response");
 
     var scorelist = response['data'] as List;
-    print("scorelist $scorelist");
+    // print("scorelist $scorelist");
     score =
         scorelist.map<ScoreModel>((json) => ScoreModel.fromJson(json)).toList();
     isLoading = false;
     setState(() {});
 
-    print("List Size: ${score.length}");
-    print("score");
-    print("score $score");
+    // print("List Size: ${score.length}");
+    // print("score");
+    // print("score $score");
   }
 
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print('profile initState');
+    // print('profile initState');
     dt = DateTime.now();
     _tooltipBehavior = TooltipBehavior(enable: true);
     getOneUser(sharedPref.getString("id").toString());
     getScore(sharedPref.getString("id").toString());
-    print("List Size: ${score.length}");
+    // print("List Size: ${score.length}");
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: isLoading == true
-          ? Scaffold(
+          ? const Scaffold(
               backgroundColor: backgroundColor,
               body: Center(
                   child: CircularProgressIndicator(
@@ -104,25 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: 100,
                             fit: BoxFit.fill,
                           ),
-                        )
-
-                            // Positioned(
-                            //   bottom: 0,
-                            //   right: 0,
-                            //   child: Container(
-                            //     width: 35,
-                            //     height: 35,
-                            //     decoration: BoxDecoration(
-                            //         borderRadius: BorderRadius.circular(100),
-                            //         color: backgroundColor),
-                            //     child: const Icon(
-                            //       LineAwesomeIcons.alternate_pencil,
-                            //       color: Colors.black,
-                            //       size: 20,
-                            //     ),
-                            //   ),
-                            // ),
-                            ),
+                        )),
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -137,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 200,
                       child: ElevatedButton(
                         onPressed: () {
-                          print("user: ${userDataList[0]}");
+                          // print("user: ${userDataList[0]}");
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
                                   UpdateProfileScreen(user: userDataList[0])));
@@ -157,12 +134,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     /// -- MENU
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0xfff3c8fb),
+                        color: const Color(0xfff3c8fb),
                         borderRadius: BorderRadius.circular(15.0),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black,
-                            offset: const Offset(
+                            offset: Offset(
                               3.0,
                               3.0,
                             ), //Offset
@@ -171,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ), //BoxShadow
                           BoxShadow(
                             color: Colors.white,
-                            offset: const Offset(0.0, 0.0),
+                            offset: Offset(0.0, 0.0),
                             blurRadius: 0.0,
                             spreadRadius: 0.0,
                           ), //BoxShadow
@@ -191,11 +168,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 // Bind data source
                                 dataSource: score,
                                 xValueMapper: (ScoreModel score, _) =>
-                                    score.day_number,
+                                    score.dayNumber,
                                 yValueMapper: (ScoreModel score, _) =>
                                     int.parse(score.score!)),
                           ]),
                     ),
+                    const SizedBox(height: 30),
+                    const Divider(),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),

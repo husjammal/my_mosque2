@@ -20,14 +20,58 @@ class CardUsers extends StatelessWidget {
           children: [
             Expanded(
                 flex: 1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100.0),
-                  child: Image.network(
-                    "$linkImageRoot/${usermodel!.usersImage}",
-                    width: 100,
-                    height: 120,
-                    fit: BoxFit.fill,
-                  ),
+                child: Row(
+                  children: [
+                    SizedBox(
+                        width: 40.0,
+                        child: rank_index! <= 2
+                            ? Stack(alignment: Alignment.center, children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                    'images/badge.png',
+                                    // width: 40,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                Container(
+                                  // width: 30,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    // color: Colors.yellow,
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  child: Text(
+                                    (rank_index! + 1).toString(),
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ])
+                            : Container(
+                                // width: 30,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  (rank_index! + 1).toString(),
+                                  style: TextStyle(
+                                      fontSize: 15.0, color: Colors.black),
+                                ),
+                              )),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100.0),
+                      child: Image.network(
+                        "$linkImageRoot/${usermodel!.usersImage}",
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ],
                 )),
             Expanded(
                 flex: 2,
@@ -41,18 +85,17 @@ class CardUsers extends StatelessWidget {
                       ),
                       Text("  "),
                       Text(
-                        rank_index! <= 2 ? " ترتيب " : "",
-                        style: TextStyle(fontSize: 20.0, color: Colors.yellow),
-                      ),
-                      Text(
-                        rank_index! <= 2 ? (rank_index! + 1).toString() : "",
+                        rank_index! <= 2 ? "الاوائل" : "",
                         style: TextStyle(fontSize: 20.0, color: Colors.yellow),
                       ),
                     ],
                   ),
                   subtitle: Text("المجموع الكلي ${usermodel!.userTotalScore}"),
                   trailing: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    alignment: Alignment.center,
+                    height: 40,
+                    width: 40,
+                    padding: EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       color: Colors.deepPurple,

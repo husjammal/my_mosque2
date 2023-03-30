@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/main.dart';
-
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant//linkapi.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:mymosque/constant/colorConfig.dart';
 
 // Creating a stateful widget to manage
 // the state of the app
 class Pray extends StatefulWidget {
+  const Pray({super.key});
+
   @override
   _PrayState createState() => _PrayState();
 }

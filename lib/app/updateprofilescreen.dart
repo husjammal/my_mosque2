@@ -150,13 +150,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         child: InkWell(
                           onTap: () {
                             showModalBottomSheet(
-                              elevation: 200.0,
+                              // elevation: 100.0,
                               context: context,
                               builder: (context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: Container(
                                   color: backgroundColor,
-                                  height: 130,
+                                  height: 200,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -169,7 +169,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                               fontSize: 22, color: Colors.grey),
                                         ),
                                       ),
-                                      InkWell(
+                                      ListTile(
+                                        leading: new Icon(Icons.photo),
+                                        title: new Text('من المعرض'),
                                         onTap: () async {
                                           XFile? xfile = await ImagePicker()
                                               .pickImage(
@@ -181,18 +183,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                           ischanged = true;
                                           setState(() {});
                                         },
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            width: double.infinity,
-                                            padding: EdgeInsets.all(10),
-                                            child: Text(
-                                              "من المعرض ",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  color: buttonColor),
-                                            )),
                                       ),
-                                      InkWell(
+                                      ListTile(
+                                        leading: new Icon(Icons.camera),
+                                        title: new Text('من الكميرا'),
                                         onTap: () async {
                                           XFile? xfile = await ImagePicker()
                                               .pickImage(
@@ -201,18 +195,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                           myfile = File(xfile!.path);
                                           print("xfile $xfile");
                                           print("myyyfile $myfile");
+                                          ischanged = true;
                                           setState(() {});
                                         },
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            width: double.infinity,
-                                            padding: EdgeInsets.all(10),
-                                            child: Text(
-                                              "من الكميرا ",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  color: buttonColor),
-                                            )),
                                       ),
                                     ],
                                   ),

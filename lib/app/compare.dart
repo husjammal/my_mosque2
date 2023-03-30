@@ -259,7 +259,7 @@ class _CompareScreenState extends State<CompareScreen> {
                                   // Bind data source
                                   dataSource: score1,
                                   xValueMapper: (ScoreModel score1, _) =>
-                                      score1.day_number,
+                                      score1.dayNumber,
                                   yValueMapper: (ScoreModel score1, _) =>
                                       int.parse(score1.score!),
                                   name: userData1[0].usersName.toString()),
@@ -267,7 +267,7 @@ class _CompareScreenState extends State<CompareScreen> {
                                   // Bind data source
                                   dataSource: score2,
                                   xValueMapper: (ScoreModel score2, _) =>
-                                      score2.day_number,
+                                      score2.dayNumber,
                                   yValueMapper: (ScoreModel score2, _) =>
                                       int.parse(score2.score!),
                                   name: userData2[0].usersName.toString()),

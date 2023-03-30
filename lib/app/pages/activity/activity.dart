@@ -64,7 +64,8 @@ class _ActivityState extends State<Activity> {
       Navigator.of(context)
           .pushNamedAndRemoveUntil("initialScreen", (route) => false);
     } else {
-      AwesomeDialog(context: context, title: "تنبيه", body: Text("يوجد خطأ"))
+      AwesomeDialog(
+          context: context, title: "تنبيه", body: const Text("يوجد خطأ"))
         ..show();
     }
   }
@@ -87,7 +88,6 @@ class _ActivityState extends State<Activity> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print('Activity initState');
     print(sharedPref.getString("id"));
@@ -103,11 +103,11 @@ class _ActivityState extends State<Activity> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('بعض من نشاطاتي'),
+          title: const Text('بعض من نشاطاتي'),
           centerTitle: true,
           backgroundColor: buttonColor,
           leading: IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             tooltip: 'قائمة',
             onPressed: () {},
           ),
@@ -117,7 +117,7 @@ class _ActivityState extends State<Activity> {
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
               },
-              icon: Icon(Icons.exit_to_app),
+              icon: const Icon(Icons.exit_to_app),
               tooltip: 'رجوع',
             )
           ], //IconButton
@@ -142,13 +142,13 @@ class _ActivityState extends State<Activity> {
                       fit: BoxFit.fill,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height - 120,
                     width: double.infinity,
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.0),
                       color: buttonColor,
@@ -166,7 +166,7 @@ class _ActivityState extends State<Activity> {
                           child: ListView(
                             children: <Widget>[
                               CheckboxListTile(
-                                title: Text(
+                                title: const Text(
                                   " رضى الوالدين جيد",
                                   style: TextStyle(
                                       color: Colors.white,
@@ -174,7 +174,7 @@ class _ActivityState extends State<Activity> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 value: _parent,
-                                secondary: Icon(Icons.animation),
+                                secondary: const Icon(Icons.animation),
                                 onChanged: (value) {
                                   setState(() {
                                     _parent = value;
@@ -190,7 +190,7 @@ class _ActivityState extends State<Activity> {
                                 },
                               ),
                               CheckboxListTile(
-                                title: Text(
+                                title: const Text(
                                   "صيام اليوم",
                                   style: TextStyle(
                                       color: Colors.white,
@@ -198,7 +198,7 @@ class _ActivityState extends State<Activity> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 value: _fasting,
-                                secondary: Icon(Icons.animation),
+                                secondary: const Icon(Icons.animation),
                                 activeColor: Colors.green,
                                 checkColor: Colors.white,
                                 controlAffinity:
@@ -218,7 +218,7 @@ class _ActivityState extends State<Activity> {
                                 },
                               ),
                               CheckboxListTile(
-                                title: Text(
+                                title: const Text(
                                   "صدقة",
                                   style: TextStyle(
                                       color: Colors.white,
@@ -226,7 +226,7 @@ class _ActivityState extends State<Activity> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 value: _charity,
-                                secondary: Icon(Icons.animation),
+                                secondary: const Icon(Icons.animation),
                                 onChanged: (value) {
                                   setState(() {
                                     _charity = value;
@@ -242,7 +242,7 @@ class _ActivityState extends State<Activity> {
                                 },
                               ),
                               CheckboxListTile(
-                                title: Text(
+                                title: const Text(
                                   "مئة تسبيح",
                                   style: TextStyle(
                                       color: Colors.white,
@@ -252,7 +252,7 @@ class _ActivityState extends State<Activity> {
                                 value: _praise,
                                 controlAffinity:
                                     ListTileControlAffinity.leading,
-                                secondary: Icon(Icons.animation),
+                                secondary: const Icon(Icons.animation),
                                 activeColor: Colors.green,
                                 checkColor: Colors.white,
                                 onChanged: (value) {
@@ -270,7 +270,7 @@ class _ActivityState extends State<Activity> {
                                 },
                               ),
                               CheckboxListTile(
-                                title: Text(
+                                title: const Text(
                                   "مئة استغفار",
                                   style: TextStyle(
                                       color: Colors.white,
@@ -280,7 +280,7 @@ class _ActivityState extends State<Activity> {
                                 value: _askForgiveness,
                                 controlAffinity:
                                     ListTileControlAffinity.platform,
-                                secondary: Icon(Icons.animation),
+                                secondary: const Icon(Icons.animation),
                                 onChanged: (value) {
                                   setState(() {
                                     _askForgiveness = value;
@@ -296,7 +296,7 @@ class _ActivityState extends State<Activity> {
                                 },
                               ),
                               CheckboxListTile(
-                                title: Text(
+                                title: const Text(
                                   "مئة صلاة على النبي",
                                   style: TextStyle(
                                       color: Colors.white,
@@ -304,7 +304,7 @@ class _ActivityState extends State<Activity> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 value: _prayerProphet,
-                                secondary: Icon(Icons.animation),
+                                secondary: const Icon(Icons.animation),
                                 controlAffinity:
                                     ListTileControlAffinity.leading,
                                 activeColor: Colors.green,
@@ -324,7 +324,7 @@ class _ActivityState extends State<Activity> {
                                 },
                               ),
                               CheckboxListTile(
-                                title: Text(
+                                title: const Text(
                                   "عبادات أخرى",
                                   style: TextStyle(
                                       color: Colors.white,
@@ -332,10 +332,11 @@ class _ActivityState extends State<Activity> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 value: _isOther,
-                                secondary: Icon(Icons.offline_bolt),
+                                secondary: const Icon(Icons.offline_bolt),
                                 activeColor: Colors.red,
                                 checkColor: Colors.yellow,
-                                subtitle: Text("نشطات غير المذكورة في الاعلى",
+                                subtitle: const Text(
+                                    "نشطات غير المذكورة في الاعلى",
                                     style: TextStyle(color: Colors.grey)),
                                 onChanged: (value) {
                                   setState(() {
@@ -354,8 +355,8 @@ class _ActivityState extends State<Activity> {
                               Container(
                                 child: Row(
                                   children: [
-                                    Text("مجموع نقاط نشاطاتي"),
-                                    Text("  "),
+                                    const Text("مجموع نقاط نشاطاتي"),
+                                    const Text("  "),
                                     Text("$activityScore")
                                   ],
                                 ),
@@ -365,15 +366,17 @@ class _ActivityState extends State<Activity> {
                         ),
                         Center(
                             child: _list.isEmpty
-                                ? Text("")
+                                ? const Text("")
                                 : RichText(
-                                    text: TextSpan(text: "نشاطاتي هي :\n",
+                                    text: TextSpan(
+                                        text: "نشاطاتي هي :\n",
                                         // style:
                                         //     DefaultTextStyle.of(context).style,
                                         children: <TextSpan>[
                                         TextSpan(
                                             text: '${_list.toString()} ',
-                                            style: TextStyle(fontSize: 16)),
+                                            style:
+                                                const TextStyle(fontSize: 16)),
                                       ]))),
                       ],
                     ),
@@ -394,7 +397,7 @@ class _ActivityState extends State<Activity> {
           },
           tooltip: 'حفظ نشاطاتي',
           // label: Text('حفظ صلاواتي'),
-          child: Icon(
+          child: const Icon(
             Icons.thumb_up,
             color: Colors.yellow,
           ),

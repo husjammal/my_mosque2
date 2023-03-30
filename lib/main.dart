@@ -12,10 +12,12 @@ late SharedPreferences sharedPref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPref = await SharedPreferences.getInstance();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
       // Application theme data, you can set the colors for the application as
       // you want
       theme: ThemeData(
-        primaryColor: Color(0xff9a55f4),
+        primaryColor: const Color(0xff9a55f4),
         textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.purple)),
         colorScheme:
             ColorScheme.fromSwatch().copyWith(secondary: Colors.yellowAccent),
@@ -35,15 +37,12 @@ class MyApp extends StatelessWidget {
       // A widget which will be started on application startup
       initialRoute: sharedPref.getString("id") == null ? "login" : "splash",
       routes: {
-        'login': (context) => Login(),
-        'signup': (context) => SignUp(),
-        'initialScreen': (context) => InitialScreen(),
-        'success': (context) => Success(),
-        'profilescreen': (context) => ProfileScreen(),
+        'login': (context) => const Login(),
+        'signup': (context) => const SignUp(),
+        'initialScreen': (context) => const InitialScreen(),
+        'success': (context) => const Success(),
+        'profilescreen': (context) => const ProfileScreen(),
         'splash': (context) => SplashPage(),
-
-        // 'addnotes': (context) => AddNotes(),
-        // 'editnotes': (context) => EditNotes(),
       },
     );
   }
