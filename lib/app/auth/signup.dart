@@ -21,14 +21,27 @@ class _SignUpState extends State<SignUp> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  int weeksBetween(DateTime from, DateTime to) {
+    from = DateTime.utc(from.year, from.month, from.day);
+    to = DateTime.utc(to.year, to.month, to.day);
+    return (to.difference(from).inDays / 7).ceil();
+  }
+
+  String weekNumber = "0";
+  final now = DateTime.now();
+
   signUp() async {
+    final firstJan = DateTime(now.year, 1, 1);
+    weekNumber = (weeksBetween(firstJan, now)).toString();
+
     if (formstate.currentState!.validate()) {
       isLoading = true;
       setState(() {});
       var response = await postRequest(linkSignUp, {
         "username": username.text,
         "email": email.text,
-        "password": password.text
+        "password": password.text,
+        "week": weekNumber
       });
       isLoading = false;
       print('isLoading $isLoading');
@@ -56,7 +69,6 @@ class _SignUpState extends State<SignUp> {
   ini_val(String user_id) async {
     isLoading = true;
     setState(() {});
-
     var response = await postRequest(linkInitual, {
       "user_id": user_id,
       "score": "0",
@@ -71,7 +83,9 @@ class _SignUpState extends State<SignUp> {
       "duaaScore": "0",
       "prayScore": "0",
       "quranScore": "0",
+      "activityScore": "0"
     });
+    print("init result ${response['status']}");
     isLoading = false;
     setState(() {});
     if (response['status'] == "success") {

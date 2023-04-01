@@ -23,28 +23,23 @@ class CardUsers extends StatelessWidget {
                 child: Row(
                   children: [
                     SizedBox(
-                        width: 40.0,
+                        width: 50.0,
                         child: rank_index! <= 2
                             ? Stack(alignment: Alignment.center, children: [
-                                Container(
-                                  alignment: Alignment.center,
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(100.0),
                                   child: Image.asset(
                                     'images/badge.png',
-                                    // width: 40,
-                                    fit: BoxFit.fill,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                                Container(
-                                  // width: 30,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    // color: Colors.yellow,
-                                    borderRadius: BorderRadius.circular(15.0),
-                                  ),
+                                Positioned(
+                                  top: 5,
+                                  right: 20,
                                   child: Text(
                                     (rank_index! + 1).toString(),
                                     style: TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: 20.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -59,9 +54,9 @@ class CardUsers extends StatelessWidget {
                                       fontSize: 15.0, color: Colors.black),
                                 ),
                               )),
-                    SizedBox(
-                      width: 5,
-                    ),
+                    // SizedBox(
+                    //   width: 5,
+                    // ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(100.0),
                       child: Image.network(

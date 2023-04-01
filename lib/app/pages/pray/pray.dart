@@ -386,6 +386,9 @@ class _PrayState extends State<Pray> {
                             },
                           ), //CheckboxListTile
                         ),
+                        SizedBox(
+                          height: 30,
+                        ),
                       ],
                     ), //Container
                   ), //Padding

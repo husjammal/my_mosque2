@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mymosque/app/about.dart';
 import 'package:mymosque/app/auth/login.dart';
 import 'package:mymosque/app/auth/signup.dart';
 import 'package:mymosque/app/auth/success.dart';
+import 'package:mymosque/app/boarding/boarding.dart';
 import 'package:mymosque/app/inistialScreen.dart';
 import 'package:mymosque/app/profilescreen.dart';
 import 'package:mymosque/app/splash.dart';
@@ -43,6 +45,8 @@ class MyApp extends StatelessWidget {
         'success': (context) => const Success(),
         'profilescreen': (context) => const ProfileScreen(),
         'splash': (context) => SplashPage(),
+        'boarding': (context) => Boarding(),
+        'about': (context) => AboutUsPage(),
       },
     );
   }

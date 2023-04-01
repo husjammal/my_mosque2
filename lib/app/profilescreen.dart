@@ -170,7 +170,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 xValueMapper: (ScoreModel score, _) =>
                                     score.dayNumber,
                                 yValueMapper: (ScoreModel score, _) =>
-                                    int.parse(score.score!)),
+                                    int.parse(score.score!),
+                                dataLabelSettings:
+                                    DataLabelSettings(isVisible: true)),
                           ]),
                     ),
                     const SizedBox(height: 30),

@@ -2,7 +2,10 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:mymosque/components/checkinternet.dart';
+import 'package:mymosque/components/statusrequest.dart';
 import 'package:path/path.dart';
+import 'package:dartz/dartz.dart';
 
 getRequest(String url) async {
   try {
@@ -36,9 +39,11 @@ postRequest(String url, Map data) async {
       return responsebody;
     } else {
       print("Error ${response.statusCode}");
+      return response.statusCode;
     }
   } catch (e) {
     print("Error Catch postRequest $e");
+    return "Error";
   }
 }
 
@@ -73,5 +78,25 @@ postRequestWithFile(String url, Map data, File file) async {
     return jsonDecode(response.body);
   } else {
     print('Error ${myrequest.statusCode}');
+  }
+}
+
+Future<Either<StatusRequest, Map>> postData(String linkurl, Map data) async {
+  // if (await checkInternet()) {
+  if (true) {
+    print("check internet is true");
+    var response = await http.post(Uri.parse(linkurl), body: data);
+    print(response.statusCode);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Map responsebody = jsonDecode(response.body);
+      print(responsebody);
+      return Right(responsebody);
+    } else {
+      return const Left(StatusRequest.serverfailure);
+    }
+  } else {
+    print("check internet is false");
+    return const Left(StatusRequest.offlinefailure);
   }
 }
