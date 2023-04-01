@@ -29,13 +29,13 @@ class MyApp extends StatelessWidget {
       title: 'My Mosque',
       // Application theme data, you can set the colors for the application as
       // you want
-      theme: ThemeData(
-        primaryColor: const Color(0xff9a55f4),
-        textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.purple)),
-        colorScheme:
-            ColorScheme.fromSwatch().copyWith(secondary: Colors.yellowAccent),
-        errorColor: Colors.yellow,
-      ),
+      // theme: ThemeData(
+      //   primaryColor: const Color(0xff9a55f4),
+      //   textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.purple)),
+      //   colorScheme:
+      //       ColorScheme.fromSwatch().copyWith(secondary: Colors.yellowAccent),
+      //   errorColor: Colors.yellow,
+      // ),
       // A widget which will be started on application startup
       initialRoute: sharedPref.getString("id") == null ? "login" : "splash",
       routes: {
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         'success': (context) => const Success(),
         'profilescreen': (context) => const ProfileScreen(),
         'splash': (context) => SplashPage(),
-        'boarding': (context) => Boarding(),
+        'boarding': (context) => const Boarding(),
         'about': (context) => AboutUsPage(),
       },
     );

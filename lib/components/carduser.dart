@@ -99,7 +99,7 @@ class CardUsers extends StatelessWidget {
                       children: [
                         Text(
                           "مجموع",
-                          style: TextStyle(color: Colors.white, fontSize: 10.0),
+                          style: TextStyle(color: Colors.white, fontSize: 8.0),
                         ),
                         // Text(""),
                         Text("${usermodel!.userFinalScore}",

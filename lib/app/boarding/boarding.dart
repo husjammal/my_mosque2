@@ -50,9 +50,9 @@ class _BoardingState extends State<Boarding> {
           onDone: () {
             if (kDebugMode) {
               print("Done clicked");
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil("initialScreen", (route) => false);
             }
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil("initialScreen", (route) => false);
           },
           //ClampingScrollPhysics prevent the scroll offset from exceeding the bounds of the content.
           scrollPhysics: const ClampingScrollPhysics(),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/pages/activity/activity.dart';
-import 'package:mymosque/app/pages/duaa/duaa.dart';
 import 'package:mymosque/app/pages/duaa/initialduaa.dart';
 import 'package:mymosque/app/pages/pray/initialpray.dart';
-import 'package:mymosque/app/pages/pray/pray.dart';
 import 'package:mymosque/app/pages/quran/quran.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -175,29 +173,50 @@ class _HomeState extends State<Home> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.purple[300],
+          actions: [],
+          toolbarHeight: 40,
+          title: Container(
+            // padding: EdgeInsets.all(8.0),
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(0.0),
+            ),
+            child: isLoading
+                ? Text("تحميل ...")
+                : Text(
+                    'مجموعك هو $_TodayScore الموافق ل ${dt.day}/${dt.month}/${dt.year} و مجموع الاسبوع هو $_FinalScore',
+                    style: TextStyle(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+          ),
+        ),
         backgroundColor: backgroundColor,
         body: SingleChildScrollView(
           child: Container(
             alignment: Alignment.center,
             child: Column(
               children: [
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0.0),
-                    color: Colors.purple[300],
-                  ),
-                  child: isLoading
-                      ? Text("تحميل ...")
-                      : Text(
-                          'مجموعك لليوم هو $_TodayScore الموافق ل ${dt.day}/${dt.month}/${dt.year} و مجموع الاسبوع هو $_FinalScore',
-                          style: TextStyle(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                ),
+                // Container(
+                //   padding: EdgeInsets.all(8.0),
+                //   width: MediaQuery.of(context).size.width,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(0.0),
+                //     color: Colors.purple[300],
+                //   ),
+                //   child: isLoading
+                //       ? Text("تحميل ...")
+                //       : Text(
+                //           'مجموعك لليوم هو $_TodayScore الموافق ل ${dt.day}/${dt.month}/${dt.year} و مجموع الاسبوع هو $_FinalScore',
+                //           style: TextStyle(
+                //               fontSize: 12.0,
+                //               fontWeight: FontWeight.bold,
+                //               color: Colors.black),
+                //         ),
+                // ),
                 Container(
                   child: Image.asset(
                     'images/logo.png',

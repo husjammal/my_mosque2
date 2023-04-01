@@ -23,7 +23,7 @@ class AboutUsPage extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: buttonColor,
               centerTitle: true,
-              title: Text('نحن'),
+              title: Text('من نحن'),
               actions: [
                 IconButton(
                   onPressed: () {
@@ -47,15 +47,36 @@ class AboutUsPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        SizedBox(height: 15),
                         Text(
-                          'المبرمج حسام الدين الجمال',
+                          'قام بالبرمجة حسام الدين الجمال',
                           style: Theme.of(context).textTheme.headline5,
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 15),
                         Container(
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                            color: Color(0xffe7a0f4),
+                            borderRadius: BorderRadius.circular(15.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                offset: const Offset(
+                                  3.0,
+                                  3.0,
+                                ), //Offset
+                                blurRadius: 10.0,
+                                spreadRadius: 2.0,
+                              ), //BoxShadow
+                              BoxShadow(
+                                color: Colors.white,
+                                offset: const Offset(0.0, 0.0),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
+                              ), //BoxShadow
+                            ],
+                          ),
                           child: Image.asset(
-                            'images/HusApps_3.png',
+                            'images/HusApps_trans.png',
                             width: 150,
                             height: 150,
                             fit: BoxFit.fill,
@@ -67,12 +88,18 @@ class AboutUsPage extends StatelessWidget {
 
                   //brief summary
                   Container(
-                      width: screenWidth,
-                      padding: EdgeInsets.all(8),
-                      child: Text(
-                        'تقدم شركتنا مجموعة واسعة من المنتجات والخدمات عالية الجودة لتلبية احتياجات عملائنا.',
-                        style: Theme.of(context).textTheme.bodyText2,
-                      )),
+                    width: screenWidth,
+                    padding: EdgeInsets.all(8),
+                    child:
+                        //  Text(
+                        //   'تقدم شركتنا مجموعة واسعة من المنتجات والخدمات عالية الجودة لتلبية احتياجات عملائنا.',
+                        //   style: Theme.of(context).textTheme.bodyText2,
+                        // ),
+                        Text(
+                      'صدقة جارية على روح النبي صلى الله عليه و سلم و من جنابه الى روح امي و ابي و جميع اموات المسلمين. بسر سورة الفاتحة !',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
 
                   // //statement and values
                   // Container(
@@ -255,7 +282,7 @@ class AboutUsPage extends StatelessWidget {
                           ),
                           ListTile(
                             leading: Icon(Icons.phone),
-                            title: Text('+963 944 393 064'),
+                            title: Text('+963-944394064'),
                           ),
                           ListTile(
                             leading: Icon(Icons.email),

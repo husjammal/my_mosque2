@@ -6,6 +6,7 @@ import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
 import 'package:mymosque/main.dart';
 import 'package:mymosque/model/usermodel.dart';
+import 'package:lottie/lottie.dart';
 
 import 'dart:convert';
 
@@ -57,6 +58,32 @@ class _RankState extends State<Rank> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 100.0,
+          backgroundColor: backgroundColor,
+          centerTitle: true,
+          actions: const [],
+          title: Column(
+            children: [
+              Image.asset(
+                'images/compare_bannar.png',
+                height: 50.0,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                "باقي لنهاية تحدي الاسبوع ${7 - int.parse(dt.weekday.toString())} يوم!",
+                style: TextStyle(
+                    color: Colors.yellow,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
         backgroundColor: backgroundColor,
         body: Container(
           padding: EdgeInsets.all(10),
@@ -100,14 +127,35 @@ class _RankState extends State<Rank> {
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
-                        child: Text("جاري التحميل ..."),
+                        child: Column(
+                          children: [
+                            Text("جاري التحميل ..."),
+                            Lottie.asset(
+                              'lottie/93603-loading-lottie-animation.json',
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.fill,
+                            ),
+                          ],
+                        ),
                       );
                     }
-                    return Center(
-                      child: Text("خطأ في التحميل ..."),
+                    return Container(
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text("خطأ في التحميل ..."),
+                            Lottie.asset(
+                              'lottie/52108-error.json',
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.fill,
+                            ),
+                          ],
+                        ),
+                      ),
                     );
                   })
-              //CardUsers(ontap: () {}, title: "title", content: "content")
             ],
           ),
         ),

@@ -114,26 +114,31 @@ class _InitialScreenState extends State<InitialScreen> {
               children: [
                 DrawerHeader(
                   decoration: BoxDecoration(color: const Color(0xff764abc)),
-                  child: Column(
+                  child: Row(
                     children: <Widget>[
                       CircleAvatar(
                         maxRadius: 40.0,
+                        backgroundColor: backgroundColor,
                         backgroundImage: AssetImage(
                           'images/ramadan.png',
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        sharedPref.getString("username").toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "hussam@gmail.com",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      SizedBox(width: 20),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            sharedPref.getString("username").toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20.0),
+                          ),
+                          Text(
+                            sharedPref.getString("email").toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -174,7 +179,7 @@ class _InitialScreenState extends State<InitialScreen> {
                 ),
                 ListTile(
                   leading: Icon(Icons.help),
-                  title: const Text('مساعدة'),
+                  title: const Text('حول التطبيق'),
                   onTap: () {
                     // Navigator.pop(context);
                     Navigator.of(context)
@@ -190,7 +195,7 @@ class _InitialScreenState extends State<InitialScreen> {
                 ),
                 ListTile(
                   leading: Icon(Icons.info),
-                  title: const Text('حول التطبيق'),
+                  title: const Text('من نحن'),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.of(context)
