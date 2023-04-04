@@ -6,9 +6,13 @@ const String linkSignUp = '$linkServerName/auth/signup.php';
 const String linkLogin = '$linkServerName/auth/login.php';
 // initual values for all actions
 const String linkInitual = '$linkServerName/actions/ini_val.php';
+const String linkIniWeekly = '$linkServerName/actions/int_weekly.php';
+
 const String linkReset = '$linkServerName/actions/reset.php';
 const String linkWeek = '$linkServerName/actions/week.php';
 const String linkVersion = '$linkServerName/actions/version.php';
+const String linkWeekly = '$linkServerName/actions/weekly.php';
+const String linkIsWeekChange = '$linkServerName/actions/is_week.php';
 
 // crud links
 //const String linkAddNotes = '$linkServerName/crud/add.php';

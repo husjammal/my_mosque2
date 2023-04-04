@@ -21,17 +21,17 @@ class Duaa extends StatefulWidget {
 class _DuaaState extends State<Duaa> {
 ////////////
   List imgList = [
-    'images/Duaa-1.png',
-    'images/Duaa-2.png',
-    'images/Duaa-3.png',
-    'images/Duaa-4.png',
-    'images/Duaa-5.png',
-    'images/Duaa-6.png',
-    'images/Duaa-7.png',
-    'images/Duaa-8.png',
-    'images/Duaa-9.png',
-    'images/Duaa-10.png',
-    'images/Duaa-11.png',
+    'assets/images/Duaa-1.png',
+    'assets/images/Duaa-2.png',
+    'assets/images/Duaa-3.png',
+    'assets/images/Duaa-4.png',
+    'assets/images/Duaa-5.png',
+    'assets/images/Duaa-6.png',
+    'assets/images/Duaa-7.png',
+    'assets/images/Duaa-8.png',
+    'assets/images/Duaa-9.png',
+    'assets/images/Duaa-10.png',
+    'assets/images/Duaa-11.png',
   ];
   List duaaList = [
     'أشْهَدُ أنْ لا إله إِلاَّ اللَّهُ وَحْدَهُ لا شَرِيك لَهُ ، وأشْهَدُ أنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ ، اللَّهُمَّ اجْعَلْنِي مِنَ التَوَّابِينَ ، واجْعَلْني مِنَ المُتَطَهِّرِينَ ، سُبْحانَكَ اللَّهُمَّ وبِحَمْدِكَ ، أشْهَدُ أنْ لا إلهَ إِلاَّ أنْتَ ، أسْتَغْفِرُكَ وأتُوبُ إِلَيْكَ',
@@ -138,7 +138,7 @@ class _DuaaState extends State<Duaa> {
                             color: buttonColor,
                           ),
                           child: Image.asset(
-                            'images/Duaa_logo1.png',
+                            'assets/images/Duaa_logo1.png',
                             width: double.infinity,
                             height: 200,
                             fit: BoxFit.cover,
@@ -165,14 +165,14 @@ class _DuaaState extends State<Duaa> {
                                     image: AssetImage(
                                       imgList[index].toString(),
                                     ),
-                                    fit: BoxFit.fill,
+                                    // fit: BoxFit.fill,
                                   ),
                                 ),
                               ),
                             );
                           },
                           options: CarouselOptions(
-                            height: 200.0,
+                            height: 100.0,
                             enlargeCenterPage: true,
                             autoPlay: true,
                             aspectRatio: 16 / 9,

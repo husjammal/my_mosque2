@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mymosque/app/pages/quran/quranlearning.dart';
+import 'package:mymosque/app/pages/quran/quranlistening.dart';
+import 'package:mymosque/app/pages/quran/quranreading.dart';
 import 'package:mymosque/components/customtextform.dart';
 import 'package:mymosque/components/valid.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -142,7 +145,7 @@ class _QuranState extends State<Quran> {
                       color: buttonColor,
                     ),
                     child: Image.asset(
-                      'images/BasmAllah.png',
+                      'assets/images/BasmAllah.png',
                       width: double.infinity,
                       height: 50,
                       fit: BoxFit.cover,
@@ -159,7 +162,7 @@ class _QuranState extends State<Quran> {
                       borderRadius: BorderRadius.circular(16.0),
                       color: buttonColor,
                       image: const DecorationImage(
-                        image: AssetImage('images/Quran_layout.png'),
+                        image: AssetImage('assets/images/Quran_layout.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -234,15 +237,17 @@ class _QuranState extends State<Quran> {
                                         ],
                                       ),
                                       child: Image.asset(
-                                        'images/praying.png',
+                                        'assets/images/praying.png',
                                         width: 30,
                                         height: 30,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                     onTap: (() {
-                                      // Navigator.of(context).push(
-                                      //     MaterialPageRoute(builder: (context) => Pray()));
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  QuranReading()));
                                     }),
                                   ),
                                 ],
@@ -308,15 +313,17 @@ class _QuranState extends State<Quran> {
                                         ],
                                       ),
                                       child: Image.asset(
-                                        'images/praying.png',
+                                        'assets/images/praying.png',
                                         width: 30,
                                         height: 30,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                     onTap: (() {
-                                      // Navigator.of(context).push(
-                                      //     MaterialPageRoute(builder: (context) => Pray()));
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  QuranLearning()));
                                     }),
                                   ),
                                 ],
@@ -382,15 +389,17 @@ class _QuranState extends State<Quran> {
                                         ],
                                       ),
                                       child: Image.asset(
-                                        'images/praying.png',
+                                        'assets/images/praying.png',
                                         width: 30,
                                         height: 30,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                     onTap: (() {
-                                      // Navigator.of(context).push(
-                                      //     MaterialPageRoute(builder: (context) => Pray()));
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  QuranListening()));
                                     }),
                                   ),
                                 ],

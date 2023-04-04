@@ -29,7 +29,7 @@ class CardUsers extends StatelessWidget {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(100.0),
                                   child: Image.asset(
-                                    'images/badge.png',
+                                    'assets/images/badge.png',
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -85,12 +85,15 @@ class CardUsers extends StatelessWidget {
                       ),
                     ],
                   ),
-                  subtitle: Text("المجموع الكلي ${usermodel!.userTotalScore}"),
+                  subtitle: Text(
+                    "المجموع الكلي ${usermodel!.userTotalScore}",
+                    style: TextStyle(fontSize: 12.0),
+                  ),
                   trailing: Container(
                     alignment: Alignment.center,
                     height: 40,
                     width: 40,
-                    padding: EdgeInsets.all(5.0),
+                    padding: EdgeInsets.all(2.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       color: Colors.deepPurple,
@@ -103,7 +106,10 @@ class CardUsers extends StatelessWidget {
                         ),
                         // Text(""),
                         Text("${usermodel!.userFinalScore}",
-                            style: TextStyle(color: Colors.white)),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold)),
 
                         // Text((rank_index! + 1).toString(),
                         //     style: TextStyle(color: Colors.white)),

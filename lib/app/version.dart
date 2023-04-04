@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymosque/app/inistialScreen.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -53,10 +54,14 @@ class _VersionState extends State<Version> {
           ? Scaffold(
               backgroundColor: backgroundColor,
               body: Center(
-                  child: CircularProgressIndicator(
-                backgroundColor: backgroundColor,
-                color: buttonColor,
-              )))
+                child: Lottie.asset(
+                  'assets/lottie/60089-eid-mubarak.json',
+                  width: 200,
+                  height: 200,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            )
           : status == "success"
               ? double.parse(versionDataList[0]["version"]) >
                       double.parse(software_version!)
@@ -66,14 +71,15 @@ class _VersionState extends State<Version> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.update_outlined,
-                              size: 70,
-                              color: Colors.redAccent,
+                            Lottie.asset(
+                              'assets/lottie/128834-info.json',
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.fill,
                             ),
                             Container(
                               child: Image.asset(
-                                'images/logo.png',
+                                'assets/images/logo.png',
                                 width: 300,
                                 height: 200,
                                 fit: BoxFit.cover,

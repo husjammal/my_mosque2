@@ -71,7 +71,7 @@ class _LoginState extends State<Login> {
                         height: 50,
                       ),
                       Image.asset(
-                        'images/Login.png',
+                        'assets/images/Login.png',
                         width: 200,
                         height: 200,
                       ),

@@ -76,7 +76,7 @@ class AboutUsPage extends StatelessWidget {
                             ],
                           ),
                           child: Image.asset(
-                            'images/HusApps_trans.png',
+                            'assets/images/HusApps_trans.png',
                             width: 150,
                             height: 150,
                             fit: BoxFit.fill,

@@ -134,7 +134,7 @@ class _PrayState extends State<Pray> {
                             color: buttonColor,
                           ),
                           child: Image.asset(
-                            'images/logo2.png',
+                            'assets/images/logo2.png',
                             width: double.infinity,
                             height: 150,
                             fit: BoxFit.cover,
@@ -172,8 +172,8 @@ class _PrayState extends State<Pray> {
                             subtitle: const Text(
                                 ' وقت صلاة الصبح هو طلوع الفجر الصادق وآخره هو طلوع الشمس'),
                             secondary: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("images/subuh.png"), //NetworkImage
+                              backgroundImage: AssetImage(
+                                  "assets/images/subuh.png"), //NetworkImage
                               radius: 20,
                             ),
                             autofocus: false,
@@ -222,8 +222,8 @@ class _PrayState extends State<Pray> {
                             subtitle: const Text(
                                 'يدخل بزوال الشمس عن وسط السماءو ينتهي إذاأصبح ظِلّ الشيءِ مثلُه'),
                             secondary: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("images/zhur.png"), //NetworkImage
+                              backgroundImage: AssetImage(
+                                  "assets/images/zhur.png"), //NetworkImage
                               radius: 20,
                             ),
                             autofocus: false,
@@ -271,8 +271,8 @@ class _PrayState extends State<Pray> {
                             subtitle: const Text(
                                 'الوقت يدخل عند زيادة ظِلُّ الشيءِ عن مثله وينتهي عند غروب الشمس'),
                             secondary: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("images/asr.png"), //NetworkImage
+                              backgroundImage: AssetImage(
+                                  "assets/images/asr.png"), //NetworkImage
                               radius: 20,
                             ),
                             autofocus: false,
@@ -321,7 +321,7 @@ class _PrayState extends State<Pray> {
                                 'الوقت يبدأ من غروب الشمس واخره غياب الشفق الأحمر'),
                             secondary: CircleAvatar(
                               backgroundImage: AssetImage(
-                                  "images/magrib.png"), //NetworkImage
+                                  "assets/images/magrib.png"), //NetworkImage
                               radius: 20,
                             ),
                             autofocus: false,
@@ -369,8 +369,8 @@ class _PrayState extends State<Pray> {
                             subtitle: const Text(
                                 'الوقت يدخل من مغيب الشفق و ينتهي عند طلوع الفجر'),
                             secondary: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("images/isyah.png"), //NetworkImage
+                              backgroundImage: AssetImage(
+                                  "assets/images/isyah.png"), //NetworkImage
                               radius: 20,
                             ),
                             autofocus: false,

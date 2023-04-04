@@ -7,7 +7,6 @@ import 'package:mymosque/constant/linkapi.dart';
 import 'package:mymosque/main.dart';
 import 'package:mymosque/model/usermodel.dart';
 import 'package:lottie/lottie.dart';
-
 import 'dart:convert';
 
 class Rank extends StatefulWidget {
@@ -24,22 +23,6 @@ class _RankState extends State<Rank> {
     return response;
   }
 
-  bool isLoading = false;
-
-  save_TotalScore() async {
-    // calculate the total score
-    // save the database
-    isLoading = true;
-    setState(() {});
-    var response = await postRequest(linkScoreUsers, {
-      "user_id": sharedPref.getString("id"),
-      "finalScore": sharedPref.getString('finalScore'),
-      "totalScore": sharedPref.getString('totalScore'),
-    });
-    isLoading = false;
-    setState(() {});
-  }
-
   var dt = DateTime.now();
   @override
   void initState() {
@@ -47,9 +30,8 @@ class _RankState extends State<Rank> {
     super.initState();
     print('rank initState');
 
-    var dt = DateTime.now();
+    dt = DateTime.now();
 
-    save_TotalScore();
     setState(() {});
   }
 
@@ -66,7 +48,7 @@ class _RankState extends State<Rank> {
           title: Column(
             children: [
               Image.asset(
-                'images/compare_bannar.png',
+                'assets/images/compare_bannar.png',
                 height: 50.0,
                 width: double.infinity,
                 fit: BoxFit.fill,
@@ -75,7 +57,7 @@ class _RankState extends State<Rank> {
                 height: 5,
               ),
               Text(
-                "باقي لنهاية تحدي الاسبوع ${7 - int.parse(dt.weekday.toString())} يوم!",
+                "باقي لنهاية تحدي الاسبوع ${8 - int.parse(dt.weekday.toString())} يوم!",
                 style: TextStyle(
                     color: Colors.yellow,
                     fontSize: 20.0,
@@ -95,9 +77,15 @@ class _RankState extends State<Rank> {
                     if (snapshot.hasData) {
                       // sort the score
                       List userData = snapshot.data['data'];
-                      userData.sort((a, b) => int.parse(b['finalScore'])
-                          .compareTo(int.parse(a['finalScore'])));
-
+                      // userData.sort((a, b) => int.parse(b['finalScore'])
+                      //     .compareTo(int.parse(a['finalScore'])));
+                      userData.sort((a, b) {
+                        int cmp = int.parse(b['finalScore'])
+                            .compareTo(int.parse(a['finalScore']));
+                        if (cmp != 0) return cmp;
+                        return int.parse(b['totalScore'])
+                            .compareTo(int.parse(a['totalScore']));
+                      });
                       if (snapshot.data['status'] == 'fail')
                         return Center(
                             child: Text(
@@ -131,7 +119,7 @@ class _RankState extends State<Rank> {
                           children: [
                             Text("جاري التحميل ..."),
                             Lottie.asset(
-                              'lottie/93603-loading-lottie-animation.json',
+                              'assets/lottie/93603-loading-lottie-animation.json',
                               width: 200,
                               height: 200,
                               fit: BoxFit.fill,
@@ -146,7 +134,7 @@ class _RankState extends State<Rank> {
                           children: [
                             Text("خطأ في التحميل ..."),
                             Lottie.asset(
-                              'lottie/52108-error.json',
+                              'assets/lottie/52108-error.json',
                               width: 200,
                               height: 200,
                               fit: BoxFit.fill,

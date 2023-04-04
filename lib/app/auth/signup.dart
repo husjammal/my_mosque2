@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mymosque/components/crud.dart';
-import 'package:mymosque/components/customtextform.dart';
 import 'package:mymosque/components/valid.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
@@ -41,7 +40,7 @@ class _SignUpState extends State<SignUp> {
         "username": username.text,
         "email": email.text,
         "password": password.text,
-        "week": weekNumber
+        "week": weekNumber,
       });
       isLoading = false;
       print('isLoading $isLoading');
@@ -57,6 +56,7 @@ class _SignUpState extends State<SignUp> {
         print('user id for ini_val $user_id');
         print("set ini");
         await ini_val(user_id);
+        await ini_weekly(user_id);
         // close sign up
         Navigator.of(context)
             .pushNamedAndRemoveUntil("success", (route) => false);
@@ -96,6 +96,21 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  ini_weekly(String user_id) async {
+    isLoading = true;
+    setState(() {});
+    var response = await postRequest(linkIniWeekly, {"user_id": user_id});
+    print("init result ${response['status']}");
+    isLoading = false;
+    setState(() {});
+    if (response['status'] == "success") {
+      // close sign up
+      print("init success");
+    } else {
+      print("init Fail");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -122,7 +137,7 @@ class _SignUpState extends State<SignUp> {
                               height: 50,
                             ),
                             Image.asset(
-                              "images/Login.png",
+                              "assets/images/Login.png",
                               width: 200,
                               height: 200,
                             ),

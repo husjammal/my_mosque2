@@ -18,7 +18,7 @@ class _BoardingState extends State<Boarding> {
               title: 'الصفحة الرنيسية',
               body:
                   'في هذه الصفحة يمكنك ادخال برنامج الصلاة و العبادات. بالاضافة اى النشطات اخرى. ورؤية مجموعك اليومي و الاسبوعي في اعلىها !',
-              image: buildImage("images/main.png"),
+              image: buildImage("assets/images/main.png"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -26,7 +26,7 @@ class _BoardingState extends State<Boarding> {
               title: 'صفحة التصنيف',
               body:
                   'في هذه الصفحة يمكن مشاهدة ترتيبك و متابعة تقدمك بين الاخرين.',
-              image: buildImage("images/rank.png"),
+              image: buildImage("assets/images/rank.png"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -34,7 +34,7 @@ class _BoardingState extends State<Boarding> {
               title: 'صفحة المقارنة و المنافسة',
               body:
                   'في صفحة التصنيف يمكنك النقر على اي اسم مستخدم اخر، لتتابع تقدمك و تقدمه في هذا الاسبوع!',
-              image: buildImage("images/compare.png"),
+              image: buildImage("assets/images/compare.png"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -42,7 +42,7 @@ class _BoardingState extends State<Boarding> {
               title: 'صفحة معلوماتي',
               body:
                   'في هذه الصفحة يمكنك مشاهدة تقدمك اليومي خلال الاسبوع، مع ايمكانية تعديل معلوماتك الشخصية.',
-              image: buildImage("images/profile.png"),
+              image: buildImage("assets/images/profile.png"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),

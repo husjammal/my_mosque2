@@ -136,7 +136,7 @@ class _ActivityState extends State<Activity> {
                       color: buttonColor,
                     ),
                     child: Image.asset(
-                      'images/activity.jpg',
+                      'assets/images/activity.jpg',
                       width: double.infinity,
                       height: 150,
                       fit: BoxFit.fill,
@@ -153,7 +153,7 @@ class _ActivityState extends State<Activity> {
                       borderRadius: BorderRadius.circular(16.0),
                       color: buttonColor,
                       image: const DecorationImage(
-                        image: AssetImage('images/avtivity_layout.jpg'),
+                        image: AssetImage('assets/images/avtivity_layout.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),

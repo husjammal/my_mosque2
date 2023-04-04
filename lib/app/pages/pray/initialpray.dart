@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mymosque/app/pages/pray/nuafel.dart';
 import 'package:mymosque/app/pages/pray/pray.dart';
+import 'package:mymosque/app/pages/pray/sunah.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/main.dart';
 
@@ -52,20 +54,17 @@ class _InitialPrayState extends State<InitialPray> {
                 constraints: BoxConstraints.expand(height: 50),
                 child: TabBar(tabs: [
                   Tab(text: "الفروض"),
+                  Tab(text: "السنن"),
                   Tab(text: "النوافل"),
-                  Tab(text: "أخرى"),
                 ]),
               ),
               Expanded(
                 child: Container(
+                  color: backgroundColor,
                   child: TabBarView(children: [
                     Pray(),
-                    Container(
-                      child: Text("النوافل"),
-                    ),
-                    Container(
-                      child: Text("اخرى"),
-                    ),
+                    Sunah(),
+                    Nuafel(),
                   ]),
                 ),
               )

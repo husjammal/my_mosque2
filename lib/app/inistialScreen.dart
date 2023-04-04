@@ -120,7 +120,7 @@ class _InitialScreenState extends State<InitialScreen> {
                         maxRadius: 40.0,
                         backgroundColor: backgroundColor,
                         backgroundImage: AssetImage(
-                          'images/ramadan.png',
+                          'assets/images/ramadan.png',
                         ),
                       ),
                       SizedBox(width: 20),

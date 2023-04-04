@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mymosque/app/pages/duaa/azkar.dart';
 import 'package:mymosque/app/pages/duaa/duaa.dart';
+import 'package:mymosque/app/pages/duaa/otherDuaa.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 
 // Creating a stateful widget to manage
@@ -52,12 +54,8 @@ class _InitialDuaaState extends State<InitialDuaa> {
                 child: Container(
                   child: TabBarView(children: [
                     Duaa(),
-                    Container(
-                      child: Text("اذكار الصباح و المساء"),
-                    ),
-                    Container(
-                      child: Text("اخرى"),
-                    ),
+                    Azkar(),
+                    OtherDuaa(),
                   ]),
                 ),
               )

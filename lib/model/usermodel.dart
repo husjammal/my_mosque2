@@ -5,22 +5,26 @@ class UserModel {
   String? usersPassword;
   String? usersPhone;
   String? usersImage;
+  String? userJoinedAt;
   String? userFinalScore;
   String? userWeek;
   String? userTotalScore;
-  String? subGroup;
-  String? myGroup;
+  String? userSubGroup;
+  String? userMyGroup;
+  String? userIsWeekChange;
 
   UserModel({
     this.usersId,
     this.usersName,
     this.usersEmail,
     this.usersImage,
+    this.userJoinedAt,
     this.userFinalScore,
     this.userWeek,
     this.userTotalScore,
-    this.subGroup,
-    this.myGroup,
+    this.userSubGroup,
+    this.userMyGroup,
+    this.userIsWeekChange,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -30,11 +34,13 @@ class UserModel {
     usersPassword = json['password'];
     usersPhone = json['phone'];
     usersImage = json['image'];
+    userJoinedAt = json['joinedAt'];
     userFinalScore = json['finalScore'];
     userWeek = json['week'];
     userTotalScore = json['totalScore'];
-    subGroup = json['subGroup'];
-    myGroup = json['myGroup'];
+    userSubGroup = json['subGroup'];
+    userMyGroup = json['myGroup'];
+    userIsWeekChange = json['isWeekChange'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,8 +54,10 @@ class UserModel {
     data['finalScore'] = this.userFinalScore;
     data['week'] = this.userWeek;
     data['totalScore'] = this.userTotalScore;
-    data['subGroup'] = this.subGroup;
-    data['myGroup'] = this.myGroup;
+    data['subGroup'] = this.userSubGroup;
+    data['myGroup'] = this.userMyGroup;
+    data['isWeekChange'] = this.userIsWeekChange;
+
     return data;
   }
 }

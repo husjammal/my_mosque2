@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:mymosque/components/checkinternet.dart';
 import 'package:mymosque/components/statusrequest.dart';
 import 'package:path/path.dart';
 import 'package:dartz/dartz.dart';
@@ -23,18 +22,18 @@ getRequest(String url) async {
 
 postRequest(String url, Map data) async {
   try {
-    // print(data);
-    // print(json.encode(data));
-    // print('Uri ${Uri.parse(url)}');
-    // print('today is ${data['day_number']}');
+    print(data);
+    print(json.encode(data));
+    print('Uri ${Uri.parse(url)}');
+    print('today is ${data['day_number']}');
     var response = await http.post(Uri.parse(url), body: data);
     // print(response.body);
-    // print('response statusCode ${response.statusCode}');
+    print('response statusCode ${response.statusCode}');
     if (response.statusCode == 200) {
       var responsebody = jsonDecode(response.body);
       //var responsebody = jsonDecode(response.body).cast<Map<String, dynamic>>();
-      // print('response statusCode ${response.statusCode}');
-      // print('responsebody $responsebody');
+      print('response statusCode ${response.statusCode}');
+      print('responsebody $responsebody');
 
       return responsebody;
     } else {
