@@ -16,32 +16,34 @@ class Nuafel extends StatefulWidget {
 
 class _NuafelState extends State<Nuafel> {
 // value set to false
-  bool _subuh = false;
-  bool _zhur = false;
-  bool _asr = false;
-  bool _magrib = false;
-  bool _isyah = false;
+  bool _duhhaNafel = false;
+  bool _tarawehNafel = false;
+  bool _keyamNafel = false;
+  bool _tahajoudNafel = false;
 
 // Fuction to save prayers
   bool isLoading = false;
 
-  int prayScore = 0;
+  int nuafelScore = 0;
   String _score = "0";
   String _duaaScore = "0";
   String _prayScore = "0";
+  String _sunahScore = "0";
+  String _nuafelScore = "0";
   String _quranScore = "0";
   String _activityScore = "0";
 
-  save_prayers(String user_id) async {
+  save_nuafel(String user_id) async {
     // calculate the prayScore
-    prayScore = (_subuh ? 1 : 0) +
-        (_zhur ? 1 : 0) +
-        (_asr ? 1 : 0) +
-        (_magrib ? 1 : 0) +
-        (_zhur ? 1 : 0);
-    print('prayScore is $prayScore');
+    nuafelScore = (_duhhaNafel ? 1 : 0) +
+        (_tarawehNafel ? 1 : 0) +
+        (_keyamNafel ? 1 : 0) +
+        (_tahajoudNafel ? 1 : 0);
+    print('sunahScore is $nuafelScore');
     _score = (int.parse(_duaaScore) +
-            prayScore +
+            nuafelScore +
+            int.parse(_prayScore) +
+            int.parse(_sunahScore) +
             int.parse(_quranScore) +
             int.parse(_activityScore))
         .toString();
@@ -49,27 +51,54 @@ class _NuafelState extends State<Nuafel> {
     // save the dat_duaaScore_quranScore+
     isLoading = true;
     setState(() {});
-    var response = await postRequest(linkPrayer, {
+    var response = await postRequest(linkNuafel, {
       "user_id": user_id,
       "day_number": dt.weekday.toString(),
       "score": _score,
-      "subuh": _subuh ? "1" : "0",
-      "zhur": _zhur ? "1" : "0",
-      "asr": _asr ? "1" : "0",
-      "magrib": _magrib ? "1" : "0",
-      "isyah": _isyah ? "1" : "0",
+      "duhhaNafel": _duhhaNafel ? "1" : "0",
+      "tarawehNafel": _tarawehNafel ? "1" : "0",
+      "keyamNafel": _keyamNafel ? "1" : "0",
+      "tahajoudNafel": _tahajoudNafel ? "1" : "0",
       "duaaScore": _duaaScore,
-      "prayScore": prayScore.toString(),
-      "quranScore": _quranScore
+      "prayScore": _prayScore,
+      "sunahScore": _sunahScore,
+      "nuafelScore": nuafelScore.toString(),
+      "quranScore": _quranScore,
+      "activityScore": _activityScore
     });
     isLoading = false;
 
     setState(() {});
     if (response['status'] == "success") {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      // Navigator.of(context)
+      //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      AwesomeDialog(
+        context: context,
+        animType: AnimType.LEFTSLIDE,
+        headerAnimationLoop: false,
+        dialogType: DialogType.SUCCES,
+        title: 'تم',
+        desc: 'تم حفظ النوافل بنجاح',
+        btnOkOnPress: () {
+          debugPrint('OnClcik');
+        },
+        btnOkIcon: Icons.check_circle,
+
+        // onDissmissCallback: () {
+        //   debugPrint('Dialog Dissmiss from callback');
+        // };
+      )..show();
     } else {
-      AwesomeDialog(context: context, title: "تنبيه", body: Text("يوجد خطأ"))
+      AwesomeDialog(
+          context: context,
+          dialogType: DialogType.ERROR,
+          animType: AnimType.RIGHSLIDE,
+          headerAnimationLoop: false,
+          title: 'تنبية',
+          desc: 'يوجد خطأ',
+          btnOkOnPress: () {},
+          btnOkIcon: Icons.cancel,
+          btnOkColor: Colors.red)
         ..show();
     }
   }
@@ -80,14 +109,19 @@ class _NuafelState extends State<Nuafel> {
       "day_number": dt.weekday.toString()
     });
 
-    _subuh = response['data'][0]['subuh'].toString() == "1" ? true : false;
-    _zhur = response['data'][0]['zhur'].toString() == "1" ? true : false;
-    _asr = response['data'][0]['asr'].toString() == "1" ? true : false;
-    _magrib = response['data'][0]['magrib'].toString() == "1" ? true : false;
-    _isyah = response['data'][0]['isyah'].toString() == "1" ? true : false;
+    _duhhaNafel =
+        response['data'][0]['duhhaNafel'].toString() == "1" ? true : false;
+    _tarawehNafel =
+        response['data'][0]['tarawehNafel'].toString() == "1" ? true : false;
+    _keyamNafel =
+        response['data'][0]['keyamNafel'].toString() == "1" ? true : false;
+    _tahajoudNafel =
+        response['data'][0]['tahajoudNafel'].toString() == "1" ? true : false;
     _score = response['data'][0]['score'].toString();
     _duaaScore = response['data'][0]['duaaScore'].toString();
     _prayScore = response['data'][0]['prayScore'].toString();
+    _sunahScore = response['data'][0]['sunahScore'].toString();
+    _nuafelScore = response['data'][0]['nuafelScore'].toString();
     _quranScore = response['data'][0]['quranScore'].toString();
     _activityScore = response['data'][0]['activityScore'].toString();
 
@@ -180,12 +214,12 @@ class _NuafelState extends State<Nuafel> {
                             isThreeLine: true,
                             activeColor: Colors.green,
                             checkColor: Colors.white,
-                            selected: _subuh,
-                            value: _subuh,
+                            selected: _duhhaNafel,
+                            value: _duhhaNafel,
                             onChanged: (bool? value) {
                               setState(() {
-                                _subuh = value!;
-                                print(_subuh);
+                                _duhhaNafel = value!;
+                                print(_duhhaNafel);
                               });
                             },
                           ), //CheckboxListTile
@@ -223,18 +257,115 @@ class _NuafelState extends State<Nuafel> {
                                 'إحدى عشرة ركعة مع الوتر بثلاث ركعات.'),
                             secondary: CircleAvatar(
                               backgroundImage: AssetImage(
-                                  "assets/images/zhur.png"), //NetworkImage
+                                  "assets/images/mosque.png"), //NetworkImage
                               radius: 20,
                             ),
                             autofocus: false,
                             isThreeLine: true,
                             activeColor: Colors.green,
                             checkColor: Colors.white,
-                            selected: _zhur,
-                            value: _zhur,
+                            selected: _tarawehNafel,
+                            value: _tarawehNafel,
                             onChanged: (bool? value) {
                               setState(() {
-                                _zhur = value!;
+                                _tarawehNafel = value!;
+                              });
+                            },
+                          ), //CheckboxListTile
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        //Zhur
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                offset: const Offset(
+                                  3.0,
+                                  3.0,
+                                ), //Offset
+                                blurRadius: 10.0,
+                                spreadRadius: 2.0,
+                              ), //BoxShadow
+                              BoxShadow(
+                                color: Colors.white,
+                                offset: const Offset(0.0, 0.0),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
+                              ), //BoxShadow
+                            ],
+                          ), //BoxDecoration
+
+                          /** CheckboxListTile Widget **/
+                          child: CheckboxListTile(
+                            title: const Text('صلاة قيام الليل'),
+                            subtitle: const Text(
+                                'من بعد فعل صلاة العشاء، إلى طلوع الفجر الثاني'),
+                            secondary: CircleAvatar(
+                              backgroundImage: AssetImage(
+                                  "assets/images/pray.png"), //NetworkImage
+                              radius: 20,
+                            ),
+                            autofocus: false,
+                            isThreeLine: true,
+                            activeColor: Colors.green,
+                            checkColor: Colors.white,
+                            selected: _keyamNafel,
+                            value: _keyamNafel,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                _keyamNafel = value!;
+                              });
+                            },
+                          ), //CheckboxListTile
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        //Zhur
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                offset: const Offset(
+                                  3.0,
+                                  3.0,
+                                ), //Offset
+                                blurRadius: 10.0,
+                                spreadRadius: 2.0,
+                              ), //BoxShadow
+                              BoxShadow(
+                                color: Colors.white,
+                                offset: const Offset(0.0, 0.0),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
+                              ), //BoxShadow
+                            ],
+                          ), //BoxDecoration
+
+                          /** CheckboxListTile Widget **/
+                          child: CheckboxListTile(
+                            title: const Text('صلاة التهجد'),
+                            subtitle: const Text('الصلاة في الليل بعد نوم.'),
+                            secondary: CircleAvatar(
+                              backgroundImage: AssetImage(
+                                  "assets/images/pray.png"), //NetworkImage
+                              radius: 20,
+                            ),
+                            autofocus: false,
+                            isThreeLine: true,
+                            activeColor: Colors.green,
+                            checkColor: Colors.white,
+                            selected: _tahajoudNafel,
+                            value: _tahajoudNafel,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                _tahajoudNafel = value!;
                               });
                             },
                           ), //CheckboxListTile
@@ -253,11 +384,11 @@ class _NuafelState extends State<Nuafel> {
             //() => setState(() => _count++),
             String? user_id = sharedPref.getString("id");
             print("user is is $user_id");
-            await save_prayers(user_id.toString());
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+            await save_nuafel(user_id.toString());
+            // Navigator.of(context)
+            //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
           },
-          tooltip: 'حفظ صلاواتي',
+          tooltip: 'حفظ النوافل',
           // label: Text('حفظ صلاواتي'),
           child: Icon(
             Icons.thumb_up,

@@ -16,32 +16,38 @@ class Sunah extends StatefulWidget {
 
 class _SunahState extends State<Sunah> {
 // value set to false
-  bool _subuh = false;
-  bool _zhur = false;
-  bool _asr = false;
-  bool _magrib = false;
-  bool _isyah = false;
+  bool _subuhSunah = false;
+  bool _zhurSunah = false;
+  bool _asrSunah = false;
+  bool _magribSunah = false;
+  bool _isyahSunah = false;
+  bool _watterSunah = false;
 
 // Fuction to save prayers
   bool isLoading = false;
 
-  int prayScore = 0;
+  int sunahScore = 0;
   String _score = "0";
   String _duaaScore = "0";
   String _prayScore = "0";
+  String _sunahScore = "0";
+  String _nuafelScore = "0";
   String _quranScore = "0";
   String _activityScore = "0";
 
-  save_prayers(String user_id) async {
+  save_sunah(String user_id) async {
     // calculate the prayScore
-    prayScore = (_subuh ? 1 : 0) +
-        (_zhur ? 1 : 0) +
-        (_asr ? 1 : 0) +
-        (_magrib ? 1 : 0) +
-        (_zhur ? 1 : 0);
-    print('prayScore is $prayScore');
+    sunahScore = (_subuhSunah ? 1 : 0) +
+        (_zhurSunah ? 1 : 0) +
+        (_asrSunah ? 1 : 0) +
+        (_magribSunah ? 1 : 0) +
+        (_isyahSunah ? 1 : 0) +
+        (_watterSunah ? 1 : 0);
+    print('sunahScore is $sunahScore');
     _score = (int.parse(_duaaScore) +
-            prayScore +
+            sunahScore +
+            int.parse(_prayScore) +
+            int.parse(_nuafelScore) +
             int.parse(_quranScore) +
             int.parse(_activityScore))
         .toString();
@@ -49,27 +55,56 @@ class _SunahState extends State<Sunah> {
     // save the dat_duaaScore_quranScore+
     isLoading = true;
     setState(() {});
-    var response = await postRequest(linkPrayer, {
+    var response = await postRequest(linkSunah, {
       "user_id": user_id,
       "day_number": dt.weekday.toString(),
       "score": _score,
-      "subuh": _subuh ? "1" : "0",
-      "zhur": _zhur ? "1" : "0",
-      "asr": _asr ? "1" : "0",
-      "magrib": _magrib ? "1" : "0",
-      "isyah": _isyah ? "1" : "0",
+      "subuhSunah": _subuhSunah ? "1" : "0",
+      "zhurSunah": _zhurSunah ? "1" : "0",
+      "asrSunah": _asrSunah ? "1" : "0",
+      "magribSunah": _magribSunah ? "1" : "0",
+      "isyahSunah": _isyahSunah ? "1" : "0",
+      "watterSunah": _watterSunah ? "1" : "0",
       "duaaScore": _duaaScore,
-      "prayScore": prayScore.toString(),
-      "quranScore": _quranScore
+      "prayScore": _prayScore,
+      "sunahScore": sunahScore.toString(),
+      "nuafelScore": _nuafelScore,
+      "quranScore": _quranScore,
+      "activityScore": _activityScore
     });
     isLoading = false;
 
     setState(() {});
     if (response['status'] == "success") {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      // Navigator.of(context)
+      //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      AwesomeDialog(
+        context: context,
+        animType: AnimType.LEFTSLIDE,
+        headerAnimationLoop: false,
+        dialogType: DialogType.SUCCES,
+        title: 'تم',
+        desc: 'تم حفظ السنن بنجاح',
+        btnOkOnPress: () {
+          debugPrint('OnClcik');
+        },
+        btnOkIcon: Icons.check_circle,
+
+        // onDissmissCallback: () {
+        //   debugPrint('Dialog Dissmiss from callback');
+        // };
+      )..show();
     } else {
-      AwesomeDialog(context: context, title: "تنبيه", body: Text("يوجد خطأ"))
+      AwesomeDialog(
+          context: context,
+          dialogType: DialogType.ERROR,
+          animType: AnimType.RIGHSLIDE,
+          headerAnimationLoop: false,
+          title: 'تنبية',
+          desc: 'يوجد خطأ',
+          btnOkOnPress: () {},
+          btnOkIcon: Icons.cancel,
+          btnOkColor: Colors.red)
         ..show();
     }
   }
@@ -80,14 +115,23 @@ class _SunahState extends State<Sunah> {
       "day_number": dt.weekday.toString()
     });
 
-    _subuh = response['data'][0]['subuh'].toString() == "1" ? true : false;
-    _zhur = response['data'][0]['zhur'].toString() == "1" ? true : false;
-    _asr = response['data'][0]['asr'].toString() == "1" ? true : false;
-    _magrib = response['data'][0]['magrib'].toString() == "1" ? true : false;
-    _isyah = response['data'][0]['isyah'].toString() == "1" ? true : false;
+    _subuhSunah =
+        response['data'][0]['subuhSunah'].toString() == "1" ? true : false;
+    _zhurSunah =
+        response['data'][0]['zhurSunah'].toString() == "1" ? true : false;
+    _asrSunah =
+        response['data'][0]['asrSunah'].toString() == "1" ? true : false;
+    _magribSunah =
+        response['data'][0]['magribSunah'].toString() == "1" ? true : false;
+    _isyahSunah =
+        response['data'][0]['isyahSunah'].toString() == "1" ? true : false;
+    _watterSunah =
+        response['data'][0]['watterSunah'].toString() == "1" ? true : false;
     _score = response['data'][0]['score'].toString();
     _duaaScore = response['data'][0]['duaaScore'].toString();
     _prayScore = response['data'][0]['prayScore'].toString();
+    _sunahScore = response['data'][0]['sunahScore'].toString();
+    _nuafelScore = response['data'][0]['nuafelScore'].toString();
     _quranScore = response['data'][0]['quranScore'].toString();
     _activityScore = response['data'][0]['activityScore'].toString();
 
@@ -100,7 +144,7 @@ class _SunahState extends State<Sunah> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('pray initState');
+    print('sunah pray initState');
     getNotes();
     var dt = DateTime.now();
     setState(() {});
@@ -179,12 +223,12 @@ class _SunahState extends State<Sunah> {
                             isThreeLine: true,
                             activeColor: Colors.green,
                             checkColor: Colors.white,
-                            selected: _subuh,
-                            value: _subuh,
+                            selected: _subuhSunah,
+                            value: _subuhSunah,
                             onChanged: (bool? value) {
                               setState(() {
-                                _subuh = value!;
-                                print(_subuh);
+                                _subuhSunah = value!;
+                                print(_subuhSunah);
                               });
                             },
                           ), //CheckboxListTile
@@ -229,11 +273,11 @@ class _SunahState extends State<Sunah> {
                             isThreeLine: true,
                             activeColor: Colors.green,
                             checkColor: Colors.white,
-                            selected: _zhur,
-                            value: _zhur,
+                            selected: _zhurSunah,
+                            value: _zhurSunah,
                             onChanged: (bool? value) {
                               setState(() {
-                                _zhur = value!;
+                                _zhurSunah = value!;
                               });
                             },
                           ), //CheckboxListTile
@@ -277,11 +321,11 @@ class _SunahState extends State<Sunah> {
                             isThreeLine: true,
                             activeColor: Colors.green,
                             checkColor: Colors.white,
-                            selected: _asr,
-                            value: _asr,
+                            selected: _asrSunah,
+                            value: _asrSunah,
                             onChanged: (bool? value) {
                               setState(() {
-                                _asr = value!;
+                                _asrSunah = value!;
                               });
                             },
                           ), //CheckboxListTile
@@ -325,11 +369,11 @@ class _SunahState extends State<Sunah> {
                             isThreeLine: true,
                             activeColor: Colors.green,
                             checkColor: Colors.white,
-                            selected: _magrib,
-                            value: _magrib,
+                            selected: _magribSunah,
+                            value: _magribSunah,
                             onChanged: (bool? value) {
                               setState(() {
-                                _magrib = value!;
+                                _magribSunah = value!;
                               });
                             },
                           ), //CheckboxListTile
@@ -374,11 +418,11 @@ class _SunahState extends State<Sunah> {
                             isThreeLine: true,
                             activeColor: Colors.green,
                             checkColor: Colors.white,
-                            selected: _isyah,
-                            value: _isyah,
+                            selected: _isyahSunah,
+                            value: _isyahSunah,
                             onChanged: (bool? value) {
                               setState(() {
-                                _isyah = value!;
+                                _isyahSunah = value!;
                               });
                             },
                           ), //CheckboxListTile
@@ -416,18 +460,18 @@ class _SunahState extends State<Sunah> {
                                 'وتراً أي ركعة واحدة، أو ثلاثاً أو أكثر أي عدداً فردياً'),
                             secondary: CircleAvatar(
                               backgroundImage: AssetImage(
-                                  "assets/images/terbit.png"), //NetworkImage
+                                  "assets/images/mecca.png"), //NetworkImage
                               radius: 20,
                             ),
                             autofocus: false,
                             isThreeLine: true,
                             activeColor: Colors.green,
                             checkColor: Colors.white,
-                            selected: _isyah,
-                            value: _isyah,
+                            selected: _watterSunah,
+                            value: _watterSunah,
                             onChanged: (bool? value) {
                               setState(() {
-                                _isyah = value!;
+                                _watterSunah = value!;
                               });
                             },
                           ), //CheckboxListTile
@@ -445,11 +489,11 @@ class _SunahState extends State<Sunah> {
             //() => setState(() => _count++),
             String? user_id = sharedPref.getString("id");
             print("user is is $user_id");
-            await save_prayers(user_id.toString());
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+            await save_sunah(user_id.toString());
+            // Navigator.of(context)
+            //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
           },
-          tooltip: 'حفظ صلاواتي',
+          tooltip: 'حفظ سنني',
           // label: Text('حفظ صلاواتي'),
           child: Icon(
             Icons.thumb_up,

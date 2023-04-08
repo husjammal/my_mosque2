@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mymosque/app/pages/quran/quranlearning.dart';
 import 'package:mymosque/app/pages/quran/quranlistening.dart';
 import 'package:mymosque/app/pages/quran/quranreading.dart';
@@ -190,12 +191,35 @@ class _QuranState extends State<Quran> {
                                             3 /
                                             4) -
                                         20,
-                                    child: CustomTextFormSign(
-                                      valid: (val) {
+                                    child: TextFormField(
+                                      validator: (val) {
                                         return validInput(val!, 1, 3);
                                       },
-                                      mycontroller: _quranRead,
-                                      hint: "عدد صفحات القراءة",
+                                      keyboardType: TextInputType.number,
+                                      controller: _quranRead,
+                                      decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 8, horizontal: 10),
+                                        labelText: "عدد صفحات القراءة",
+                                        labelStyle: const TextStyle(
+                                            color: Colors.amber),
+                                        hintText: "عدد صفحات القراءة",
+                                        errorStyle: const TextStyle(
+                                            color: Colors.amber),
+                                        enabledBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.deepPurple,
+                                                width: 1),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        focusedBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.purpleAccent,
+                                                width: 1),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
@@ -266,12 +290,35 @@ class _QuranState extends State<Quran> {
                                             3 /
                                             4) -
                                         20,
-                                    child: CustomTextFormSign(
-                                      valid: (val) {
+                                    child: TextFormField(
+                                      validator: (val) {
                                         return validInput(val!, 1, 3);
                                       },
-                                      mycontroller: _quranLearn,
-                                      hint: "عدد صفحات الحفظ",
+                                      keyboardType: TextInputType.number,
+                                      controller: _quranLearn,
+                                      decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 8, horizontal: 10),
+                                        labelText: "عدد صفحات الحفظ",
+                                        labelStyle: const TextStyle(
+                                            color: Colors.amber),
+                                        hintText: "عدد صفحات الحفظ",
+                                        errorStyle: const TextStyle(
+                                            color: Colors.amber),
+                                        enabledBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.deepPurple,
+                                                width: 1),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        focusedBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.purpleAccent,
+                                                width: 1),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
@@ -342,12 +389,35 @@ class _QuranState extends State<Quran> {
                                             3 /
                                             4) -
                                         20,
-                                    child: CustomTextFormSign(
-                                      valid: (val) {
+                                    child: TextFormField(
+                                      validator: (val) {
                                         return validInput(val!, 1, 3);
                                       },
-                                      mycontroller: _quranListen,
-                                      hint: "عدد صفحات الاستماع",
+                                      keyboardType: TextInputType.number,
+                                      controller: _quranListen,
+                                      decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 8, horizontal: 10),
+                                        labelText: "عدد صفحات الاستماع",
+                                        labelStyle: const TextStyle(
+                                            color: Colors.amber),
+                                        hintText: "عدد صفحات الاستماع",
+                                        errorStyle: const TextStyle(
+                                            color: Colors.amber),
+                                        enabledBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.deepPurple,
+                                                width: 1),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        focusedBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.purpleAccent,
+                                                width: 1),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(

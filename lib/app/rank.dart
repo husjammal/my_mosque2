@@ -23,6 +23,9 @@ class _RankState extends State<Rank> {
     return response;
   }
 
+  String sortColumn = "finalScore";
+  String rankName = "كلي";
+
   var dt = DateTime.now();
   @override
   void initState() {
@@ -41,7 +44,7 @@ class _RankState extends State<Rank> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 100.0,
+          toolbarHeight: 160.0,
           backgroundColor: backgroundColor,
           centerTitle: true,
           actions: const [],
@@ -63,6 +66,118 @@ class _RankState extends State<Rank> {
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold),
               ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  InkWell(
+                    child: Column(
+                      children: [
+                        Icon(Icons.favorite, size: 15.0),
+                        Text(
+                          "كلي",
+                          style: TextStyle(fontSize: 15.0),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      sortColumn = 'finalScore';
+                      rankName = "كلي";
+                      setState(() {});
+                    },
+                  ),
+                  InkWell(
+                    child: Column(
+                      children: [
+                        Icon(Icons.favorite, size: 15.0),
+                        Text(
+                          "صلاة",
+                          style: TextStyle(fontSize: 15.0),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      sortColumn = 'finalprayScore';
+                      rankName = "صلاة";
+                      setState(() {});
+                    },
+                  ),
+                  InkWell(
+                    child: Column(
+                      children: [
+                        Icon(Icons.favorite, size: 15.0),
+                        Text(
+                          "سنن",
+                          style: TextStyle(fontSize: 15.0),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      sortColumn = 'finalsunahScore';
+                      rankName = "سنن";
+                      setState(() {});
+                    },
+                  ),
+                  InkWell(
+                    child: Column(
+                      children: [
+                        Icon(Icons.favorite, size: 15.0),
+                        Text(
+                          "نوافل",
+                          style: TextStyle(fontSize: 15.0),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      sortColumn = 'finalnuafelScore';
+                      rankName = "نوافل";
+                      setState(() {});
+                    },
+                  ),
+                  InkWell(
+                    child: Column(
+                      children: [
+                        Icon(Icons.favorite, size: 15.0),
+                        Text(
+                          "قران",
+                          style: TextStyle(fontSize: 15.0),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      sortColumn = 'finalquranScore';
+                      rankName = "قران";
+                      setState(() {});
+                    },
+                  ),
+                  InkWell(
+                    highlightColor: Colors.green,
+                    child: Column(
+                      children: [
+                        Icon(Icons.favorite, size: 15.0),
+                        Text(
+                          "نشاط",
+                          style: TextStyle(fontSize: 15.0),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      sortColumn = 'finalactivityScore';
+                      rankName = "نشاط";
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(" التصنيف حسب $rankName"),
+              SizedBox(
+                height: 10.0,
+              ),
             ],
           ),
         ),
@@ -79,9 +194,10 @@ class _RankState extends State<Rank> {
                       List userData = snapshot.data['data'];
                       // userData.sort((a, b) => int.parse(b['finalScore'])
                       //     .compareTo(int.parse(a['finalScore'])));
+                      // /////////////////////////////
                       userData.sort((a, b) {
-                        int cmp = int.parse(b['finalScore'])
-                            .compareTo(int.parse(a['finalScore']));
+                        int cmp = int.parse(b[sortColumn])
+                            .compareTo(int.parse(a[sortColumn]));
                         if (cmp != 0) return cmp;
                         return int.parse(b['totalScore'])
                             .compareTo(int.parse(a['totalScore']));

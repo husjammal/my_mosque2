@@ -4,6 +4,7 @@ import 'package:mymosque/main.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant//linkapi.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'dart:convert';
 
 // Creating a stateful widget to manage
 // the state of the app
@@ -37,6 +38,9 @@ class _ActivityState extends State<Activity> {
   String _prayScore = "0";
   String _quranScore = "0";
   String _activityScore = "0";
+  String _sunahScore = "0";
+  String _nuafelScore = "0";
+  String _actList = "0";
 
   var dt = DateTime.now();
 
@@ -46,7 +50,9 @@ class _ActivityState extends State<Activity> {
     _score = (int.parse(_prayScore) +
             int.parse(_quranScore) +
             activityScore +
-            int.parse(_duaaScore))
+            int.parse(_duaaScore) +
+            int.parse(_nuafelScore) +
+            int.parse(_sunahScore))
         .toString();
     print('_score $_score');
     // save the database
@@ -56,7 +62,8 @@ class _ActivityState extends State<Activity> {
       "user_id": user_id,
       "day_number": dt.weekday.toString(),
       "score": _score,
-      "activityScore": activityScore.toString()
+      "activityScore": activityScore.toString(),
+      "actList": _list.toString().replaceAll('[', '').replaceAll(']', '')
     });
     isLoading = false;
     setState(() {});
@@ -79,8 +86,34 @@ class _ActivityState extends State<Activity> {
     _score = response['data'][0]['score'].toString();
     _duaaScore = response['data'][0]['duaaScore'].toString();
     _prayScore = response['data'][0]['prayScore'].toString();
+    _sunahScore = response['data'][0]['sunahScore'].toString();
+    _nuafelScore = response['data'][0]['nuafelScore'].toString();
     _quranScore = response['data'][0]['quranScore'].toString();
     _activityScore = response['data'][0]['activityScore'].toString();
+    _actList = response['data'][0]['actList'].toString();
+    // _list = _actList as List<String>;
+    // _list = json.decode(_actList).cast<String>().toList();
+    _list = (_actList.split(','));
+    print("_actList $_actList");
+    print("_list $_list");
+
+    int.parse(_activityScore) > 0
+        ? {
+            activityScore = int.parse(_activityScore),
+          }
+        : {activityScore = 0};
+
+    _actList.contains("رضى الوالدين جيد") ? _parent = true : _parent = false;
+    _actList.contains("صيام اليوم") ? _fasting = true : _fasting = false;
+    _actList.contains("صدقة") ? _charity = true : _charity = false;
+    _actList.contains("مئة تسابيح") ? _praise = true : _praise = false;
+    _actList.contains("مئة استغفار")
+        ? _askForgiveness = true
+        : _askForgiveness = false;
+    _actList.contains("مئة صلاة على النبي")
+        ? _prayerProphet = true
+        : _prayerProphet = false;
+    _actList.contains("عبدات اخرى") ? _isOther = true : _isOther = false;
 
     setState(() {});
     return response;
@@ -180,10 +213,10 @@ class _ActivityState extends State<Activity> {
                                     _parent = value;
                                     String selectVal = " رضى الوالدين جيد";
                                     if (value == true) {
-                                      _list.add(selectVal);
+                                      _list[0] = selectVal;
                                       activityScore++;
                                     } else {
-                                      _list.remove(selectVal);
+                                      _list[0] = "0";
                                       activityScore--;
                                     }
                                   });
@@ -208,10 +241,10 @@ class _ActivityState extends State<Activity> {
                                     _fasting = value;
                                     String selectVal = "صيام اليوم";
                                     if (value == true) {
-                                      _list.add(selectVal);
+                                      _list[1] = selectVal;
                                       activityScore++;
                                     } else {
-                                      _list.remove(selectVal);
+                                      _list[1] = "0";
                                       activityScore--;
                                     }
                                   });
@@ -232,10 +265,10 @@ class _ActivityState extends State<Activity> {
                                     _charity = value;
                                     String selectVal = "صدقة";
                                     if (value == true) {
-                                      _list.add(selectVal);
+                                      _list[2] = selectVal;
                                       activityScore++;
                                     } else {
-                                      _list.remove(selectVal);
+                                      _list[2] = "0";
                                       activityScore--;
                                     }
                                   });
@@ -260,10 +293,10 @@ class _ActivityState extends State<Activity> {
                                     _praise = value;
                                     String selectVal = "مئة تسابيح";
                                     if (value == true) {
-                                      _list.add(selectVal);
+                                      _list[3] = selectVal;
                                       activityScore++;
                                     } else {
-                                      _list.remove(selectVal);
+                                      _list[3] = "0";
                                       activityScore--;
                                     }
                                   });
@@ -286,10 +319,10 @@ class _ActivityState extends State<Activity> {
                                     _askForgiveness = value;
                                     String selectVal = "مئة استغفار";
                                     if (value == true) {
-                                      _list.add(selectVal);
+                                      _list[4] = selectVal;
                                       activityScore++;
                                     } else {
-                                      _list.remove(selectVal);
+                                      _list[4] = "0";
                                       activityScore--;
                                     }
                                   });
@@ -314,10 +347,10 @@ class _ActivityState extends State<Activity> {
                                     _prayerProphet = value;
                                     String selectVal = "مئة صلاة على النبي";
                                     if (value == true) {
-                                      _list.add(selectVal);
+                                      _list[5] = selectVal;
                                       activityScore++;
                                     } else {
-                                      _list.remove(selectVal);
+                                      _list[5] = "0";
                                       activityScore--;
                                     }
                                   });
@@ -343,10 +376,10 @@ class _ActivityState extends State<Activity> {
                                     _isOther = value;
                                     String selectVal = "عبدات اخرى";
                                     if (value == true) {
-                                      _list.add(selectVal);
+                                      _list[6] = selectVal;
                                       activityScore++;
                                     } else {
-                                      _list.remove(selectVal);
+                                      _list[6] = "0";
                                       activityScore--;
                                     }
                                   });
@@ -392,8 +425,8 @@ class _ActivityState extends State<Activity> {
             String? user_id = sharedPref.getString("id");
             print("user is is $user_id");
             await save_activity(user_id.toString());
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+            // Navigator.of(context)
+            //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
           },
           tooltip: 'حفظ نشاطاتي',
           // label: Text('حفظ صلاواتي'),

@@ -31,6 +31,8 @@ class _PrayState extends State<Pray> {
   String _prayScore = "0";
   String _quranScore = "0";
   String _activityScore = "0";
+  String _sunahScore = "0";
+  String _nuafelScore = "0";
 
   save_prayers(String user_id) async {
     // calculate the prayScore
@@ -43,6 +45,8 @@ class _PrayState extends State<Pray> {
     _score = (int.parse(_duaaScore) +
             prayScore +
             int.parse(_quranScore) +
+            int.parse(_nuafelScore) +
+            int.parse(_sunahScore) +
             int.parse(_activityScore))
         .toString();
     print('_score $_score');
@@ -60,16 +64,44 @@ class _PrayState extends State<Pray> {
       "isyah": _isyah ? "1" : "0",
       "duaaScore": _duaaScore,
       "prayScore": prayScore.toString(),
-      "quranScore": _quranScore
+      "quranScore": _quranScore,
+      "sunahScore": _sunahScore,
+      "nuafelScore": _nuafelScore,
+      "activityScore": _activityScore
     });
     isLoading = false;
 
     setState(() {});
     if (response['status'] == "success") {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      // Navigator.of(context)
+      //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      AwesomeDialog(
+        context: context,
+        animType: AnimType.LEFTSLIDE,
+        headerAnimationLoop: false,
+        dialogType: DialogType.SUCCES,
+        title: 'تم',
+        desc: 'تم حفظ الفروض بنجاح',
+        btnOkOnPress: () {
+          debugPrint('OnClcik');
+        },
+        btnOkIcon: Icons.check_circle,
+
+        // onDissmissCallback: () {
+        //   debugPrint('Dialog Dissmiss from callback');
+        // };
+      )..show();
     } else {
-      AwesomeDialog(context: context, title: "تنبيه", body: Text("يوجد خطأ"))
+      AwesomeDialog(
+          context: context,
+          dialogType: DialogType.ERROR,
+          animType: AnimType.RIGHSLIDE,
+          headerAnimationLoop: false,
+          title: 'تنبية',
+          desc: 'يوجد خطأ',
+          btnOkOnPress: () {},
+          btnOkIcon: Icons.cancel,
+          btnOkColor: Colors.red)
         ..show();
     }
   }
@@ -88,6 +120,8 @@ class _PrayState extends State<Pray> {
     _score = response['data'][0]['score'].toString();
     _duaaScore = response['data'][0]['duaaScore'].toString();
     _prayScore = response['data'][0]['prayScore'].toString();
+    _sunahScore = response['data'][0]['sunahScore'].toString();
+    _nuafelScore = response['data'][0]['nuafelScore'].toString();
     _quranScore = response['data'][0]['quranScore'].toString();
     _activityScore = response['data'][0]['activityScore'].toString();
 
@@ -400,8 +434,8 @@ class _PrayState extends State<Pray> {
             String? user_id = sharedPref.getString("id");
             print("user is is $user_id");
             await save_prayers(user_id.toString());
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+            // Navigator.of(context)
+            //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
           },
           tooltip: 'حفظ صلاواتي',
           // label: Text('حفظ صلاواتي'),

@@ -25,6 +25,9 @@ const String linkScoreUsers = '$linkServerName/actions/total_score.php';
 
 // Actions links
 const String linkPrayer = '$linkServerName/actions/prayer.php';
+const String linkSunah = '$linkServerName/actions/sunah.php';
+const String linkNuafel = '$linkServerName/actions/nuafel.php';
+
 const String linkDuaa = '$linkServerName/actions/duaa.php';
 const String linkQuran = '$linkServerName/actions/quran.php';
 const String linkActivity = '$linkServerName/actions/activity.php';

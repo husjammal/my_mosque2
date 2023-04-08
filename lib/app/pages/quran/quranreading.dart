@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/pages/quran/quranlists.dart';
 import 'package:mymosque/constant/colorConfig.dart';
+import 'dart:math';
 
 class QuranReading extends StatefulWidget {
   const QuranReading({Key? key}) : super(key: key);
@@ -356,20 +357,18 @@ class _QuranReadingState extends State<QuranReading> {
     "0.4",
     "0.3"
   ];
+  quranReadState() {}
   @override
   Widget build(BuildContext context) {
+    var _myWiedth = MediaQuery.of(context).size.width;
+    var isPressed = false;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('متابعة القراءة'),
           centerTitle: true,
-          backgroundColor: buttonColor,
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            tooltip: 'قائمة',
-            onPressed: () {},
-          ),
+          backgroundColor: Colors.purple,
           actions: [
             IconButton(
               onPressed: () {
@@ -382,23 +381,82 @@ class _QuranReadingState extends State<QuranReading> {
           ], //IconButton
         ),
         body: Container(
-          color: backgroundColor,
+          color: Color(0xffdea5e8),
+          padding: EdgeInsets.all(10.0),
           child: ListView.builder(
             itemCount: titles.length,
             itemBuilder: (context, index) {
-              return Card(
-                  child: ListTile(
+              // _myCurrent = index * 10;
+
+              //converting the degrees angle into radians and then applying sin()
+              // degrees = 90.0
+              // PI = 3.14159265
+              // result first converts degrees to radians then apply sin
+              double result = sin(index * 10 * (pi / 180.0));
+              print("The value of sin(index * (pi / 180.0)): ${result}");
+              return Container(
+                // height: 50,
+                // width: 50,
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100.0),
+                  color: true ? Color(0xffdea5e8) : Colors.black,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width:
+                          (_myWiedth * 1.5 / 4) + result * (_myWiedth * 1 / 4),
+                      height: 50,
+                      color: Colors.transparent,
+                      child: Text(index.toString()),
+                    ),
+                    InkWell(
                       onTap: () {
-                        // Scaffold.of(context).showSnackBar(SnackBar(
-                        //   content: Text(titles[index] + ' pressed!'),
-                        // ));
+                        isPressed = !isPressed;
+                        print("isPressed $isPressed");
+                        print("index $index");
+                        // setState(() {});
                       },
-                      title: Text(titles[index]),
-                      subtitle: Text(pageNumber[index]),
-                      leading: CircleAvatar(
-                          backgroundImage: AssetImage(
-                              "assets/surat/sname_${(index + 1).toString()}.png")),
-                      trailing: Icon(Icons.info)));
+                      child: CircleAvatar(
+                        maxRadius: 40.0,
+                        backgroundColor:
+                            isPressed ? Colors.greenAccent : Colors.white,
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          child: ClipOval(
+                            child: Image.asset(
+                              "assets/surat/sname_${(index + 1).toString()}.png",
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+              // Padding(
+              //   padding: const EdgeInsets.all(20.0),
+              //   child: Card(
+              //       color: backgroundColor,
+              //       child: ListTile(
+              //           onTap: () {
+              //             // Scaffold.of(context).showSnackBar(SnackBar(
+              //             //   content: Text(titles[index] + ' pressed!'),
+              //             // ));
+              //           },
+              //           title: Text(titles[index]),
+              //           subtitle: Text(pageNumber[index]),
+              //           leading: CircleAvatar(
+              //             maxRadius: 50.0,
+              //             backgroundImage: AssetImage(
+              //                 "assets/surat/sname_${(index + 1).toString()}.png"),
+              //             backgroundColor: Colors.white,
+              //           ),
+              //           trailing: Icon(Icons.info))),
+              // );
             },
           ),
         ),

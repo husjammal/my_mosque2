@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mymosque/app/inistialScreen.dart';
 import 'package:mymosque/components/crud.dart';
@@ -53,12 +54,17 @@ class _VersionState extends State<Version> {
       child: isLoading == true
           ? Scaffold(
               backgroundColor: backgroundColor,
-              body: Center(
-                child: Lottie.asset(
-                  'assets/lottie/60089-eid-mubarak.json',
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.fill,
+              body: InkWell(
+                onTap: () {
+                  getVersion();
+                },
+                child: Center(
+                  child: Lottie.asset(
+                    'assets/lottie/60089-eid-mubarak.json',
+                    width: 200,
+                    height: 200,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             )

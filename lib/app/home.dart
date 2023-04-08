@@ -20,6 +20,12 @@ class _HomeState extends State<Home> {
   String? user_name = sharedPref.getString("username");
   String? _TodayScore = "0";
   String? _FinalScore = "0";
+  String? _FinalprayScore = "0";
+  String? _FinalsunahScore = "0";
+  String? _FinalnuafelScore = "0";
+  String? _FinalquranScore = "0";
+  String? _FinalactivityScore = "0";
+
   String? _TotalScore;
   String? _userWeek;
   List<UserModel> userData = [];
@@ -78,6 +84,48 @@ class _HomeState extends State<Home> {
       print('the response of _TodayScore $_TodayScore');
       sharedPref.setString("finalScore", _FinalScore.toString());
       /////////////////////////////////////////////////////////////////////
+      ///calc the other scores
+      _FinalprayScore = (int.parse(totalScore[0]['prayScore']) +
+              int.parse(totalScore[1]['prayScore']) +
+              int.parse(totalScore[2]['prayScore']) +
+              int.parse(totalScore[3]['prayScore']) +
+              int.parse(totalScore[4]['prayScore']) +
+              int.parse(totalScore[5]['prayScore']) +
+              int.parse(totalScore[6]['prayScore']))
+          .toString();
+      _FinalsunahScore = (int.parse(totalScore[0]['sunahScore']) +
+              int.parse(totalScore[1]['sunahScore']) +
+              int.parse(totalScore[2]['sunahScore']) +
+              int.parse(totalScore[3]['sunahScore']) +
+              int.parse(totalScore[4]['sunahScore']) +
+              int.parse(totalScore[5]['sunahScore']) +
+              int.parse(totalScore[6]['sunahScore']))
+          .toString();
+      _FinalnuafelScore = (int.parse(totalScore[0]['nuafelScore']) +
+              int.parse(totalScore[1]['nuafelScore']) +
+              int.parse(totalScore[2]['nuafelScore']) +
+              int.parse(totalScore[3]['nuafelScore']) +
+              int.parse(totalScore[4]['nuafelScore']) +
+              int.parse(totalScore[5]['nuafelScore']) +
+              int.parse(totalScore[6]['nuafelScore']))
+          .toString();
+      _FinalquranScore = (int.parse(totalScore[0]['quranScore']) +
+              int.parse(totalScore[1]['quranScore']) +
+              int.parse(totalScore[2]['quranScore']) +
+              int.parse(totalScore[3]['quranScore']) +
+              int.parse(totalScore[4]['quranScore']) +
+              int.parse(totalScore[5]['quranScore']) +
+              int.parse(totalScore[6]['quranScore']))
+          .toString();
+      _FinalactivityScore = (int.parse(totalScore[0]['activityScore']) +
+              int.parse(totalScore[1]['activityScore']) +
+              int.parse(totalScore[2]['activityScore']) +
+              int.parse(totalScore[3]['activityScore']) +
+              int.parse(totalScore[4]['activityScore']) +
+              int.parse(totalScore[5]['activityScore']) +
+              int.parse(totalScore[6]['activityScore']))
+          .toString();
+      /////////////////////////////////////////////////////////////////////
       //// the total score
       _TotalScore = userData[0].userTotalScore.toString();
       var oldFinalScore = userData[0].userFinalScore.toString();
@@ -112,6 +160,11 @@ class _HomeState extends State<Home> {
       "user_id": sharedPref.getString("id"),
       "finalScore": sharedPref.getString('finalScore'),
       "totalScore": sharedPref.getString('totalScore'),
+      "finalprayScore": _FinalprayScore,
+      "finalsunahScore": _FinalsunahScore,
+      "finalnuafelScore": _FinalnuafelScore,
+      "finalquranScore": _FinalquranScore,
+      "finalactivityScore": _FinalactivityScore,
     });
     isLoading = false;
     setState(() {});
