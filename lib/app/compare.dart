@@ -180,7 +180,7 @@ class _CompareScreenState extends State<CompareScreen> {
                               Text(userData1[0].usersName.toString(),
                                   style: Theme.of(context).textTheme.headline4),
                               Text("مجموع"),
-                              Text(userData1[0].userFinalScore.toString(),
+                              Text(userData1[0].userfinalScore.toString(),
                                   style: Theme.of(context).textTheme.bodyText2),
                             ],
                           ),
@@ -207,7 +207,7 @@ class _CompareScreenState extends State<CompareScreen> {
                               Text(userData2[0].usersName.toString(),
                                   style: Theme.of(context).textTheme.headline4),
                               Text("مجموع"),
-                              Text(userData2[0].userFinalScore.toString(),
+                              Text(userData2[0].userfinalScore.toString(),
                                   style: Theme.of(context).textTheme.bodyText2),
                             ],
                           ),
@@ -258,16 +258,48 @@ class _CompareScreenState extends State<CompareScreen> {
                               LineSeries<ScoreModel, String>(
                                   // Bind data source
                                   dataSource: score1,
-                                  xValueMapper: (ScoreModel score1, _) =>
-                                      score1.dayNumber,
+                                  xValueMapper: (ScoreModel score, _) => score
+                                              .dayNumber ==
+                                          "1"
+                                      ? "اث"
+                                      : score.dayNumber == "2"
+                                          ? "ثلا"
+                                          : score.dayNumber == "3"
+                                              ? "ارب"
+                                              : score.dayNumber == "4"
+                                                  ? "خمي"
+                                                  : score.dayNumber == "5"
+                                                      ? "جمع"
+                                                      : score.dayNumber == "6"
+                                                          ? "سبت"
+                                                          : score.dayNumber ==
+                                                                  "7"
+                                                              ? "احد"
+                                                              : "",
                                   yValueMapper: (ScoreModel score1, _) =>
                                       int.parse(score1.score!),
                                   name: userData1[0].usersName.toString()),
                               LineSeries<ScoreModel, String>(
                                   // Bind data source
                                   dataSource: score2,
-                                  xValueMapper: (ScoreModel score2, _) =>
-                                      score2.dayNumber,
+                                  xValueMapper: (ScoreModel score, _) => score
+                                              .dayNumber ==
+                                          "1"
+                                      ? "اث"
+                                      : score.dayNumber == "2"
+                                          ? "ثلا"
+                                          : score.dayNumber == "3"
+                                              ? "ارب"
+                                              : score.dayNumber == "4"
+                                                  ? "خمي"
+                                                  : score.dayNumber == "5"
+                                                      ? "جمع"
+                                                      : score.dayNumber == "6"
+                                                          ? "سبت"
+                                                          : score.dayNumber ==
+                                                                  "7"
+                                                              ? "احد"
+                                                              : "",
                                   yValueMapper: (ScoreModel score2, _) =>
                                       int.parse(score2.score!),
                                   name: userData2[0].usersName.toString()),

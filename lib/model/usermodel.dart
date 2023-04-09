@@ -6,7 +6,12 @@ class UserModel {
   String? usersPhone;
   String? usersImage;
   String? userJoinedAt;
-  String? userFinalScore;
+  String? userfinalScore;
+  String? userfinalprayScore;
+  String? userfinalsunahScore;
+  String? userfinalnuafelScore;
+  String? userfinalquranScore;
+  String? userfinalactivityScore;
   String? userWeek;
   String? userTotalScore;
   String? userSubGroup;
@@ -19,7 +24,12 @@ class UserModel {
     this.usersEmail,
     this.usersImage,
     this.userJoinedAt,
-    this.userFinalScore,
+    this.userfinalScore,
+    this.userfinalprayScore,
+    this.userfinalsunahScore,
+    this.userfinalnuafelScore,
+    this.userfinalquranScore,
+    this.userfinalactivityScore,
     this.userWeek,
     this.userTotalScore,
     this.userSubGroup,
@@ -35,7 +45,12 @@ class UserModel {
     usersPhone = json['phone'];
     usersImage = json['image'];
     userJoinedAt = json['joinedAt'];
-    userFinalScore = json['finalScore'];
+    userfinalScore = json['finalScore'];
+    userfinalprayScore = json['finalprayScore'];
+    userfinalsunahScore = json['finalsunahScore'];
+    userfinalnuafelScore = json['finalnuafelScore'];
+    userfinalquranScore = json['finalquranScore'];
+    userfinalactivityScore = json['finalactivityScore'];
     userWeek = json['week'];
     userTotalScore = json['totalScore'];
     userSubGroup = json['subGroup'];
@@ -51,7 +66,12 @@ class UserModel {
     data['password'] = this.usersPassword;
     data['phone'] = this.usersPhone;
     data['image'] = this.usersImage;
-    data['finalScore'] = this.userFinalScore;
+    data['finalScore'] = this.userfinalScore;
+    data['finalprayScore'] = this.userfinalprayScore;
+    data['finalsunahScore'] = this.userfinalsunahScore;
+    data['finalnuafelScore'] = this.userfinalnuafelScore;
+    data['finalquranScore'] = this.userfinalquranScore;
+    data['finalactivityScore'] = this.userfinalactivityScore;
     data['week'] = this.userWeek;
     data['totalScore'] = this.userTotalScore;
     data['subGroup'] = this.userSubGroup;

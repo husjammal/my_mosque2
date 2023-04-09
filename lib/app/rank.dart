@@ -75,7 +75,7 @@ class _RankState extends State<Rank> {
                   InkWell(
                     child: Column(
                       children: [
-                        Icon(Icons.favorite, size: 15.0),
+                        Icon(Icons.star, size: 15.0),
                         Text(
                           "كلي",
                           style: TextStyle(fontSize: 15.0),
@@ -91,7 +91,7 @@ class _RankState extends State<Rank> {
                   InkWell(
                     child: Column(
                       children: [
-                        Icon(Icons.favorite, size: 15.0),
+                        Icon(Icons.star, size: 15.0),
                         Text(
                           "صلاة",
                           style: TextStyle(fontSize: 15.0),
@@ -107,7 +107,7 @@ class _RankState extends State<Rank> {
                   InkWell(
                     child: Column(
                       children: [
-                        Icon(Icons.favorite, size: 15.0),
+                        Icon(Icons.star, size: 15.0),
                         Text(
                           "سنن",
                           style: TextStyle(fontSize: 15.0),
@@ -123,7 +123,7 @@ class _RankState extends State<Rank> {
                   InkWell(
                     child: Column(
                       children: [
-                        Icon(Icons.favorite, size: 15.0),
+                        Icon(Icons.star, size: 15.0),
                         Text(
                           "نوافل",
                           style: TextStyle(fontSize: 15.0),
@@ -139,7 +139,7 @@ class _RankState extends State<Rank> {
                   InkWell(
                     child: Column(
                       children: [
-                        Icon(Icons.favorite, size: 15.0),
+                        Icon(Icons.star, size: 15.0),
                         Text(
                           "قران",
                           style: TextStyle(fontSize: 15.0),
@@ -156,7 +156,7 @@ class _RankState extends State<Rank> {
                     highlightColor: Colors.green,
                     child: Column(
                       children: [
-                        Icon(Icons.favorite, size: 15.0),
+                        Icon(Icons.star, size: 15.0),
                         Text(
                           "نشاط",
                           style: TextStyle(fontSize: 15.0),
@@ -226,6 +226,7 @@ class _RankState extends State<Rank> {
                               usermodel:
                                   UserModel.fromJson(snapshot.data['data'][i]),
                               rank_index: i,
+                              sortColumn: sortColumn,
                             );
                           });
                     }

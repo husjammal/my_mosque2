@@ -128,7 +128,7 @@ class _HomeState extends State<Home> {
       /////////////////////////////////////////////////////////////////////
       //// the total score
       _TotalScore = userData[0].userTotalScore.toString();
-      var oldFinalScore = userData[0].userFinalScore.toString();
+      var oldFinalScore = userData[0].userfinalScore.toString();
       if (oldFinalScore == _FinalScore) {
         newTotalScore = _TotalScore;
         sharedPref.setString("totalScore", newTotalScore!);

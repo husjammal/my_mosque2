@@ -21,6 +21,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isLoading = false;
   TooltipBehavior? _tooltipBehavior;
 
+  String? _group1SelectedValue;
+
   void getOneUser(String userID) async {
     isLoading = true;
     var response = await postRequest(linkViewOneUser, {
@@ -62,6 +64,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // print('profile initState');
     dt = DateTime.now();
     _tooltipBehavior = TooltipBehavior(enable: true);
+    _group1SelectedValue = "1";
+
     getOneUser(sharedPref.getString("id").toString());
     getScore(sharedPref.getString("id").toString());
     // print("List Size: ${score.length}");
@@ -132,6 +136,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 10),
 
                     /// -- MENU
+                    SizedBox(
+                      height: 100.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Column(children: [
+                            Text("اليومي"),
+                            Radio(
+                                value: "1",
+                                groupValue: _group1SelectedValue,
+                                onChanged: _group1Changes),
+                          ]),
+                          Column(children: [
+                            Text("الاسبوعي"),
+                            Radio(
+                                value: "2",
+                                groupValue: _group1SelectedValue,
+                                onChanged: _group1Changes),
+                          ]),
+                          Column(children: [
+                            Text("نسبي"),
+                            Radio(
+                                value: "3",
+                                groupValue: _group1SelectedValue,
+                                onChanged: _group1Changes),
+                          ]),
+                        ],
+                      ),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                         color: const Color(0xfff3c8fb),
@@ -154,27 +189,268 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ), //BoxShadow
                         ],
                       ),
-                      child: SfCartesianChart(
-                          // Initialize category axis
-                          primaryXAxis: CategoryAxis(),
-                          // Chart title
-                          title: ChartTitle(text: 'مجموعي اليومي هذا الاسبوع'),
-                          // Enable legend
-                          // legend: Legend(isVisible: true),
-                          // Enable tooltip
-                          tooltipBehavior: _tooltipBehavior,
-                          series: <LineSeries<ScoreModel, String>>[
-                            LineSeries<ScoreModel, String>(
-                                // Bind data source
-                                dataSource: score,
-                                xValueMapper: (ScoreModel score, _) =>
-                                    score.dayNumber,
-                                yValueMapper: (ScoreModel score, _) =>
-                                    int.parse(score.score!),
-                                dataLabelSettings:
-                                    DataLabelSettings(isVisible: true)),
-                          ]),
+                      child: _group1SelectedValue == "1"
+                          ? SfCartesianChart(
+                              // Initialize category axis
+                              primaryXAxis: CategoryAxis(),
+                              // Chart title
+                              title:
+                                  ChartTitle(text: 'مجموعي اليومي هذا الاسبوع'),
+                              // Enable legend
+                              // legend: Legend(isVisible: true),
+                              // Enable tooltip
+                              tooltipBehavior: _tooltipBehavior,
+                              series: <LineSeries<ScoreModel, String>>[
+                                  LineSeries<ScoreModel, String>(
+                                    // Bind data source
+                                    dataSource: score,
+                                    xValueMapper: (ScoreModel score, _) => score
+                                                .dayNumber ==
+                                            "1"
+                                        ? "اث"
+                                        : score.dayNumber == "2"
+                                            ? "ثلا"
+                                            : score.dayNumber == "3"
+                                                ? "ارب"
+                                                : score.dayNumber == "4"
+                                                    ? "خمي"
+                                                    : score.dayNumber == "5"
+                                                        ? "جمع"
+                                                        : score.dayNumber == "6"
+                                                            ? "سبت"
+                                                            : score.dayNumber ==
+                                                                    "7"
+                                                                ? "احد"
+                                                                : "",
+
+                                    yValueMapper: (ScoreModel score, _) =>
+                                        int.parse(score.score!),
+                                    dataLabelSettings:
+                                        DataLabelSettings(isVisible: true),
+                                  ),
+                                ])
+                          : _group1SelectedValue == "2"
+                              ? SfCartesianChart(
+                                  // Initialize category axis
+                                  primaryXAxis: CategoryAxis(),
+                                  // Chart title
+                                  title: ChartTitle(text: 'مجموعي الاسبوعي'),
+                                  // Enable legend
+                                  // legend: Legend(isVisible: true),
+                                  // Enable tooltip
+                                  tooltipBehavior: _tooltipBehavior,
+                                  series: <AreaSeries<ScoreModel, String>>[
+                                      AreaSeries<ScoreModel, String>(
+                                          // Bind data source
+                                          dataSource: score,
+                                          xValueMapper: (ScoreModel score, _) => score
+                                                      .dayNumber ==
+                                                  "1"
+                                              ? "اث"
+                                              : score.dayNumber == "2"
+                                                  ? "ثلا"
+                                                  : score.dayNumber == "3"
+                                                      ? "ارب"
+                                                      : score.dayNumber == "4"
+                                                          ? "خمي"
+                                                          : score.dayNumber ==
+                                                                  "5"
+                                                              ? "جمع"
+                                                              : score.dayNumber ==
+                                                                      "6"
+                                                                  ? "سبت"
+                                                                  : score.dayNumber ==
+                                                                          "7"
+                                                                      ? "احد"
+                                                                      : "",
+                                          yValueMapper: (ScoreModel score, _) =>
+                                              int.parse(score.score!),
+                                          dataLabelSettings: DataLabelSettings(
+                                              isVisible: true)),
+                                    ])
+                              : SfCartesianChart(
+                                  // Initialize category axis
+                                  primaryXAxis: CategoryAxis(),
+                                  // Chart title
+                                  title: ChartTitle(text: 'مجموعي النسبي'),
+                                  // Enable legend
+                                  legend: Legend(
+                                      isVisible: true,
+                                      position: LegendPosition.bottom),
+                                  // Enable tooltip
+                                  tooltipBehavior: _tooltipBehavior,
+                                  series: <ColumnSeries<ScoreModel, String>>[
+                                      ColumnSeries<ScoreModel, String>(
+                                          // Bind data source
+                                          dataSource: score,
+                                          xValueMapper: (ScoreModel score, _) => score
+                                                      .dayNumber ==
+                                                  "1"
+                                              ? "اث"
+                                              : score.dayNumber == "2"
+                                                  ? "ثلا"
+                                                  : score.dayNumber == "3"
+                                                      ? "ارب"
+                                                      : score.dayNumber == "4"
+                                                          ? "خمي"
+                                                          : score.dayNumber ==
+                                                                  "5"
+                                                              ? "جمع"
+                                                              : score.dayNumber ==
+                                                                      "6"
+                                                                  ? "سبت"
+                                                                  : score.dayNumber ==
+                                                                          "7"
+                                                                      ? "احد"
+                                                                      : "",
+                                          yValueMapper: (ScoreModel score, _) =>
+                                              int.parse(score.prayScore!),
+                                          name: "صلاة",
+                                          dataLabelSettings: DataLabelSettings(
+                                              isVisible: true)),
+                                      ColumnSeries<ScoreModel, String>(
+                                          // Bind data source
+                                          dataSource: score,
+                                          xValueMapper: (ScoreModel score, _) => score
+                                                      .dayNumber ==
+                                                  "1"
+                                              ? "اث"
+                                              : score.dayNumber == "2"
+                                                  ? "ثلا"
+                                                  : score.dayNumber == "3"
+                                                      ? "ارب"
+                                                      : score.dayNumber == "4"
+                                                          ? "خمي"
+                                                          : score.dayNumber ==
+                                                                  "5"
+                                                              ? "جمع"
+                                                              : score.dayNumber ==
+                                                                      "6"
+                                                                  ? "سبت"
+                                                                  : score.dayNumber ==
+                                                                          "7"
+                                                                      ? "احد"
+                                                                      : "",
+                                          yValueMapper: (ScoreModel score, _) =>
+                                              int.parse(score.quranScore!),
+                                          name: "قران",
+                                          dataLabelSettings: DataLabelSettings(
+                                              isVisible: true)),
+                                      ColumnSeries<ScoreModel, String>(
+                                          // Bind data source
+                                          dataSource: score,
+                                          xValueMapper: (ScoreModel score, _) => score
+                                                      .dayNumber ==
+                                                  "1"
+                                              ? "اث"
+                                              : score.dayNumber == "2"
+                                                  ? "ثلا"
+                                                  : score.dayNumber == "3"
+                                                      ? "ارب"
+                                                      : score.dayNumber == "4"
+                                                          ? "خمي"
+                                                          : score.dayNumber ==
+                                                                  "5"
+                                                              ? "جمع"
+                                                              : score.dayNumber ==
+                                                                      "6"
+                                                                  ? "سبت"
+                                                                  : score.dayNumber ==
+                                                                          "7"
+                                                                      ? "احد"
+                                                                      : "",
+                                          yValueMapper: (ScoreModel score, _) =>
+                                              int.parse(score.duaaScore!),
+                                          name: "دعاء",
+                                          dataLabelSettings: DataLabelSettings(
+                                              isVisible: true)),
+                                      ColumnSeries<ScoreModel, String>(
+                                          // Bind data source
+                                          dataSource: score,
+                                          xValueMapper: (ScoreModel score, _) => score
+                                                      .dayNumber ==
+                                                  "1"
+                                              ? "اث"
+                                              : score.dayNumber == "2"
+                                                  ? "ثلا"
+                                                  : score.dayNumber == "3"
+                                                      ? "ارب"
+                                                      : score.dayNumber == "4"
+                                                          ? "خمي"
+                                                          : score.dayNumber ==
+                                                                  "5"
+                                                              ? "جمع"
+                                                              : score.dayNumber ==
+                                                                      "6"
+                                                                  ? "سبت"
+                                                                  : score.dayNumber ==
+                                                                          "7"
+                                                                      ? "احد"
+                                                                      : "",
+                                          yValueMapper: (ScoreModel score, _) =>
+                                              int.parse(score.sunahScore!),
+                                          name: "سنن",
+                                          dataLabelSettings: DataLabelSettings(
+                                              isVisible: true)),
+                                      ColumnSeries<ScoreModel, String>(
+                                          // Bind data source
+                                          dataSource: score,
+                                          xValueMapper: (ScoreModel score, _) => score
+                                                      .dayNumber ==
+                                                  "1"
+                                              ? "اث"
+                                              : score.dayNumber == "2"
+                                                  ? "ثلا"
+                                                  : score.dayNumber == "3"
+                                                      ? "ارب"
+                                                      : score.dayNumber == "4"
+                                                          ? "خمي"
+                                                          : score.dayNumber ==
+                                                                  "5"
+                                                              ? "جمع"
+                                                              : score.dayNumber ==
+                                                                      "6"
+                                                                  ? "سبت"
+                                                                  : score.dayNumber ==
+                                                                          "7"
+                                                                      ? "احد"
+                                                                      : "",
+                                          yValueMapper: (ScoreModel score, _) =>
+                                              int.parse(score.nuafelScore!),
+                                          name: "نوافل",
+                                          dataLabelSettings: DataLabelSettings(
+                                              isVisible: true)),
+                                      ColumnSeries<ScoreModel, String>(
+                                          // Bind data source
+                                          dataSource: score,
+                                          xValueMapper: (ScoreModel score, _) => score
+                                                      .dayNumber ==
+                                                  "1"
+                                              ? "اث"
+                                              : score.dayNumber == "2"
+                                                  ? "ثلا"
+                                                  : score.dayNumber == "3"
+                                                      ? "ارب"
+                                                      : score.dayNumber == "4"
+                                                          ? "خمي"
+                                                          : score.dayNumber ==
+                                                                  "5"
+                                                              ? "جمع"
+                                                              : score.dayNumber ==
+                                                                      "6"
+                                                                  ? "سبت"
+                                                                  : score.dayNumber ==
+                                                                          "7"
+                                                                      ? "احد"
+                                                                      : "",
+                                          yValueMapper: (ScoreModel score, _) =>
+                                              int.parse(score.activityScore!),
+                                          name: "نشاط",
+                                          dataLabelSettings: DataLabelSettings(
+                                              isVisible: true)),
+                                    ]),
                     ),
+
                     const SizedBox(height: 30),
                     const Divider(),
                     const SizedBox(height: 10),
@@ -183,5 +459,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
     );
+  }
+
+  void _group1Changes(String? value) {
+    setState(() {
+      _group1SelectedValue = value;
+    });
   }
 }

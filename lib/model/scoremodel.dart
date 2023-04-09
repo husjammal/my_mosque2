@@ -4,6 +4,8 @@ class ScoreModel {
   String? score;
   String? duaaScore;
   String? prayScore;
+  String? sunahScore;
+  String? nuafelScore;
   String? quranScore;
   String? activityScore;
 
@@ -13,6 +15,8 @@ class ScoreModel {
     this.score,
     this.duaaScore,
     this.prayScore,
+    this.sunahScore,
+    this.nuafelScore,
     this.quranScore,
     this.activityScore,
   });
@@ -23,6 +27,8 @@ class ScoreModel {
     score = json['score'];
     duaaScore = json['duaaScore'];
     prayScore = json['prayScore'];
+    sunahScore = json['sunahScore'];
+    nuafelScore = json['nuafelScore'];
     quranScore = json['quranScore'];
     activityScore = json['activityScore'];
   }
@@ -34,6 +40,8 @@ class ScoreModel {
     data['score'] = this.score;
     data['duaaScore'] = this.duaaScore;
     data['prayScore'] = this.prayScore;
+    data['sunahScore'] = this.sunahScore;
+    data['nuafelScore'] = this.nuafelScore;
     data['quranScore'] = this.quranScore;
     data['activityScore'] = this.activityScore;
     return data;

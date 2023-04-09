@@ -7,8 +7,10 @@ class CardUsers extends StatelessWidget {
   final void Function()? ontap;
   final UserModel? usermodel;
   final int? rank_index;
+  final String? sortColumn;
 
-  const CardUsers({Key? key, this.ontap, this.usermodel, this.rank_index})
+  const CardUsers(
+      {Key? key, this.ontap, this.usermodel, this.rank_index, this.sortColumn})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -105,7 +107,18 @@ class CardUsers extends StatelessWidget {
                           style: TextStyle(color: Colors.white, fontSize: 8.0),
                         ),
                         // Text(""),
-                        Text("${usermodel!.userFinalScore}",
+                        Text(
+                            sortColumn == "finalScore"
+                                ? "${usermodel!.userfinalScore}"
+                                : sortColumn == "finalprayScore"
+                                    ? "${usermodel!.userfinalprayScore}"
+                                    : sortColumn == "finalsunahScore"
+                                        ? "${usermodel!.userfinalsunahScore}"
+                                        : sortColumn == "finalnuafelScore"
+                                            ? "${usermodel!.userfinalnuafelScore}"
+                                            : sortColumn == "finalquranScore"
+                                                ? "${usermodel!.userfinalquranScore}"
+                                                : "${usermodel!.userfinalactivityScore}",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15.0,
