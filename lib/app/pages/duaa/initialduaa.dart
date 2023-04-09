@@ -42,7 +42,7 @@ class _InitialDuaaState extends State<InitialDuaa> {
           child: Column(
             children: <Widget>[
               Container(
-                color: backgroundColor,
+                color: buttonColor2,
                 constraints: BoxConstraints.expand(height: 50),
                 child: TabBar(tabs: [
                   Tab(text: "ادعية"),

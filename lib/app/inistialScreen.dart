@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:mymosque/app/about.dart';
-import 'package:mymosque/app/boarding/boarding.dart';
 import 'package:mymosque/app/home.dart';
 import 'package:mymosque/app/profilescreen.dart';
 import 'package:mymosque/app/rank.dart';
@@ -79,14 +76,13 @@ class _InitialScreenState extends State<InitialScreen> {
             iconSize: 20,
             mouseCursor: SystemMouseCursors.grab,
             selectedFontSize: 12,
-            selectedIconTheme:
-                IconThemeData(color: Colors.amberAccent, size: 24),
-            selectedItemColor: Colors.amberAccent,
+            selectedIconTheme: IconThemeData(color: textColor, size: 24),
+            selectedItemColor: textColor,
             selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
             unselectedIconTheme: IconThemeData(
-              color: Colors.deepPurpleAccent,
+              color: buttonColor2,
             ),
-            unselectedItemColor: Colors.deepPurpleAccent,
+            unselectedItemColor: buttonColor2,
             showSelectedLabels: true,
             showUnselectedLabels: false,
             items: const <BottomNavigationBarItem>[
@@ -113,7 +109,7 @@ class _InitialScreenState extends State<InitialScreen> {
               padding: EdgeInsets.zero,
               children: [
                 DrawerHeader(
-                  decoration: BoxDecoration(color: const Color(0xff764abc)),
+                  decoration: BoxDecoration(color: buttonColor2),
                   child: Row(
                     children: <Widget>[
                       CircleAvatar(

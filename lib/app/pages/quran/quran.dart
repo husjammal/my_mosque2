@@ -146,7 +146,7 @@ class _QuranState extends State<Quran> {
                       color: buttonColor,
                     ),
                     child: Image.asset(
-                      'assets/images/BasmAllah.png',
+                      'assets/images/BasmAllah_green.png',
                       width: double.infinity,
                       height: 50,
                       fit: BoxFit.cover,
@@ -163,7 +163,8 @@ class _QuranState extends State<Quran> {
                       borderRadius: BorderRadius.circular(16.0),
                       color: buttonColor,
                       image: const DecorationImage(
-                        image: AssetImage('assets/images/Quran_layout.png'),
+                        image:
+                            AssetImage('assets/images/Quran_layout_green.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -179,8 +180,8 @@ class _QuranState extends State<Quran> {
                             children: <Widget>[
                               Text(
                                 'قراءة',
-                                style: TextStyle(
-                                    fontSize: 22.0, color: Colors.grey[400]),
+                                style:
+                                    TextStyle(fontSize: 22.0, color: textColor),
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -202,21 +203,19 @@ class _QuranState extends State<Quran> {
                                             const EdgeInsets.symmetric(
                                                 vertical: 8, horizontal: 10),
                                         labelText: "عدد صفحات القراءة",
-                                        labelStyle: const TextStyle(
-                                            color: Colors.amber),
+                                        labelStyle:
+                                            const TextStyle(color: textColor2),
                                         hintText: "عدد صفحات القراءة",
-                                        errorStyle: const TextStyle(
-                                            color: Colors.amber),
+                                        errorStyle:
+                                            const TextStyle(color: textColor2),
                                         enabledBorder: const OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.deepPurple,
-                                                width: 1),
+                                                color: buttonColor, width: 1),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
                                         focusedBorder: const OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.purpleAccent,
-                                                width: 1),
+                                                color: buttonColor2, width: 1),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
                                       ),
@@ -278,8 +277,8 @@ class _QuranState extends State<Quran> {
                               ),
                               Text(
                                 'حفظ',
-                                style: TextStyle(
-                                    fontSize: 22.0, color: Colors.grey[400]),
+                                style:
+                                    TextStyle(fontSize: 22.0, color: textColor),
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -301,21 +300,19 @@ class _QuranState extends State<Quran> {
                                             const EdgeInsets.symmetric(
                                                 vertical: 8, horizontal: 10),
                                         labelText: "عدد صفحات الحفظ",
-                                        labelStyle: const TextStyle(
-                                            color: Colors.amber),
+                                        labelStyle:
+                                            const TextStyle(color: textColor2),
                                         hintText: "عدد صفحات الحفظ",
-                                        errorStyle: const TextStyle(
-                                            color: Colors.amber),
+                                        errorStyle:
+                                            const TextStyle(color: textColor2),
                                         enabledBorder: const OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.deepPurple,
-                                                width: 1),
+                                                color: buttonColor, width: 1),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
                                         focusedBorder: const OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.purpleAccent,
-                                                width: 1),
+                                                color: buttonColor2, width: 1),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
                                       ),
@@ -377,8 +374,8 @@ class _QuranState extends State<Quran> {
                               ),
                               Text(
                                 'استماع',
-                                style: TextStyle(
-                                    fontSize: 22.0, color: Colors.grey[400]),
+                                style:
+                                    TextStyle(fontSize: 22.0, color: textColor),
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -400,21 +397,19 @@ class _QuranState extends State<Quran> {
                                             const EdgeInsets.symmetric(
                                                 vertical: 8, horizontal: 10),
                                         labelText: "عدد صفحات الاستماع",
-                                        labelStyle: const TextStyle(
-                                            color: Colors.amber),
+                                        labelStyle:
+                                            const TextStyle(color: textColor2),
                                         hintText: "عدد صفحات الاستماع",
-                                        errorStyle: const TextStyle(
-                                            color: Colors.amber),
+                                        errorStyle:
+                                            const TextStyle(color: textColor2),
                                         enabledBorder: const OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.deepPurple,
-                                                width: 1),
+                                                color: buttonColor, width: 1),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
                                         focusedBorder: const OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.purpleAccent,
-                                                width: 1),
+                                                color: buttonColor2, width: 1),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
                                       ),

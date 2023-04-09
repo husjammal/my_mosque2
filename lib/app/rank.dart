@@ -44,14 +44,14 @@ class _RankState extends State<Rank> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 160.0,
-          backgroundColor: backgroundColor,
+          toolbarHeight: 180.0,
+          backgroundColor: buttonColor2,
           centerTitle: true,
           actions: const [],
           title: Column(
             children: [
               Image.asset(
-                'assets/images/compare_bannar.png',
+                'assets/images/compare_bannar2_green.png',
                 height: 50.0,
                 width: double.infinity,
                 fit: BoxFit.fill,
@@ -62,7 +62,7 @@ class _RankState extends State<Rank> {
               Text(
                 "باقي لنهاية تحدي الاسبوع ${8 - int.parse(dt.weekday.toString())} يوم!",
                 style: TextStyle(
-                    color: Colors.yellow,
+                    color: textColor2,
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold),
               ),

@@ -276,7 +276,7 @@ class _HomeState extends State<Home> {
                 )
               : Scaffold(
                   appBar: AppBar(
-                    backgroundColor: Colors.purple[300],
+                    backgroundColor: buttonColor2,
                     actions: const [],
                     toolbarHeight: 40,
                     title: Container(
@@ -315,7 +315,7 @@ class _HomeState extends State<Home> {
                             style: TextStyle(
                                 fontSize: 22.0,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.yellow),
+                                color: textColor2),
                           ),
                           SizedBox(
                             height: 15.0,
@@ -365,7 +365,7 @@ class _HomeState extends State<Home> {
                                 Text(
                                   'صلاتي',
                                   style: TextStyle(
-                                      fontSize: 22.0, color: Colors.grey[400]),
+                                      fontSize: 22.0, color: textColor),
                                 ),
                               ]),
                               SizedBox(
@@ -412,7 +412,7 @@ class _HomeState extends State<Home> {
                                 Text(
                                   'قرآني',
                                   style: TextStyle(
-                                      fontSize: 22.0, color: Colors.grey[400]),
+                                      fontSize: 22.0, color: textColor),
                                 ),
                               ]),
                             ],
@@ -466,8 +466,7 @@ class _HomeState extends State<Home> {
                                   Text(
                                     'نشاطاتي',
                                     style: TextStyle(
-                                        fontSize: 22.0,
-                                        color: Colors.grey[400]),
+                                        fontSize: 22.0, color: textColor),
                                   ),
                                 ]),
                                 SizedBox(
@@ -516,8 +515,7 @@ class _HomeState extends State<Home> {
                                   Text(
                                     'أذكاري',
                                     style: TextStyle(
-                                        fontSize: 22.0,
-                                        color: Colors.grey[400]),
+                                        fontSize: 22.0, color: textColor),
                                   ),
                                 ]),
                               ]),

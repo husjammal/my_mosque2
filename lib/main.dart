@@ -9,6 +9,7 @@ import 'package:mymosque/app/inistialScreen.dart';
 import 'package:mymosque/app/pages/quran/quran.dart';
 import 'package:mymosque/app/profilescreen.dart';
 import 'package:mymosque/app/splash.dart';
+import 'package:mymosque/constant/colorConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences sharedPref;
@@ -30,11 +31,11 @@ class MyApp extends StatelessWidget {
       // Application theme data, you can set the colors for the application as
       // you want
       theme: ThemeData(
-        primaryColor: const Color(0xff9a55f4),
+        primaryColor: buttonColor,
         // textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.purple)),
-        colorScheme:
-            ColorScheme.fromSwatch().copyWith(secondary: Colors.yellowAccent),
-        errorColor: Colors.yellow,
+        // colorScheme:
+        //     ColorScheme.fromSwatch().copyWith(secondary: Colors.yellowAccent),
+        // errorColor: Colors.yellow,
       ),
       // A widget which will be started on application startup
       initialRoute: sharedPref.getString("id") == null ? "login" : "splash",

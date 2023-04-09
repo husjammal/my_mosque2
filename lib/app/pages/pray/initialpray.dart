@@ -50,9 +50,9 @@ class _InitialPrayState extends State<InitialPray> {
           child: Column(
             children: <Widget>[
               Container(
-                color: backgroundColor,
+                color: buttonColor2,
                 constraints: BoxConstraints.expand(height: 50),
-                child: TabBar(tabs: [
+                child: TabBar(indicatorColor: textColor2, tabs: [
                   Tab(text: "الفروض"),
                   Tab(text: "السنن"),
                   Tab(text: "النوافل"),

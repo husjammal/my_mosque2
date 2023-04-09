@@ -83,7 +83,7 @@ class CardUsers extends StatelessWidget {
                       Text("  "),
                       Text(
                         rank_index! <= 2 ? "الاوائل" : "",
-                        style: TextStyle(fontSize: 20.0, color: Colors.yellow),
+                        style: TextStyle(fontSize: 20.0, color: textColor2),
                       ),
                     ],
                   ),
@@ -98,7 +98,7 @@ class CardUsers extends StatelessWidget {
                     padding: EdgeInsets.all(2.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      color: Colors.deepPurple,
+                      color: buttonColor,
                     ),
                     child: Column(
                       children: [
