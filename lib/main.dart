@@ -7,6 +7,7 @@ import 'package:mymosque/app/boarding/boarding.dart';
 import 'package:mymosque/app/home.dart';
 import 'package:mymosque/app/inistialScreen.dart';
 import 'package:mymosque/app/pages/quran/quran.dart';
+import 'package:mymosque/app/setting.dart';
 import 'package:mymosque/app/profilescreen.dart';
 import 'package:mymosque/app/splash.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -17,11 +18,13 @@ late SharedPreferences sharedPref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPref = await SharedPreferences.getInstance();
+  bool isSwitched = false;
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  late bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,12 +33,10 @@ class MyApp extends StatelessWidget {
       title: 'My Mosque',
       // Application theme data, you can set the colors for the application as
       // you want
+
       theme: ThemeData(
+        brightness: isSwitched ? Brightness.dark : Brightness.light,
         primaryColor: buttonColor,
-        // textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.purple)),
-        // colorScheme:
-        //     ColorScheme.fromSwatch().copyWith(secondary: Colors.yellowAccent),
-        // errorColor: Colors.yellow,
       ),
       // A widget which will be started on application startup
       initialRoute: sharedPref.getString("id") == null ? "login" : "splash",
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         'about': (context) => AboutUsPage(),
         'quran': (context) => Quran(),
         'home': (context) => Home(),
+        'setting': (context) => SettingPage(),
       },
     );
   }

@@ -13,6 +13,8 @@ const String linkWeek = '$linkServerName/actions/week.php';
 const String linkVersion = '$linkServerName/actions/version.php';
 const String linkWeekly = '$linkServerName/actions/weekly.php';
 const String linkIsWeekChange = '$linkServerName/actions/is_week.php';
+const String linkBadge = '$linkServerName/actions/badge.php';
+const String linkViewBadge = '$linkServerName/actions/viewBadge.php';
 
 // crud links
 //const String linkAddNotes = '$linkServerName/crud/add.php';

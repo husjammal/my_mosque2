@@ -174,6 +174,15 @@ class _InitialScreenState extends State<InitialScreen> {
                   padding: const EdgeInsets.all(16.0),
                 ),
                 ListTile(
+                  leading: Icon(Icons.settings),
+                  title: const Text('اعدادات التطبيق'),
+                  onTap: () {
+                    // Navigator.pop(context);
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil("setting", (route) => false);
+                  },
+                ),
+                ListTile(
                   leading: Icon(Icons.help),
                   title: const Text('حول التطبيق'),
                   onTap: () {

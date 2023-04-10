@@ -128,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
                         child: const Text("تعديل معلوماتك",
-                            style: TextStyle(color: Colors.grey)),
+                            style: TextStyle(color: textColor)),
                       ),
                     ),
                     const SizedBox(height: 30),

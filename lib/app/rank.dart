@@ -51,7 +51,7 @@ class _RankState extends State<Rank> {
           title: Column(
             children: [
               Image.asset(
-                'assets/images/compare_bannar2_green.png',
+                'assets/images/compare_bannar.png',
                 height: 50.0,
                 width: double.infinity,
                 fit: BoxFit.fill,

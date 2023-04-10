@@ -5,6 +5,7 @@ import 'package:mymosque/app/pages/activity/activity.dart';
 import 'package:mymosque/app/pages/duaa/initialduaa.dart';
 import 'package:mymosque/app/pages/pray/initialpray.dart';
 import 'package:mymosque/app/pages/quran/quran.dart';
+import 'package:mymosque/app/weekresult.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
@@ -59,6 +60,10 @@ class _HomeState extends State<Home> {
     /// the rest of the week//////////////////////////////////////////////////
     _userWeek = userData[0].userWeek.toString();
     if (int.parse(weekNumber.toString()) > int.parse(_userWeek.toString())) {
+      print("recorde the badges for the first three");
+      print("userDataList $userDataList");
+      print("userDate $userData");
+      save_badges();
       print("delete the old week score");
       reset_val();
       save_Week();
@@ -170,18 +175,6 @@ class _HomeState extends State<Home> {
     setState(() {});
   }
 
-  rest_isWeeklyChange() async {
-    // calculate the total score
-    // save the database
-    isLoading = true;
-    setState(() {});
-    var response = await postRequest(linkIsWeekChange, {
-      "user_id": sharedPref.getString("id"),
-    });
-    isLoading = false;
-    setState(() {});
-  }
-
   save_weekly() async {
     // save the finalScore in weekly
     // save the database
@@ -207,12 +200,25 @@ class _HomeState extends State<Home> {
       "asr": "0",
       "magrib": "0",
       "isyah": "0",
+      "subuhSunah": "0",
+      "zhurSunah": "0",
+      "asrSunah": "0",
+      "magribSunah": "0",
+      "isyahSunah": "0",
+      "watterSunah": "0",
+      "duhhaNafel": "0",
+      "tarawehNafel": "0",
+      "keyamNafel": "0",
+      "tahajoudNafel": "0",
+      "actList": "0,0,0,0,0,0,0",
       "quranRead": "0",
       "quranLearn": "0",
       "quranListen": "0",
       "duaaScore": "0",
       "prayScore": "0",
       "quranScore": "0",
+      "sunahScore": "0",
+      "nuafelScore": "0",
       "activityScore": "0",
     });
     isLoading = false;
@@ -227,15 +233,86 @@ class _HomeState extends State<Home> {
 
   save_Week() async {
     // calculate the total score
+
     // save the database
     isLoading = true;
     setState(() {});
     var response = await postRequest(linkWeek, {
       "finalScore": "0",
+      "finalprayScore": "0",
+      "finalsunahScore": "0",
+      "finalnuafelScore": "0",
+      "finalquranScore": "0",
+      "finalactivityScore": "0",
       "week": weekNumber.toString(),
+      "isWeekChange": "1"
     });
     isLoading = false;
     setState(() {});
+  }
+
+  save_badges() async {
+    // all users
+    var response4 = await postRequest(linkViewUsers, {
+      "id": sharedPref.getString("id"),
+      "day_number": dt.weekday.toString(),
+    });
+    var userDataList4 = response4['data'] as List;
+    var userData4 = userDataList4
+        .map<UserModel>((json) => UserModel.fromJson(json))
+        .toList();
+
+    userData4.sort((a, b) {
+      int cmp =
+          int.parse(b.userfinalScore!).compareTo(int.parse(a.userfinalScore!));
+      if (cmp != 0) return cmp;
+      return int.parse(b.userTotalScore!)
+          .compareTo(int.parse(a.userTotalScore!));
+    });
+    var firstfinalBadgeID = userData4[0].usersId;
+    var secondfinalBadgeID = userData4[1].usersId;
+    var thriedfinalBadgeID = userData4[2].usersId;
+    print(
+        "badge $firstfinalBadgeID , $secondfinalBadgeID, $thriedfinalBadgeID");
+
+    userData4.sort((a, b) {
+      int cmp = int.parse(b.userfinalquranScore!)
+          .compareTo(int.parse(a.userfinalquranScore!));
+      if (cmp != 0) return cmp;
+      return int.parse(b.userTotalScore!)
+          .compareTo(int.parse(a.userTotalScore!));
+    });
+    var firstquranBadgeID = userData4[0].usersId;
+    var secondquranBadgeID = userData4[1].usersId;
+    var thriedquranBadgeID = userData4[2].usersId;
+
+    userData4.sort((a, b) {
+      int cmp = int.parse(b.userfinalprayScore!)
+          .compareTo(int.parse(a.userfinalprayScore!));
+      if (cmp != 0) return cmp;
+      return int.parse(b.userTotalScore!)
+          .compareTo(int.parse(a.userTotalScore!));
+    });
+    var firstprayBadgeID = userData4[0].usersId;
+    var secondprayBadgeID = userData4[1].usersId;
+    var thriedprayBadgeID = userData4[2].usersId;
+    // save the database
+    isLoading = true;
+    setState(() {});
+    var response3 = await postRequest(linkBadge, {
+      "firstfinalBadgeID": firstfinalBadgeID.toString(),
+      "secondfinalBadgeID": secondfinalBadgeID.toString(),
+      "thriedfinalBadgeID": thriedfinalBadgeID.toString(),
+      "firstquranBadgeID": firstquranBadgeID.toString(),
+      "secondquranBadgeID": secondquranBadgeID.toString(),
+      "thriedquranBadgeID": thriedquranBadgeID.toString(),
+      "firstprayBadgeID": firstprayBadgeID.toString(),
+      "secondprayBadgeID": secondprayBadgeID.toString(),
+      "thriedprayBadgeID": thriedprayBadgeID.toString()
+    });
+    isLoading = false;
+    setState(() {});
+    // print("response3 $response3");
   }
 
   @override
@@ -257,23 +334,7 @@ class _HomeState extends State<Home> {
               child: CircularProgressIndicator(),
             )
           : userData[0].userIsWeekChange == "1"
-              ? Scaffold(
-                  appBar: AppBar(
-                    title: Text("نتائج الاسبوع الماضي"),
-                  ),
-                  body: Column(
-                    children: [
-                      Text("الفائزون الثلاث الاوائل"),
-                      ElevatedButton(
-                          onPressed: () async {
-                            await rest_isWeeklyChange();
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                "initialScreen", (route) => false);
-                          },
-                          child: Text("متابعة")),
-                    ],
-                  ),
-                )
+              ? WeekResult()
               : Scaffold(
                   appBar: AppBar(
                     backgroundColor: buttonColor2,
@@ -286,13 +347,19 @@ class _HomeState extends State<Home> {
                         borderRadius: BorderRadius.circular(0.0),
                       ),
                       child: isLoading
-                          ? Text("تحميل ...")
+                          ? Text(
+                              "تحميل ...",
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: textColor2),
+                            )
                           : Text(
                               'مجموعك هو $_TodayScore الموافق ل ${dt.day}/${dt.month}/${dt.year} و مجموع الاسبوع هو $_FinalScore',
                               style: TextStyle(
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                                  color: textColor2),
                             ),
                     ),
                   ),
