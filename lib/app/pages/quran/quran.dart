@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mymosque/app/pages/quran/quranlearning.dart';
 import 'package:mymosque/app/pages/quran/quranlistening.dart';
 import 'package:mymosque/app/pages/quran/quranreading.dart';
-import 'package:mymosque/components/customtextform.dart';
 import 'package:mymosque/components/valid.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/main.dart';
-
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant//linkapi.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:mymosque/constant/colorConfig.dart';
 
 // Creating a stateful widget to manage
 // the state of the app
@@ -38,7 +34,6 @@ class _QuranState extends State<Quran> {
   String _quranScore = "0";
   String _activityScore = "0";
 
-  var dt = DateTime.now();
   save_quran(String user_id) async {
     // calculate the quranScore
     quranScore = (int.parse(_quranRead.text)) +
@@ -67,11 +62,35 @@ class _QuranState extends State<Quran> {
     isLoading = false;
     setState(() {});
     if (response['status'] == "success") {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      // Navigator.of(context)
+      //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      AwesomeDialog(
+        context: context,
+        animType: AnimType.LEFTSLIDE,
+        headerAnimationLoop: false,
+        dialogType: DialogType.SUCCES,
+        title: 'تم',
+        desc: 'تم حفظ القران بنجاح',
+        btnOkOnPress: () {
+          debugPrint('OnClcik');
+        },
+        btnOkIcon: Icons.check_circle,
+
+        // onDissmissCallback: () {
+        //   debugPrint('Dialog Dissmiss from callback');
+        // };
+      )..show();
     } else {
       AwesomeDialog(
-          context: context, title: "تنبيه", body: const Text("يوجد خطأ"))
+          context: context,
+          dialogType: DialogType.ERROR,
+          animType: AnimType.RIGHSLIDE,
+          headerAnimationLoop: false,
+          title: 'تنبية',
+          desc: 'يوجد خطأ',
+          btnOkOnPress: () {},
+          btnOkIcon: Icons.cancel,
+          btnOkColor: Colors.red)
         ..show();
     }
   }
@@ -95,6 +114,8 @@ class _QuranState extends State<Quran> {
     return response;
   }
 
+  var dt = DateTime.now();
+  var now = DateTime.now();
   @override
   void initState() {
     // TODO: implement initState
@@ -102,8 +123,6 @@ class _QuranState extends State<Quran> {
     print('quran initState');
     print(sharedPref.getString("id"));
     getQuranNotes();
-    var dt = DateTime.now();
-    setState(() {});
   }
 
 // App widget tree
@@ -113,14 +132,82 @@ class _QuranState extends State<Quran> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('حصّتي من القران'),
+          toolbarHeight: 100.0,
+          title: Column(
+            children: [
+              const Text('حصّتي من القران'),
+              Container(
+                height: 25.0,
+                width: 200,
+                margin: EdgeInsets.all(15.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  color: buttonColor,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    InkWell(
+                      child: Icon(
+                        Icons.arrow_circle_right,
+                        color: Colors.white,
+                      ),
+                      onTap: () {
+                        var new_dt = dt.subtract(Duration(hours: 24));
+                        if (new_dt.weekday < 7) {
+                          dt = new_dt;
+                          setState(() {});
+                          getQuranNotes();
+                        } else {
+                          AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.ERROR,
+                              animType: AnimType.RIGHSLIDE,
+                              headerAnimationLoop: false,
+                              title: 'تنبية',
+                              desc: 'لايمكن العودة اكثر!',
+                              btnOkOnPress: () {},
+                              btnOkIcon: Icons.cancel,
+                              btnOkColor: Colors.red)
+                            ..show();
+                        }
+                      },
+                    ),
+                    Text("اليوم ${dt.day}/${dt.month}/${dt.year}"),
+                    InkWell(
+                      child: Icon(
+                        Icons.arrow_circle_left,
+                        color: Colors.white,
+                      ),
+                      onTap: () {
+                        var new_dt = dt.add(Duration(hours: 24));
+                        if (new_dt.weekday <= 7 /*now.weekday*/ &&
+                            new_dt.weekday != 1) {
+                          dt = new_dt;
+                          setState(() {});
+                          getQuranNotes();
+                        } else {
+                          AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.ERROR,
+                              animType: AnimType.RIGHSLIDE,
+                              headerAnimationLoop: false,
+                              title: 'تنبية',
+                              desc: 'لايمكن التقدم اكثر!',
+                              btnOkOnPress: () {},
+                              btnOkIcon: Icons.cancel,
+                              btnOkColor: Colors.red)
+                            ..show();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
           centerTitle: true,
           backgroundColor: buttonColor,
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            tooltip: 'قائمة',
-            onPressed: () {},
-          ),
+
           actions: [
             IconButton(
               onPressed: () {
@@ -486,8 +573,8 @@ class _QuranState extends State<Quran> {
             String? user_id = sharedPref.getString("id");
             print("user is is $user_id");
             await save_quran(user_id.toString());
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+            // Navigator.of(context)
+            //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
           },
           tooltip: 'حفظ تلاواتي',
           // label: Text('حفظ صلاواتي'),

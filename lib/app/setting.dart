@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mymosque/constant/colorConfig.dart';
-import 'package:settings_ui/settings_ui.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);

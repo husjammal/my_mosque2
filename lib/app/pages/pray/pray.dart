@@ -130,13 +130,15 @@ class _PrayState extends State<Pray> {
   }
 
   var dt = DateTime.now();
+  var now = DateTime.now();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     print('pray initState');
     getNotes();
-    var dt = DateTime.now();
+
     setState(() {});
   }
 
@@ -146,6 +148,81 @@ class _PrayState extends State<Pray> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: backgroundColor,
+          actions: const [],
+          centerTitle: true,
+
+          /// the date selector
+          title: Container(
+            height: 25.0,
+            width: 200,
+            margin: EdgeInsets.all(15.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: buttonColor,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                InkWell(
+                  child: Icon(
+                    Icons.arrow_circle_right,
+                    color: Colors.white,
+                  ),
+                  onTap: () {
+                    var new_dt = dt.subtract(Duration(hours: 24));
+                    if (new_dt.weekday < 7) {
+                      dt = new_dt;
+                      setState(() {});
+                      getNotes();
+                    } else {
+                      AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.ERROR,
+                          animType: AnimType.RIGHSLIDE,
+                          headerAnimationLoop: false,
+                          title: 'تنبية',
+                          desc: 'لايمكن العودة اكثر!',
+                          btnOkOnPress: () {},
+                          btnOkIcon: Icons.cancel,
+                          btnOkColor: Colors.red)
+                        ..show();
+                    }
+                  },
+                ),
+                Text("اليوم ${dt.day}/${dt.month}/${dt.year}"),
+                InkWell(
+                  child: Icon(
+                    Icons.arrow_circle_left,
+                    color: Colors.white,
+                  ),
+                  onTap: () {
+                    var new_dt = dt.add(Duration(hours: 24));
+                    if (new_dt.weekday <= 7 /*now.weekday*/ &&
+                        new_dt.weekday != 1) {
+                      dt = new_dt;
+                      setState(() {});
+                      getNotes();
+                    } else {
+                      AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.ERROR,
+                          animType: AnimType.RIGHSLIDE,
+                          headerAnimationLoop: false,
+                          title: 'تنبية',
+                          desc: 'لايمكن التقدم اكثر!',
+                          btnOkOnPress: () {},
+                          btnOkIcon: Icons.cancel,
+                          btnOkColor: Colors.red)
+                        ..show();
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
         body: isLoading == true
             ? Scaffold(
                 backgroundColor: backgroundColor,
@@ -160,6 +237,7 @@ class _PrayState extends State<Pray> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
                           //height: 45.0,

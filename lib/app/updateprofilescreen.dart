@@ -24,6 +24,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController phone = TextEditingController();
+  String joinedAt = "";
   bool ischanged = false;
   bool isLoading = false;
   List<UserModel> userData = [];
@@ -86,6 +87,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     email.text = widget.user['email'];
     password.text = widget.user['password'];
     phone.text = widget.user['phone'];
+    joinedAt = widget.user['joinedAt'];
+
     // userImage = widget.user['image'];
 
     super.initState();

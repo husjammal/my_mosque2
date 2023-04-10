@@ -97,46 +97,104 @@ class _WeekResultState extends State<WeekResult> {
                           color: textColor2),
                     ),
                     SizedBox(
-                      height: 20.0,
+                      height: 10.0,
                     ),
                     Lottie.asset(
-                      'assets/lottie/60089-eid-mubarak.json',
-                      width: 200,
-                      height: 200,
+                      'assets/lottie/67230-trophy-winner.json',
+                      width: 100,
+                      height: 100,
                       fit: BoxFit.fill,
+                    ),
+                    SizedBox(
+                      height: 10.0,
                     ),
                     Text(
                       "الفائزون الثلاث الاوائل",
                       style: TextStyle(
-                          fontSize: 12.0,
+                          fontSize: 15.0,
                           fontWeight: FontWeight.bold,
                           color: textColor),
+                    ),
+                    Text("المرتبة الاولى"),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100.0),
+                      child: Image.network(
+                        "$linkImageRoot/${userBadge1[0].usersImage}",
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                     Text(
                       userBadge1[0].usersName.toString(),
                     ),
-                    Text(
-                      userBadge2[0].usersName.toString(),
-                    ),
-                    Text(
-                      userBadge3[0].usersName.toString(),
+                    SizedBox(height: 10.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Text("المرتبة الثانية"),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100.0),
+                              child: Image.network(
+                                "$linkImageRoot/${userBadge2[0].usersImage}",
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Text(
+                              userBadge2[0].usersName.toString(),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        Column(
+                          children: [
+                            Text("المرتبة الثالثة"),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100.0),
+                              child: Image.network(
+                                "$linkImageRoot/${userBadge3[0].usersImage}",
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Text(
+                              userBadge3[0].usersName.toString(),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 20.0,
                     ),
-                    ElevatedButton(
-                        onPressed: () async {
-                          await rest_isWeeklyChange();
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              "initialScreen", (route) => false);
-                        },
-                        child: Text("متابعة")),
-                    InkWell(
-                      child: Text("اخفاء"),
-                      onTap: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            "initialScreen", (route) => false);
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InkWell(
+                            onTap: () async {
+                              await rest_isWeeklyChange();
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  "initialScreen", (route) => false);
+                            },
+                            child: Text("عدم اظهار مرة اخرى")),
+                        SizedBox(
+                          width: 60.0,
+                        ),
+                        InkWell(
+                          child: Text("متابعة"),
+                          onTap: () {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                "initialScreen", (route) => false);
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),

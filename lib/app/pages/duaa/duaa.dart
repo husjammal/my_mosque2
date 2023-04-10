@@ -80,10 +80,35 @@ class _DuaaState extends State<Duaa> {
     isLoading = false;
     setState(() {});
     if (response['status'] == "success") {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      // Navigator.of(context)
+      //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      AwesomeDialog(
+        context: context,
+        animType: AnimType.LEFTSLIDE,
+        headerAnimationLoop: false,
+        dialogType: DialogType.SUCCES,
+        title: 'تم',
+        desc: 'تم حفظ الدعاء بنجاح',
+        btnOkOnPress: () {
+          debugPrint('OnClcik');
+        },
+        btnOkIcon: Icons.check_circle,
+
+        // onDissmissCallback: () {
+        //   debugPrint('Dialog Dissmiss from callback');
+        // };
+      )..show();
     } else {
-      AwesomeDialog(context: context, title: "تنبيه", body: Text("يوجد خطأ"))
+      AwesomeDialog(
+          context: context,
+          dialogType: DialogType.ERROR,
+          animType: AnimType.RIGHSLIDE,
+          headerAnimationLoop: false,
+          title: 'تنبية',
+          desc: 'يوجد خطأ',
+          btnOkOnPress: () {},
+          btnOkIcon: Icons.cancel,
+          btnOkColor: Colors.red)
         ..show();
     }
   }
@@ -105,14 +130,13 @@ class _DuaaState extends State<Duaa> {
   }
 
   var dt = DateTime.now();
+  var now = DateTime.now();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     print('duaa initState');
     getDuaaScore();
-    var dt = DateTime.now();
-    setState(() {});
   }
 
 // App widget tree
@@ -121,6 +145,81 @@ class _DuaaState extends State<Duaa> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: backgroundColor,
+          actions: const [],
+          centerTitle: true,
+
+          /// the date selector
+          title: Container(
+            height: 25.0,
+            width: 200,
+            margin: EdgeInsets.all(15.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: buttonColor,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                InkWell(
+                  child: Icon(
+                    Icons.arrow_circle_right,
+                    color: Colors.white,
+                  ),
+                  onTap: () {
+                    var new_dt = dt.subtract(Duration(hours: 24));
+                    if (new_dt.weekday < 7) {
+                      dt = new_dt;
+                      setState(() {});
+                      getDuaaScore();
+                    } else {
+                      AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.ERROR,
+                          animType: AnimType.RIGHSLIDE,
+                          headerAnimationLoop: false,
+                          title: 'تنبية',
+                          desc: 'لايمكن العودة اكثر!',
+                          btnOkOnPress: () {},
+                          btnOkIcon: Icons.cancel,
+                          btnOkColor: Colors.red)
+                        ..show();
+                    }
+                  },
+                ),
+                Text("اليوم ${dt.day}/${dt.month}/${dt.year}"),
+                InkWell(
+                  child: Icon(
+                    Icons.arrow_circle_left,
+                    color: Colors.white,
+                  ),
+                  onTap: () {
+                    var new_dt = dt.add(Duration(hours: 24));
+                    if (new_dt.weekday <= 7 /*now.weekday*/ &&
+                        new_dt.weekday != 1) {
+                      dt = new_dt;
+                      setState(() {});
+                      getDuaaScore();
+                    } else {
+                      AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.ERROR,
+                          animType: AnimType.RIGHSLIDE,
+                          headerAnimationLoop: false,
+                          title: 'تنبية',
+                          desc: 'لايمكن التقدم اكثر!',
+                          btnOkOnPress: () {},
+                          btnOkIcon: Icons.cancel,
+                          btnOkColor: Colors.red)
+                        ..show();
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
         body: isLoading == true
             ? Scaffold(
                 backgroundColor: backgroundColor,
@@ -146,7 +245,7 @@ class _DuaaState extends State<Duaa> {
                           child: Image.asset(
                             'assets/images/Duaa_logo1.png',
                             width: double.infinity,
-                            height: 200,
+                            height: 150,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -235,8 +334,8 @@ class _DuaaState extends State<Duaa> {
             String? user_id = sharedPref.getString("id");
             print("user is is $user_id");
             await save_Duaa(user_id.toString());
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+            // Navigator.of(context)
+            //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
           },
           tooltip: 'حفظ دعائي',
           // label: Text('حفظ صلاواتي'),

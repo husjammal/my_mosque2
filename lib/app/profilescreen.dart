@@ -128,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
                         child: const Text("تعديل معلوماتك",
-                            style: TextStyle(color: textColor)),
+                            style: TextStyle(color: backgroundColor)),
                       ),
                     ),
                     const SizedBox(height: 30),
@@ -169,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xfff3c8fb),
+                        color: textColor,
                         borderRadius: BorderRadius.circular(15.0),
                         boxShadow: const [
                           BoxShadow(

@@ -68,11 +68,35 @@ class _ActivityState extends State<Activity> {
     isLoading = false;
     setState(() {});
     if (response['status'] == "success") {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      // Navigator.of(context)
+      //     .pushNamedAndRemoveUntil("initialScreen", (route) => false);
+      AwesomeDialog(
+        context: context,
+        animType: AnimType.LEFTSLIDE,
+        headerAnimationLoop: false,
+        dialogType: DialogType.SUCCES,
+        title: 'تم',
+        desc: 'تم حفظ النشاط بنجاح',
+        btnOkOnPress: () {
+          debugPrint('OnClcik');
+        },
+        btnOkIcon: Icons.check_circle,
+
+        // onDissmissCallback: () {
+        //   debugPrint('Dialog Dissmiss from callback');
+        // };
+      )..show();
     } else {
       AwesomeDialog(
-          context: context, title: "تنبيه", body: const Text("يوجد خطأ"))
+          context: context,
+          dialogType: DialogType.ERROR,
+          animType: AnimType.RIGHSLIDE,
+          headerAnimationLoop: false,
+          title: 'تنبية',
+          desc: 'يوجد خطأ',
+          btnOkOnPress: () {},
+          btnOkIcon: Icons.cancel,
+          btnOkColor: Colors.red)
         ..show();
     }
   }
@@ -136,14 +160,82 @@ class _ActivityState extends State<Activity> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('بعض من نشاطاتي'),
+          toolbarHeight: 100.0,
+          title: Column(
+            children: [
+              const Text('بعض من نشاطاتي'),
+              Container(
+                height: 25.0,
+                width: 200,
+                margin: EdgeInsets.all(15.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  color: buttonColor,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    InkWell(
+                      child: Icon(
+                        Icons.arrow_circle_right,
+                        color: Colors.white,
+                      ),
+                      onTap: () {
+                        var new_dt = dt.subtract(Duration(hours: 24));
+                        if (new_dt.weekday < 7) {
+                          dt = new_dt;
+                          setState(() {});
+                          getActivityNotes();
+                        } else {
+                          AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.ERROR,
+                              animType: AnimType.RIGHSLIDE,
+                              headerAnimationLoop: false,
+                              title: 'تنبية',
+                              desc: 'لايمكن العودة اكثر!',
+                              btnOkOnPress: () {},
+                              btnOkIcon: Icons.cancel,
+                              btnOkColor: Colors.red)
+                            ..show();
+                        }
+                      },
+                    ),
+                    Text("اليوم ${dt.day}/${dt.month}/${dt.year}"),
+                    InkWell(
+                      child: Icon(
+                        Icons.arrow_circle_left,
+                        color: Colors.white,
+                      ),
+                      onTap: () {
+                        var new_dt = dt.add(Duration(hours: 24));
+                        if (new_dt.weekday <= 7 /*now.weekday*/ &&
+                            new_dt.weekday != 1) {
+                          dt = new_dt;
+                          setState(() {});
+                          getActivityNotes();
+                        } else {
+                          AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.ERROR,
+                              animType: AnimType.RIGHSLIDE,
+                              headerAnimationLoop: false,
+                              title: 'تنبية',
+                              desc: 'لايمكن التقدم اكثر!',
+                              btnOkOnPress: () {},
+                              btnOkIcon: Icons.cancel,
+                              btnOkColor: Colors.red)
+                            ..show();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
           centerTitle: true,
           backgroundColor: buttonColor,
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            tooltip: 'قائمة',
-            onPressed: () {},
-          ),
+
           actions: [
             IconButton(
               onPressed: () {

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/inistialScreen.dart';
-import 'package:mymosque/app/rank.dart';
-import 'package:mymosque/app/updateprofilescreen.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
@@ -220,7 +218,7 @@ class _CompareScreenState extends State<CompareScreen> {
                       /// -- MENU
                       Container(
                         decoration: BoxDecoration(
-                          color: Color(0xfff3c8fb),
+                          color: textColor,
                           borderRadius: BorderRadius.circular(15.0),
                           boxShadow: [
                             BoxShadow(
@@ -320,7 +318,7 @@ class _CompareScreenState extends State<CompareScreen> {
                               side: BorderSide.none,
                               shape: const StadiumBorder()),
                           child: const Text("عودة",
-                              style: TextStyle(color: Colors.grey)),
+                              style: TextStyle(color: textColor)),
                         ),
                       ),
                     ],

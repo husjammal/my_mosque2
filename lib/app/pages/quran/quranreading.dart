@@ -368,7 +368,7 @@ class _QuranReadingState extends State<QuranReading> {
         appBar: AppBar(
           title: const Text('متابعة القراءة'),
           centerTitle: true,
-          backgroundColor: Colors.purple,
+          backgroundColor: buttonColor,
           actions: [
             IconButton(
               onPressed: () {
@@ -381,7 +381,7 @@ class _QuranReadingState extends State<QuranReading> {
           ], //IconButton
         ),
         body: Container(
-          color: Color(0xffdea5e8),
+          color: backgroundColor,
           padding: EdgeInsets.all(10.0),
           child: ListView.builder(
             itemCount: titles.length,
@@ -400,7 +400,7 @@ class _QuranReadingState extends State<QuranReading> {
                 padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100.0),
-                  color: true ? Color(0xffdea5e8) : Colors.black,
+                  color: true ? backgroundColor : Colors.black,
                 ),
                 child: Row(
                   children: [

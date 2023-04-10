@@ -166,6 +166,14 @@ class _InitialScreenState extends State<InitialScreen> {
                     Navigator.pop(context);
                   },
                 ),
+                ListTile(
+                  leading: Icon(Icons.list),
+                  title: const Text('نتائج سابقة'),
+                  onTap: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        "weekresult", (route) => false);
+                  },
+                ),
                 Divider(
                   height: 1,
                   thickness: 1,
