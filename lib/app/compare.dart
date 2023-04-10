@@ -218,7 +218,7 @@ class _CompareScreenState extends State<CompareScreen> {
                       /// -- MENU
                       Container(
                         decoration: BoxDecoration(
-                          color: textColor,
+                          color: backgroundColor,
                           borderRadius: BorderRadius.circular(15.0),
                           boxShadow: [
                             BoxShadow(
@@ -318,7 +318,7 @@ class _CompareScreenState extends State<CompareScreen> {
                               side: BorderSide.none,
                               shape: const StadiumBorder()),
                           child: const Text("عودة",
-                              style: TextStyle(color: textColor)),
+                              style: TextStyle(color: Colors.white)),
                         ),
                       ),
                     ],

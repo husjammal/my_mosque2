@@ -169,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: textColor,
+                        color: backgroundColor,
                         borderRadius: BorderRadius.circular(15.0),
                         boxShadow: const [
                           BoxShadow(
