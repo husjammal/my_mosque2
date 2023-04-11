@@ -240,7 +240,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         const SizedBox(height: 30 - 20),
                         TextFormField(
                           validator: (val) {
-                            return validInput(val!, 1, 250);
+                            return validInput(val!, 1, 8);
                           },
                           controller: email,
                           decoration: const InputDecoration(

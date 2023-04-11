@@ -15,6 +15,8 @@ const String linkWeekly = '$linkServerName/actions/weekly.php';
 const String linkIsWeekChange = '$linkServerName/actions/is_week.php';
 const String linkBadge = '$linkServerName/actions/badge.php';
 const String linkViewBadge = '$linkServerName/actions/viewBadge.php';
+const String linkViewprayBadge = '$linkServerName/actions/viewprayBadge.php';
+const String linkViewquranBadge = '$linkServerName/actions/viewquranBadge.php';
 
 // crud links
 //const String linkAddNotes = '$linkServerName/crud/add.php';

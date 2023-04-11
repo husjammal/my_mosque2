@@ -5,6 +5,7 @@ import 'package:mymosque/app/inistialScreen.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Version extends StatefulWidget {
   const Version({Key? key}) : super(key: key);
@@ -100,7 +101,7 @@ class _VersionState extends State<Version> {
                               alignment: Alignment.center,
                               padding: EdgeInsets.all(15.0),
                               decoration: BoxDecoration(
-                                color: buttonColor,
+                                color: buttonColor2,
                                 borderRadius: BorderRadius.circular(15.0),
                                 boxShadow: [
                                   BoxShadow(
@@ -123,25 +124,38 @@ class _VersionState extends State<Version> {
                               child: Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      "هناك تحديث!!!",
+                                      "هناك تحديث للنسخة رقم ${versionDataList[0]["version"]} !!!",
                                       style: TextStyle(
                                           color: Colors.red,
-                                          fontSize: 30.0,
+                                          fontSize: 20.0,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Text(""),
-                                    Text("الرابط هو : "),
-                                    InkWell(
-                                      onTap: () {},
-                                      child: Text(
-                                        " ${versionDataList[0]['link']}",
-                                        style: TextStyle(
-                                            color: Colors.blue,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                    Text(
+                                      " النسخة الحالية $software_version",
+                                      style: TextStyle(
+                                          color: textColor2,
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text("الرابط  : "),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.link),
+                                        InkWell(
+                                          child: Text(
+                                            'اضغط هنا',
+                                            style: TextStyle(
+                                                color: textColor,
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          onTap: () => launchUrl(Uri.parse(
+                                              '${versionDataList[0]['link']}')),
+                                        ),
+                                      ],
                                     ),
                                     Text(""),
                                     InkWell(
@@ -155,7 +169,7 @@ class _VersionState extends State<Version> {
                                         "لا شكرا",
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 10.0,
+                                            fontSize: 12.0,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),

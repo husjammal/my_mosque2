@@ -43,6 +43,7 @@ class _ActivityState extends State<Activity> {
   String _actList = "0";
 
   var dt = DateTime.now();
+  var now = DateTime.now();
 
   save_activity(String user_id) async {
     // calculate the quranScore
@@ -208,7 +209,7 @@ class _ActivityState extends State<Activity> {
                       ),
                       onTap: () {
                         var new_dt = dt.add(Duration(hours: 24));
-                        if (new_dt.weekday <= 7 /*now.weekday*/ &&
+                        if (new_dt.weekday <= now.weekday &&
                             new_dt.weekday != 1) {
                           dt = new_dt;
                           setState(() {});

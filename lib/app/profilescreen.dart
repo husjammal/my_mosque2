@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymosque/app/updateprofilescreen.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -76,13 +77,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: isLoading == true
-          ? const Scaffold(
+          ? Scaffold(
               backgroundColor: backgroundColor,
-              body: Center(
-                  child: CircularProgressIndicator(
-                backgroundColor: backgroundColor,
-                color: buttonColor,
-              )))
+              body: InkWell(
+                onTap: () {
+                  getOneUser(sharedPref.getString("id").toString());
+                },
+                child: Center(
+                  child: Lottie.asset(
+                    'assets/lottie/60089-eid-mubarak.json',
+                    width: 200,
+                    height: 200,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+            )
           : SingleChildScrollView(
               child: Container(
                 color: backgroundColor,
@@ -90,21 +100,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: [
                     /// -- IMAGE
-                    Stack(
-                      children: [
-                        SizedBox(
-                            // width: 100,
-                            // height: 100,
-                            child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100.0),
-                          child: Image.network(
-                            "$linkImageRoot/${userData[0].usersImage}",
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.fill,
-                          ),
-                        )),
-                      ],
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100.0),
+                      child: Image.network(
+                        "$linkImageRoot/${userData[0].usersImage}",
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Text(userData[0].usersName.toString(),
@@ -132,7 +135,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    const Divider(),
+                    const Divider(
+                      thickness: 1.0,
+                      height: 1.0,
+                    ),
                     const SizedBox(height: 10),
 
                     /// -- MENU

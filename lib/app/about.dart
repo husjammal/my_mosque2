@@ -55,7 +55,7 @@ class AboutUsPage extends StatelessWidget {
                         SizedBox(height: 15),
                         Container(
                           decoration: BoxDecoration(
-                            color: Color(0xffe7a0f4),
+                            color: backgroundColor,
                             borderRadius: BorderRadius.circular(15.0),
                             boxShadow: [
                               BoxShadow(
@@ -282,7 +282,7 @@ class AboutUsPage extends StatelessWidget {
                           ),
                           ListTile(
                             leading: Icon(Icons.phone),
-                            title: Text('+963-944394064'),
+                            title: Text('+963944394064'),
                           ),
                           ListTile(
                             leading: Icon(Icons.email),

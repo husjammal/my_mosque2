@@ -180,7 +180,7 @@ class _QuranState extends State<Quran> {
                       ),
                       onTap: () {
                         var new_dt = dt.add(Duration(hours: 24));
-                        if (new_dt.weekday <= 7 /*now.weekday*/ &&
+                        if (new_dt.weekday <= now.weekday &&
                             new_dt.weekday != 1) {
                           dt = new_dt;
                           setState(() {});

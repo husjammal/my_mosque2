@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/home.dart';
+import 'package:mymosque/app/notification.dart';
 import 'package:mymosque/app/profilescreen.dart';
+import 'package:mymosque/app/race.dart';
 import 'package:mymosque/app/rank.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/main.dart';
@@ -34,6 +36,8 @@ class _InitialScreenState extends State<InitialScreen> {
     Home(),
     Rank(),
     ProfileScreen(),
+    Race(),
+    MyNotification(),
   ];
 
   @override
@@ -97,6 +101,14 @@ class _InitialScreenState extends State<InitialScreen> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
                 label: 'معلوماتي',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.local_activity),
+                label: 'مسابقات',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.notifications),
+                label: 'اشعارات',
               ),
             ],
           ),
@@ -167,6 +179,24 @@ class _InitialScreenState extends State<InitialScreen> {
                   },
                 ),
                 ListTile(
+                  leading: Icon(Icons.local_activity),
+                  title: const Text('مسابقات'),
+                  onTap: () {
+                    _selectedIndex = 3;
+                    setState(() {});
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.notifications),
+                  title: const Text('اشعارات'),
+                  onTap: () {
+                    _selectedIndex = 4;
+                    setState(() {});
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
                   leading: Icon(Icons.list),
                   title: const Text('نتائج سابقة'),
                   onTap: () {
@@ -197,6 +227,15 @@ class _InitialScreenState extends State<InitialScreen> {
                     // Navigator.pop(context);
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil("boarding", (route) => false);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.update),
+                  title: const Text('تحديث التطبيق'),
+                  onTap: () {
+                    // Navigator.pop(context);
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil("version", (route) => false);
                   },
                 ),
                 Divider(

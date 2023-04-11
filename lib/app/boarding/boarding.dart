@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:mymosque/constant/colorConfig.dart';
 
 class Boarding extends StatefulWidget {
   const Boarding({Key? key}) : super(key: key);
@@ -61,15 +62,15 @@ class _BoardingState extends State<Boarding> {
           showSkipButton: true,
           isBottomSafeArea: true,
           skip: const Text("تخطي",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600, color: Colors.deepPurple)),
+              style:
+                  TextStyle(fontWeight: FontWeight.w600, color: buttonColor)),
           next: const Icon(
             Icons.forward,
-            color: Colors.deepPurple,
+            color: buttonColor,
           ),
           done: const Text("تم",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600, color: Colors.deepPurple)),
+              style:
+                  TextStyle(fontWeight: FontWeight.w600, color: buttonColor)),
           dotsDecorator: getDotsDecorator()),
     );
   }
@@ -91,7 +92,7 @@ class _BoardingState extends State<Boarding> {
       imageFlex: 6,
       bodyFlex: 2,
       imagePadding: EdgeInsets.only(top: 60),
-      pageColor: Color(0xffe397f1),
+      pageColor: backgroundColor,
       bodyPadding: EdgeInsets.only(top: 8, left: 20, right: 20),
       titlePadding: EdgeInsets.only(top: 10),
       bodyTextStyle: TextStyle(color: Colors.black54, fontSize: 15),
@@ -102,8 +103,8 @@ class _BoardingState extends State<Boarding> {
   DotsDecorator getDotsDecorator() {
     return const DotsDecorator(
       spacing: EdgeInsets.symmetric(horizontal: 2),
-      activeColor: Colors.deepPurpleAccent,
-      color: Color(0xffe397f1),
+      activeColor: buttonColor2,
+      color: backgroundColor,
       activeSize: Size(12, 5),
       activeShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(25.0)),

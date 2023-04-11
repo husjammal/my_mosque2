@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymosque/components/customtextform.dart';
 import 'package:mymosque/components/valid.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -102,11 +103,20 @@ class _AzkarState extends State<Azkar> {
         body: isLoading == true
             ? Scaffold(
                 backgroundColor: backgroundColor,
-                body: Center(
-                    child: CircularProgressIndicator(
-                  backgroundColor: backgroundColor,
-                  color: buttonColor,
-                )))
+                body: InkWell(
+                  onTap: () {
+                    getDuaaScore();
+                  },
+                  child: Center(
+                    child: Lottie.asset(
+                      'assets/lottie/60089-eid-mubarak.json',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              )
             : SingleChildScrollView(
                 child: Container(
                   color: backgroundColor,

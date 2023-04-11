@@ -78,12 +78,12 @@ class CardUsers extends StatelessWidget {
                       Text(
                         "${usermodel!.usersName}",
                         style: TextStyle(
-                            fontSize: 25.0, fontWeight: FontWeight.bold),
+                            fontSize: 20.0, fontWeight: FontWeight.bold),
                       ),
                       Text("  "),
                       Text(
                         rank_index! <= 2 ? "الاوائل" : "",
-                        style: TextStyle(fontSize: 20.0, color: textColor2),
+                        style: TextStyle(fontSize: 8.0, color: textColor2),
                       ),
                     ],
                   ),

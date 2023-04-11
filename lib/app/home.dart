@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymosque/app/pages/activity/activity.dart';
 import 'package:mymosque/app/pages/duaa/initialduaa.dart';
 import 'package:mymosque/app/pages/pray/initialpray.dart';
@@ -272,6 +273,9 @@ class _HomeState extends State<Home> {
     var firstfinalBadgeID = userData4[0].usersId;
     var secondfinalBadgeID = userData4[1].usersId;
     var thriedfinalBadgeID = userData4[2].usersId;
+    var firstnumBadge = (int.parse(userData4[0].usernumBadge!) + 1).toString();
+    var secondnumBadge = (int.parse(userData4[1].usernumBadge!) + 1).toString();
+    var thriednumBadge = (int.parse(userData4[2].usernumBadge!) + 1).toString();
     print(
         "badge $firstfinalBadgeID , $secondfinalBadgeID, $thriedfinalBadgeID");
 
@@ -285,6 +289,12 @@ class _HomeState extends State<Home> {
     var firstquranBadgeID = userData4[0].usersId;
     var secondquranBadgeID = userData4[1].usersId;
     var thriedquranBadgeID = userData4[2].usersId;
+    var firstnumquranBadge =
+        (int.parse(userData4[0].usernumquranBadge!) + 1).toString();
+    var secondnumquranBadge =
+        (int.parse(userData4[1].usernumquranBadge!) + 1).toString();
+    var thriednumquranBadge =
+        (int.parse(userData4[2].usernumquranBadge!) + 1).toString();
 
     userData4.sort((a, b) {
       int cmp = int.parse(b.userfinalprayScore!)
@@ -296,6 +306,12 @@ class _HomeState extends State<Home> {
     var firstprayBadgeID = userData4[0].usersId;
     var secondprayBadgeID = userData4[1].usersId;
     var thriedprayBadgeID = userData4[2].usersId;
+    var firstnumprayBadge =
+        (int.parse(userData4[0].usernumprayBadge!) + 1).toString();
+    var secondnumprayBadge =
+        (int.parse(userData4[1].usernumprayBadge!) + 1).toString();
+    var thriednumprayBadge =
+        (int.parse(userData4[2].usernumprayBadge!) + 1).toString();
     // save the database
     isLoading = true;
     setState(() {});
@@ -308,7 +324,17 @@ class _HomeState extends State<Home> {
       "thriedquranBadgeID": thriedquranBadgeID.toString(),
       "firstprayBadgeID": firstprayBadgeID.toString(),
       "secondprayBadgeID": secondprayBadgeID.toString(),
-      "thriedprayBadgeID": thriedprayBadgeID.toString()
+      "thriedprayBadgeID": thriedprayBadgeID.toString(),
+      ///////////
+      "firstnumBadge": firstnumBadge.toString(),
+      "secondnumBadge": secondnumBadge.toString(),
+      "thriednumBadge": thriednumBadge.toString(),
+      "firstnumquranBadge": firstnumquranBadge.toString(),
+      "secondnumquranBadge": secondnumquranBadge.toString(),
+      "thriednumquranBadge": thriednumquranBadge.toString(),
+      "firstnumprayBadge": firstnumprayBadge.toString(),
+      "secondnumprayBadge": secondnumprayBadge.toString(),
+      "thriednumprayBadge": thriednumprayBadge.toString(),
     });
     isLoading = false;
     setState(() {});
@@ -330,8 +356,21 @@ class _HomeState extends State<Home> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
+          ? Scaffold(
+              backgroundColor: backgroundColor,
+              body: InkWell(
+                onTap: () {
+                  getFinalScore();
+                },
+                child: Center(
+                  child: Lottie.asset(
+                    'assets/lottie/60089-eid-mubarak.json',
+                    width: 200,
+                    height: 200,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
             )
           : userData[0].userIsWeekChange == "1"
               ? WeekResult()
@@ -339,7 +378,7 @@ class _HomeState extends State<Home> {
                   appBar: AppBar(
                     backgroundColor: buttonColor2,
                     actions: const [],
-                    toolbarHeight: 40,
+                    toolbarHeight: 70,
                     title: Container(
                       // padding: EdgeInsets.all(8.0),
                       width: MediaQuery.of(context).size.width,
@@ -350,16 +389,41 @@ class _HomeState extends State<Home> {
                           ? Text(
                               "تحميل ...",
                               style: TextStyle(
-                                  fontSize: 12.0,
+                                  fontSize: 15.0,
                                   fontWeight: FontWeight.bold,
                                   color: textColor2),
                             )
-                          : Text(
-                              'مجموعك هو $_TodayScore الموافق ل ${dt.day}/${dt.month}/${dt.year} و مجموع الاسبوع هو $_FinalScore',
-                              style: TextStyle(
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: textColor2),
+                          : Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'مجموعك لليوم ${dt.day}/${dt.month}/${dt.year}   ',
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: textColor2),
+                                    ),
+                                    Icon(Icons.star),
+                                    Text(
+                                      '$_TodayScore',
+                                      style: TextStyle(
+                                          fontSize: 25.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: buttonColor),
+                                    ),
+                                    Icon(Icons.star),
+                                  ],
+                                ),
+                                Text(
+                                  'و مجموع الاسبوع  $_FinalScore',
+                                  style: TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: textColor),
+                                ),
+                              ],
                             ),
                     ),
                   ),
@@ -417,8 +481,8 @@ class _HomeState extends State<Home> {
                                     ),
                                     child: Image.asset(
                                       'assets/images/praying.png',
-                                      width: 100,
-                                      height: 100,
+                                      width: 90,
+                                      height: 90,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -465,8 +529,8 @@ class _HomeState extends State<Home> {
                                     ),
                                     child: Image.asset(
                                       'assets/images/quran.png',
-                                      width: 100,
-                                      height: 100,
+                                      width: 90,
+                                      height: 90,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -485,7 +549,7 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                           SizedBox(
-                            height: 20.0,
+                            height: 10.0,
                           ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -518,8 +582,8 @@ class _HomeState extends State<Home> {
                                       ),
                                       child: Image.asset(
                                         'assets/images/ramadan.png',
-                                        width: 100,
-                                        height: 100,
+                                        width: 90,
+                                        height: 90,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -567,8 +631,8 @@ class _HomeState extends State<Home> {
                                       ),
                                       child: Image.asset(
                                         'assets/images/muslim.png',
-                                        width: 100,
-                                        height: 100,
+                                        width: 90,
+                                        height: 90,
                                         fit: BoxFit.cover,
                                       ),
                                     ),

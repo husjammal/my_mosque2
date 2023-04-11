@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/main.dart';
 import 'package:mymosque/components/crud.dart';
@@ -199,8 +200,7 @@ class _PrayState extends State<Pray> {
                   ),
                   onTap: () {
                     var new_dt = dt.add(Duration(hours: 24));
-                    if (new_dt.weekday <= 7 /*now.weekday*/ &&
-                        new_dt.weekday != 1) {
+                    if (new_dt.weekday <= now.weekday && new_dt.weekday != 1) {
                       dt = new_dt;
                       setState(() {});
                       getNotes();
@@ -226,11 +226,20 @@ class _PrayState extends State<Pray> {
         body: isLoading == true
             ? Scaffold(
                 backgroundColor: backgroundColor,
-                body: Center(
-                    child: CircularProgressIndicator(
-                  backgroundColor: backgroundColor,
-                  color: buttonColor,
-                )))
+                body: InkWell(
+                  onTap: () {
+                    getNotes();
+                  },
+                  child: Center(
+                    child: Lottie.asset(
+                      'assets/lottie/60089-eid-mubarak.json',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              )
             : SingleChildScrollView(
                 child: Container(
                   color: backgroundColor,

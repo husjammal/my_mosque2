@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/components/customtextform.dart';
 import 'package:mymosque/components/valid.dart';
@@ -53,13 +54,22 @@ class _LoginState extends State<Login> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         body: isLoading == true
-            ? const Scaffold(
+            ? Scaffold(
                 backgroundColor: backgroundColor,
-                body: Center(
-                    child: CircularProgressIndicator(
-                  backgroundColor: backgroundColor,
-                  color: buttonColor,
-                )))
+                body: InkWell(
+                  onTap: () {
+                    Login();
+                  },
+                  child: Center(
+                    child: Lottie.asset(
+                      'assets/lottie/60089-eid-mubarak.json',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              )
             : Container(
                 color: backgroundColor,
                 padding: const EdgeInsets.all(10),

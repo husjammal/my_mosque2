@@ -10,6 +10,7 @@ import 'package:mymosque/app/pages/quran/quran.dart';
 import 'package:mymosque/app/setting.dart';
 import 'package:mymosque/app/profilescreen.dart';
 import 'package:mymosque/app/splash.dart';
+import 'package:mymosque/app/version.dart';
 import 'package:mymosque/app/weekresult.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         'home': (context) => Home(),
         'setting': (context) => SettingPage(),
         'weekresult': (context) => WeekResult(),
+        'version': (context) => Version(),
       },
     );
   }

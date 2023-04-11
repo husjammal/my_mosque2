@@ -29,10 +29,21 @@ class _WeekResultState extends State<WeekResult> {
   List userBadge1 = [];
   List userBadge2 = [];
   List userBadge3 = [];
+
+  List userprayBadge1 = [];
+  List userprayBadge2 = [];
+  List userprayBadge3 = [];
+
+  List userquranBadge1 = [];
+  List userquranBadge2 = [];
+  List userquranBadge3 = [];
+
   String weekNumber = "0";
+
   getBadge() async {
     final firstJan = DateTime(dt.year, 1, 1);
     weekNumber = (weeksBetween(firstJan, dt)).toString();
+    print("get the badge");
     isLoading = true;
     setState(() {});
     var response1 = await postRequest(linkViewBadge, {"badge": "1"});
@@ -48,6 +59,52 @@ class _WeekResultState extends State<WeekResult> {
     var response3 = await postRequest(linkViewBadge, {"badge": "3"});
     var userDataBadge3List = response3['data'] as List;
     userBadge3 = userDataBadge3List
+        .map<UserModel>((json) => UserModel.fromJson(json))
+        .toList();
+    // isLoading = false;
+    setState(() {});
+  }
+
+  getprayBadge() async {
+    print("get the pray badge");
+    isLoading = true;
+    setState(() {});
+    var response4 = await postRequest(linkViewprayBadge, {"badge": "1"});
+    var userDataBadge4List = response4['data'] as List;
+    userprayBadge1 = userDataBadge4List
+        .map<UserModel>((json) => UserModel.fromJson(json))
+        .toList();
+    var response5 = await postRequest(linkViewprayBadge, {"badge": "2"});
+    var userDataBadge5List = response5['data'] as List;
+    userprayBadge2 = userDataBadge5List
+        .map<UserModel>((json) => UserModel.fromJson(json))
+        .toList();
+    var response6 = await postRequest(linkViewprayBadge, {"badge": "3"});
+    var userDataBadge6List = response6['data'] as List;
+    userprayBadge3 = userDataBadge6List
+        .map<UserModel>((json) => UserModel.fromJson(json))
+        .toList();
+    // isLoading = false;
+    setState(() {});
+  }
+
+  getquranBadge() async {
+    print("get quran the badge");
+    isLoading = true;
+    setState(() {});
+    var response7 = await postRequest(linkViewquranBadge, {"badge": "1"});
+    var userDataBadge7List = response7['data'] as List;
+    userquranBadge1 = userDataBadge7List
+        .map<UserModel>((json) => UserModel.fromJson(json))
+        .toList();
+    var response8 = await postRequest(linkViewquranBadge, {"badge": "2"});
+    var userDataBadge8List = response8['data'] as List;
+    userquranBadge2 = userDataBadge8List
+        .map<UserModel>((json) => UserModel.fromJson(json))
+        .toList();
+    var response9 = await postRequest(linkViewquranBadge, {"badge": "3"});
+    var userDataBadge9List = response9['data'] as List;
+    userquranBadge3 = userDataBadge9List
         .map<UserModel>((json) => UserModel.fromJson(json))
         .toList();
     isLoading = false;
@@ -68,6 +125,8 @@ class _WeekResultState extends State<WeekResult> {
     print('badge initState');
     dt = DateTime.now();
     getBadge();
+    getprayBadge();
+    getquranBadge();
     // setState(() {});
   }
 
@@ -82,121 +141,305 @@ class _WeekResultState extends State<WeekResult> {
         //   actions: [],
         // ),
         body: isLoading
-            ? Center(child: CircularProgressIndicator())
-            : Center(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Text(
-                      "نتائج الاسبوع الماضي رقم ${int.parse(weekNumber) - 1}",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: textColor2),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Lottie.asset(
-                      'assets/lottie/67230-trophy-winner.json',
-                      width: 100,
-                      height: 100,
+            ? Scaffold(
+                backgroundColor: backgroundColor,
+                body: InkWell(
+                  onTap: () {
+                    getquranBadge();
+                  },
+                  child: Center(
+                    child: Lottie.asset(
+                      'assets/lottie/60089-eid-mubarak.json',
+                      width: 200,
+                      height: 200,
                       fit: BoxFit.fill,
                     ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Text(
-                      "الفائزون الثلاث الاوائل",
-                      style: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                          color: textColor),
-                    ),
-                    Text("المرتبة الاولى"),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(100.0),
-                      child: Image.network(
-                        "$linkImageRoot/${userBadge1[0].usersImage}",
+                  ),
+                ),
+              )
+            : SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        "نتائج الاسبوع الماضي رقم ${int.parse(weekNumber) - 1}",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: textColor2),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Lottie.asset(
+                        'assets/lottie/67230-trophy-winner.json',
                         width: 100,
                         height: 100,
                         fit: BoxFit.fill,
                       ),
-                    ),
-                    Text(
-                      userBadge1[0].usersName.toString(),
-                    ),
-                    SizedBox(height: 10.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Text("المرتبة الثانية"),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(100.0),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        "الفائزون الثلاث الاوائل",
+                        style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
+                            color: textColor),
+                      ),
+                      Text("المرتبة الاولى"),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100.0),
+                        child: Image.network(
+                          "$linkImageRoot/${userBadge1[0].usersImage}",
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Text(
+                        userBadge1[0].usersName.toString(),
+                      ),
+                      SizedBox(height: 10.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              Text("المرتبة الثانية"),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(100.0),
+                                child: Image.network(
+                                  "$linkImageRoot/${userBadge2[0].usersImage}",
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Text(
+                                userBadge2[0].usersName.toString(),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 20.0,
+                          ),
+                          Column(
+                            children: [
+                              Text("المرتبة الثالثة"),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(100.0),
+                                child: Image.network(
+                                  "$linkImageRoot/${userBadge3[0].usersImage}",
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Text(
+                                userBadge3[0].usersName.toString(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Divider(
+                        thickness: 1.0,
+                        height: 1.0,
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        "حصل على الاوسمة",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: textColor2),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "اوائل الصلاة",
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                                color: textColor),
+                          ),
+                          ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(30.0),
                               child: Image.network(
-                                "$linkImageRoot/${userBadge2[0].usersImage}",
-                                width: 100,
-                                height: 100,
+                                "$linkImageRoot/${userprayBadge1[0].usersImage}",
+                                width: 30,
+                                height: 30,
                                 fit: BoxFit.fill,
                               ),
                             ),
-                            Text(
-                              userBadge2[0].usersName.toString(),
+                            title: Text(
+                              userprayBadge1[0].usersName.toString(),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                        Column(
-                          children: [
-                            Text("المرتبة الثالثة"),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(100.0),
+                            subtitle: Text('المرتبة الاولى في الصلاة'),
+                            trailing: Icon(Icons.one_k_plus),
+                          ),
+
+                          ///
+                          ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(30.0),
                               child: Image.network(
-                                "$linkImageRoot/${userBadge3[0].usersImage}",
-                                width: 100,
-                                height: 100,
+                                "$linkImageRoot/${userprayBadge2[0].usersImage}",
+                                width: 30,
+                                height: 30,
                                 fit: BoxFit.fill,
                               ),
                             ),
-                            Text(
-                              userBadge3[0].usersName.toString(),
+                            title: Text(
+                              userprayBadge2[0].usersName.toString(),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        InkWell(
-                            onTap: () async {
-                              await rest_isWeeklyChange();
+                            subtitle: Text('المرتبة الثانية في الصلاة'),
+                            trailing: Icon(Icons.one_k_plus),
+                          ),
+
+                          ///
+                          ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(30.0),
+                              child: Image.network(
+                                "$linkImageRoot/${userprayBadge3[0].usersImage}",
+                                width: 30,
+                                height: 30,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            title: Text(
+                              userprayBadge3[0].usersName.toString(),
+                            ),
+                            subtitle: Text('المرتبة الثالثة في الصلاة'),
+                            trailing: Icon(Icons.one_k_plus),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 20.0,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "اوائل القران",
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                                color: textColor),
+                          ),
+                          ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(30.0),
+                              child: Image.network(
+                                "$linkImageRoot/${userquranBadge1[0].usersImage}",
+                                width: 30,
+                                height: 30,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            title: Text(
+                              userquranBadge1[0].usersName.toString(),
+                            ),
+                            subtitle: Text('المرتبة الاولى في القران'),
+                            trailing: Icon(Icons.one_k_plus),
+                          ),
+
+                          ///
+                          ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(30.0),
+                              child: Image.network(
+                                "$linkImageRoot/${userquranBadge2[0].usersImage}",
+                                width: 30,
+                                height: 30,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            title: Text(
+                              userquranBadge2[0].usersName.toString(),
+                            ),
+                            subtitle: Text('المرتبة الثانية في القران'),
+                            trailing: Icon(Icons.one_k_plus),
+                          ),
+
+                          ///
+                          ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(30.0),
+                              child: Image.network(
+                                "$linkImageRoot/${userquranBadge3[0].usersImage}",
+                                width: 30,
+                                height: 30,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            title: Text(
+                              userquranBadge3[0].usersName.toString(),
+                            ),
+                            subtitle: Text('المرتبة الثالثة في القران'),
+                            trailing: Icon(Icons.one_k_plus),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Divider(
+                        thickness: 1.0,
+                        height: 1.0,
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                              onTap: () async {
+                                await rest_isWeeklyChange();
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    "initialScreen", (route) => false);
+                              },
+                              child: Text("عدم اظهار مرة اخرى")),
+                          SizedBox(
+                            width: 60.0,
+                          ),
+                          InkWell(
+                            child: Container(
+                              padding: EdgeInsets.all(15.0),
+                              width: 70.0,
+                              color: buttonColor,
+                              alignment: Alignment.center,
+                              child: Text("متابعة",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      backgroundColor: buttonColor)),
+                            ),
+                            onTap: () {
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                   "initialScreen", (route) => false);
                             },
-                            child: Text("عدم اظهار مرة اخرى")),
-                        SizedBox(
-                          width: 60.0,
-                        ),
-                        InkWell(
-                          child: Text("متابعة"),
-                          onTap: () {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                "initialScreen", (route) => false);
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
       ),

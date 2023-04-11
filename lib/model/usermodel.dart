@@ -17,6 +17,12 @@ class UserModel {
   String? userSubGroup;
   String? userMyGroup;
   String? userIsWeekChange;
+  String? userbadge;
+  String? userpraybadge;
+  String? userquranbadge;
+  String? usernumBadge;
+  String? usernumprayBadge;
+  String? usernumquranBadge;
 
   UserModel({
     this.usersId,
@@ -35,6 +41,12 @@ class UserModel {
     this.userSubGroup,
     this.userMyGroup,
     this.userIsWeekChange,
+    this.userbadge,
+    this.userpraybadge,
+    this.userquranbadge,
+    this.usernumBadge,
+    this.usernumprayBadge,
+    this.usernumquranBadge,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -56,6 +68,12 @@ class UserModel {
     userSubGroup = json['subGroup'];
     userMyGroup = json['myGroup'];
     userIsWeekChange = json['isWeekChange'];
+    userbadge = json['badge'];
+    userpraybadge = json['praybadge'];
+    userquranbadge = json['quranbadge'];
+    usernumBadge = json['numBadge'];
+    usernumprayBadge = json['numprayBadge'];
+    usernumquranBadge = json['numquranBadge'];
   }
 
   Map<String, dynamic> toJson() {
@@ -77,7 +95,12 @@ class UserModel {
     data['subGroup'] = this.userSubGroup;
     data['myGroup'] = this.userMyGroup;
     data['isWeekChange'] = this.userIsWeekChange;
-
+    data['badge'] = this.userbadge;
+    data['praybadge'] = this.userpraybadge;
+    data['quranbadge'] = this.userquranbadge;
+    data['numBadge'] = this.usernumBadge;
+    data['numprayBadge'] = this.usernumprayBadge;
+    data['numquranBadge'] = this.usernumquranBadge;
     return data;
   }
 }

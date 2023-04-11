@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymosque/components/customtextform.dart';
 import 'package:mymosque/components/valid.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -196,8 +197,7 @@ class _DuaaState extends State<Duaa> {
                   ),
                   onTap: () {
                     var new_dt = dt.add(Duration(hours: 24));
-                    if (new_dt.weekday <= 7 /*now.weekday*/ &&
-                        new_dt.weekday != 1) {
+                    if (new_dt.weekday <= now.weekday && new_dt.weekday != 1) {
                       dt = new_dt;
                       setState(() {});
                       getDuaaScore();
@@ -223,11 +223,20 @@ class _DuaaState extends State<Duaa> {
         body: isLoading == true
             ? Scaffold(
                 backgroundColor: backgroundColor,
-                body: Center(
-                    child: CircularProgressIndicator(
-                  backgroundColor: backgroundColor,
-                  color: buttonColor,
-                )))
+                body: InkWell(
+                  onTap: () {
+                    getDuaaScore();
+                  },
+                  child: Center(
+                    child: Lottie.asset(
+                      'assets/lottie/60089-eid-mubarak.json',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              )
             : SingleChildScrollView(
                 child: Container(
                   color: backgroundColor,
@@ -312,12 +321,35 @@ class _DuaaState extends State<Duaa> {
                         SizedBox(
                           width:
                               (MediaQuery.of(context).size.width * 1 / 2) - 20,
-                          child: CustomTextFormSign(
-                            valid: (val) {
-                              return validInput(val!, 1, 3);
-                            },
-                            mycontroller: _DuaaScore,
-                            hint: "علامتي للدعاء من 10",
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: TextFormField(
+                              validator: (val) {
+                                return validInput(val!, 1, 2);
+                              },
+                              controller: _DuaaScore,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 10),
+                                labelText: "علامتي للدعاء من 10",
+                                labelStyle:
+                                    const TextStyle(color: Colors.deepPurple),
+                                hintText: "علامتي للدعاء من 10",
+                                errorStyle:
+                                    const TextStyle(color: Colors.amber),
+                                enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.deepPurple, width: 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.purpleAccent, width: 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(

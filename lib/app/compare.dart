@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymosque/app/inistialScreen.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -145,11 +146,20 @@ class _CompareScreenState extends State<CompareScreen> {
         body: isLoading == true
             ? Scaffold(
                 backgroundColor: backgroundColor,
-                body: Center(
-                    child: CircularProgressIndicator(
-                  backgroundColor: backgroundColor,
-                  color: buttonColor,
-                )))
+                body: InkWell(
+                  onTap: () {
+                    getOneUser1();
+                  },
+                  child: Center(
+                    child: Lottie.asset(
+                      'assets/lottie/60089-eid-mubarak.json',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              )
             : SingleChildScrollView(
                 child: Container(
                   color: backgroundColor,
