@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mymosque/app/inistialScreen.dart';
 import 'package:mymosque/components/crud.dart';
@@ -40,8 +41,8 @@ class _CompareScreenState extends State<CompareScreen> {
         .map<UserModel>((json) => UserModel.fromJson(json))
         .toList();
     // userData = response['data'];
-    isLoading = false;
-    setState(() {});
+    // isLoading = false;
+    // setState(() {});
     print("userOneData1 $userData1");
   }
 
@@ -55,14 +56,14 @@ class _CompareScreenState extends State<CompareScreen> {
         .map<UserModel>((json) => UserModel.fromJson(json))
         .toList();
     // userData = response['data'];
-    isLoading = false;
-    setState(() {});
+    // isLoading = false;
+    // setState(() {});
     print("userOneData2 $userData2");
   }
 
   void getScore1() async {
-    isLoading = true;
-    setState(() {});
+    // isLoading = true;
+    // setState(() {});
     print("getScore");
     var response = await postRequest(linkViewNotes,
         {"user_id": sharedPref.get("id").toString(), "day_number": "ALL"});
@@ -73,8 +74,8 @@ class _CompareScreenState extends State<CompareScreen> {
     score1 = scorelist1
         .map<ScoreModel>((json) => ScoreModel.fromJson(json))
         .toList();
-    isLoading = false;
-    setState(() {});
+    // isLoading = false;
+    // setState(() {});
 
     print("List1 Size: ${score1.length}");
     print("score1");
@@ -82,8 +83,8 @@ class _CompareScreenState extends State<CompareScreen> {
   }
 
   void getScore2() async {
-    isLoading = true;
-    setState(() {});
+    // isLoading = true;
+    // setState(() {});
     print("getScore");
     var response = await postRequest(linkViewNotes,
         {"user_id": widget.userID2.toString(), "day_number": "ALL"});
@@ -187,9 +188,182 @@ class _CompareScreenState extends State<CompareScreen> {
                               const SizedBox(height: 10),
                               Text(userData1[0].usersName.toString(),
                                   style: Theme.of(context).textTheme.headline4),
-                              Text("مجموع"),
-                              Text(userData1[0].userfinalScore.toString(),
-                                  style: Theme.of(context).textTheme.bodyText2),
+                              Divider(
+                                thickness: 1.0,
+                                height: 1.0,
+                                color: textColor2,
+                              ),
+                              Text("الاوسمة"),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                alignment: Alignment.centerRight,
+                                width: 120.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: buttonColor2,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.electric_bolt,
+                                      color: buttonColor,
+                                      size: 20.0,
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userData1[0]
+                                              .userTotalScore
+                                              .toString(),
+                                        ),
+                                        Text(
+                                          "المجموع الكلي",
+                                          style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: backgroundColor,
+                                              fontWeight: FontWeight.w100),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                width: 120.0,
+                                height: 50.0,
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: buttonColor2,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      LineAwesomeIcons.first_order,
+                                      color: buttonColor,
+                                      size: 20.0,
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userData1[0].usernumBadge.toString(),
+                                        ),
+                                        Text(
+                                          "المراكز الثالثة الاولى",
+                                          style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: backgroundColor,
+                                              fontWeight: FontWeight.w100),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                alignment: Alignment.centerRight,
+                                width: 120.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: buttonColor2,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      LineAwesomeIcons.pray,
+                                      color: buttonColor,
+                                      size: 20.0,
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userData1[0]
+                                              .usernumprayBadge
+                                              .toString(),
+                                        ),
+                                        Text(
+                                          "اولي الصلاة",
+                                          style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: backgroundColor,
+                                              fontWeight: FontWeight.w100),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                width: 120.0,
+                                height: 50.0,
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: buttonColor2,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      LineAwesomeIcons.quran,
+                                      color: buttonColor,
+                                      size: 20.0,
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userData1[0]
+                                              .usernumquranBadge
+                                              .toString(),
+                                        ),
+                                        Text(
+                                          "اولى القران",
+                                          style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: backgroundColor,
+                                              fontWeight: FontWeight.w100),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                           /////
@@ -214,16 +388,202 @@ class _CompareScreenState extends State<CompareScreen> {
                               const SizedBox(height: 10),
                               Text(userData2[0].usersName.toString(),
                                   style: Theme.of(context).textTheme.headline4),
-                              Text("مجموع"),
-                              Text(userData2[0].userfinalScore.toString(),
-                                  style: Theme.of(context).textTheme.bodyText2),
+                              Divider(
+                                thickness: 1.0,
+                                height: 1.0,
+                                color: textColor2,
+                              ),
+                              Text("الاوسمة"),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                alignment: Alignment.centerRight,
+                                width: 120.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: buttonColor2,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.electric_bolt,
+                                      color: buttonColor,
+                                      size: 20.0,
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userData2[0]
+                                              .userTotalScore
+                                              .toString(),
+                                        ),
+                                        Text(
+                                          "المجموع الكلي",
+                                          style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: backgroundColor,
+                                              fontWeight: FontWeight.w100),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                width: 120.0,
+                                height: 50.0,
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: buttonColor2,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      LineAwesomeIcons.first_order,
+                                      color: buttonColor,
+                                      size: 20.0,
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userData2[0].usernumBadge.toString(),
+                                        ),
+                                        Text(
+                                          "المراكز الثالثة الاولى",
+                                          style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: backgroundColor,
+                                              fontWeight: FontWeight.w100),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                alignment: Alignment.centerRight,
+                                width: 120.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: buttonColor2,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      LineAwesomeIcons.pray,
+                                      color: buttonColor,
+                                      size: 20.0,
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userData2[0]
+                                              .usernumprayBadge
+                                              .toString(),
+                                        ),
+                                        Text(
+                                          "اولي الصلاة",
+                                          style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: backgroundColor,
+                                              fontWeight: FontWeight.w100),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                width: 120.0,
+                                height: 50.0,
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: buttonColor2,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      LineAwesomeIcons.quran,
+                                      color: buttonColor,
+                                      size: 20.0,
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userData2[0]
+                                              .usernumquranBadge
+                                              .toString(),
+                                        ),
+                                        Text(
+                                          "اولى القران",
+                                          style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: backgroundColor,
+                                              fontWeight: FontWeight.w100),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30),
-                      const Divider(),
+
+                      const SizedBox(height: 20),
+                      const Divider(
+                        thickness: 1.0,
+                        height: 1.0,
+                        color: textColor2,
+                      ),
                       const SizedBox(height: 10),
+                      Text("الاحصائيات",
+                          style: TextStyle(
+                              fontSize: 10.0,
+                              color: textColor2,
+                              fontWeight: FontWeight.bold)),
+                      SizedBox(
+                        height: 10.0,
+                      ),
 
                       /// -- MENU
                       Container(

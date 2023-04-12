@@ -15,7 +15,7 @@ class Version extends StatefulWidget {
 class _VersionState extends State<Version> {
   //////////////////////////////////////////////////////////////////
   // please set the version of the software you want to puplished //
-  String? software_version = '0'; //
+  String? software_version = '3'; //
   //////////////////////////////////////////////////////////////////
 
   List versionDataList = [];
@@ -142,6 +142,8 @@ class _VersionState extends State<Version> {
                                     ),
                                     Text("الرابط  : "),
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Icon(Icons.link),
                                         InkWell(

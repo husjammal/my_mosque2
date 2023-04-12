@@ -78,7 +78,7 @@ class CardUsers extends StatelessWidget {
                       Text(
                         "${usermodel!.usersName}",
                         style: TextStyle(
-                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                            fontSize: 15.0, fontWeight: FontWeight.bold),
                       ),
                       Text("  "),
                       Text(
@@ -88,9 +88,10 @@ class CardUsers extends StatelessWidget {
                     ],
                   ),
                   subtitle: Text(
-                    "المجموع الكلي ${usermodel!.userTotalScore}",
-                    style: TextStyle(fontSize: 12.0),
+                    "المجموع الكلي ${usermodel!.userTotalScore} \n مسجد ${usermodel!.userMyGroup},حلقة ${usermodel!.userSubGroup}",
+                    style: TextStyle(fontSize: 10.0),
                   ),
+                  isThreeLine: true,
                   trailing: Container(
                     alignment: Alignment.center,
                     height: 40,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 
 class Success extends StatefulWidget {
@@ -14,12 +15,20 @@ class _SuccessState extends State<Success> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Lottie.asset(
+                        'assets/lottie/141356-man-goes-to-the-mosque-on-ramadan.json',
+                        width: 200,
+                        height: 300,
+                        fit: BoxFit.fill,
+                      ),
+          SizedBox(height: 20.0,),
           Center(
             child: Text(
               "تم انشاء الحساب بنجاح الان يمكنك تسجيل الدخول",
               style: TextStyle(fontSize: 20),
             ),
           ),
+          SizedBox(height: 20.0,),
           MaterialButton(
               textColor: Colors.white,
               color: buttonColor,

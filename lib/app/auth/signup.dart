@@ -17,6 +17,55 @@ class _SignUpState extends State<SignUp> {
   bool isLoading = false;
   bool pinWasObscured = true;
 
+  String? mosqueDropdownValue = 'الكل';
+  List<String> mosquedropdownItems = <String>[
+    'الكل',
+    'مسجد 1',
+    'مسجد 2',
+    'مسجد 3',
+    'مسجد 4',
+    'مسجد 5',
+    'مسجد 6',
+    'مسجد 7',
+    'مسجد 8',
+    'مسجد 9',
+    'مسجد 10',
+    'مسجد 11',
+    'مسجد 12',
+    'مسجد 13',
+    'مسجد 14',
+    'مسجد 15',
+    'مسجد 16',
+    'مسجد 17',
+    'مسجد 18',
+    'مسجد 19',
+    'مسجد 20'
+  ];
+  String? dropdownValue = 'الكل';
+  List<String> dropdownItems = <String>[
+    'الكل',
+    'حلقة 1',
+    'حلقة 2',
+    'حلقة 3',
+    'حلقة 4',
+    'حلقة 5',
+    'حلقة 6',
+    'حلقة 7',
+    'حلقة 8',
+    'حلقة 9',
+    'حلقة 10',
+    'حلقة 11',
+    'حلقة 12',
+    'حلقة 13',
+    'حلقة 14',
+    'حلقة 15',
+    'حلقة 16',
+    'حلقة 17',
+    'حلقة 18',
+    'حلقة 19',
+    'حلقة 20'
+  ];
+
   TextEditingController username = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -42,6 +91,8 @@ class _SignUpState extends State<SignUp> {
         "email": email.text,
         "password": password.text,
         "week": weekNumber,
+        "subGroup": mosqueDropdownValue,
+        "myGroup": dropdownValue,
       });
       isLoading = false;
       print('isLoading $isLoading');
@@ -144,19 +195,19 @@ class _SignUpState extends State<SignUp> {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 50,
+                              height: 25,
                             ),
                             Image.asset(
                               "assets/images/Login.png",
-                              width: 200,
-                              height: 200,
+                              width: 140,
+                              height: 140,
                             ),
                             SizedBox(
-                              height: 50,
+                              height: 25,
                             ),
                             TextFormField(
                               validator: (val) {
-                                return validInput(val!, 1, 8);
+                                return validInput(val!, 1, 10);
                               },
                               controller: username,
                               decoration: const InputDecoration(
@@ -164,7 +215,7 @@ class _SignUpState extends State<SignUp> {
                                   prefixIcon: Icon(LineAwesomeIcons.user)),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 15,
                             ),
                             TextFormField(
                               validator: (val) {
@@ -177,7 +228,7 @@ class _SignUpState extends State<SignUp> {
                                       Icon(LineAwesomeIcons.envelope_1)),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 15,
                             ),
                             TextFormField(
                               validator: (val) {
@@ -200,7 +251,90 @@ class _SignUpState extends State<SignUp> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 30),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  LineAwesomeIcons.layer_group,
+                                  color: Colors.grey,
+                                  size: 36.0,
+                                ),
+                                SizedBox(
+                                  width: 5.0,
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width - 61,
+                                  child: DropdownButton<String>(
+                                    isExpanded: true,
+                                    focusColor: buttonColor,
+                                    value: mosqueDropdownValue,
+                                    icon: Icon(Icons.arrow_drop_down),
+                                    iconSize: 36,
+                                    elevation: 10,
+                                    // style: TextStyle(color: textColor, fontSize: 36),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        mosqueDropdownValue = newValue;
+                                      });
+                                    },
+                                    items: mosquedropdownItems
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            ////
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  LineAwesomeIcons.object_group,
+                                  color: Colors.grey,
+                                  size: 36.0,
+                                ),
+                                SizedBox(
+                                  width: 5.0,
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width - 61,
+                                  child: DropdownButton<String>(
+                                    isExpanded: true,
+                                    focusColor: buttonColor,
+                                    value: dropdownValue,
+                                    icon: Icon(Icons.arrow_drop_down),
+                                    iconSize: 36,
+                                    elevation: 10,
+                                    // style: TextStyle(color: textColor, fontSize: 36),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownValue = newValue;
+                                      });
+                                    },
+                                    items: dropdownItems
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            ////
+
+                            const SizedBox(height: 20),
                             MaterialButton(
                               color: buttonColor,
                               textColor: Colors.white,

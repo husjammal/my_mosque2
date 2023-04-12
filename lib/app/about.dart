@@ -47,7 +47,7 @@ class AboutUsPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(height: 15),
+                        SizedBox(height: 25),
                         Text(
                           'قام بالبرمجة حسام الدين الجمال',
                           style: Theme.of(context).textTheme.headline5,
