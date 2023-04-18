@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mymosque/app/pages/activity/activity.dart';
@@ -20,6 +18,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String? user_name = sharedPref.getString("username");
+
+  String? user_subGroup = sharedPref.getString("subGroup");
+  String? user_myGroup = sharedPref.getString("myGroup");
+
   String? _TodayScore = "0";
   String? _FinalScore = "0";
   String? _FinalprayScore = "0";
@@ -73,7 +75,7 @@ class _HomeState extends State<Home> {
 
     /////////////////////////////////////////////////////////////////////////
     ///check if ther is chane in finalScore ??
-    var response1 = await postRequest(linkViewNotes,
+    var response1 = await postRequest(linkViewActions,
         {"user_id": sharedPref.getString("id"), "day_number": "ALL"});
     if (response1['status'] == "success") {
       List totalScore = response1['data'];
@@ -221,6 +223,8 @@ class _HomeState extends State<Home> {
       "sunahScore": "0",
       "nuafelScore": "0",
       "activityScore": "0",
+      "subGroup": user_subGroup,
+      "myGroup": user_myGroup
     });
     isLoading = false;
     setState(() {});
@@ -246,7 +250,9 @@ class _HomeState extends State<Home> {
       "finalquranScore": "0",
       "finalactivityScore": "0",
       "week": weekNumber.toString(),
-      "isWeekChange": "1"
+      "isWeekChange": "1",
+      "subGroup": user_subGroup,
+      "myGroup": user_myGroup
     });
     isLoading = false;
     setState(() {});
@@ -255,8 +261,8 @@ class _HomeState extends State<Home> {
   save_badges() async {
     // all users
     var response4 = await postRequest(linkViewUsers, {
-      "id": sharedPref.getString("id"),
-      "day_number": dt.weekday.toString(),
+      "subGroup": sharedPref.getString("subGroup"),
+      "myGroup": sharedPref.getString("myGroup"),
     });
     var userDataList4 = response4['data'] as List;
     var userData4 = userDataList4
@@ -335,6 +341,9 @@ class _HomeState extends State<Home> {
       "firstnumprayBadge": firstnumprayBadge.toString(),
       "secondnumprayBadge": secondnumprayBadge.toString(),
       "thriednumprayBadge": thriednumprayBadge.toString(),
+      /////
+      "subGroup": user_subGroup,
+      "myGroup": user_myGroup,
     });
     isLoading = false;
     setState(() {});

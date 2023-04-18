@@ -9,12 +9,12 @@ import 'package:mymosque/main.dart';
 import 'package:mymosque/model/usermodel.dart';
 import 'package:lottie/lottie.dart';
 
-class Rank extends StatefulWidget {
-  const Rank({Key? key}) : super(key: key);
-  _RankState createState() => _RankState();
+class Student extends StatefulWidget {
+  const Student({Key? key}) : super(key: key);
+  _StudentState createState() => _StudentState();
 }
 
-class _RankState extends State<Rank> {
+class _StudentState extends State<Student> {
   getUsers() async {
     var response = await postRequest(linkViewUsers, {
       "subGroup": "ALL",
@@ -51,15 +51,6 @@ class _RankState extends State<Rank> {
           actions: const [],
           title: Column(
             children: [
-              Image.asset(
-                'assets/images/compare_bannar.png',
-                height: 50.0,
-                width: double.infinity,
-                fit: BoxFit.fill,
-              ),
-              SizedBox(
-                height: 3.0,
-              ),
               Text(
                 "باقي لنهاية تحدي الاسبوع ${8 - int.parse(dt.weekday.toString())} يوم!",
                 style: TextStyle(
@@ -193,7 +184,7 @@ class _RankState extends State<Rank> {
                     width: 150.0,
                     child: SwitchListTile(
                       title: Text(_isSwitchedOn ? 'حلقتي' : "مسجدي",
-                          style: TextStyle(color: buttonColor, fontSize: 12.0)),
+                          style: TextStyle(color: buttonColor, fontSize: 15.0)),
                       value: _isSwitchedOn,
                       onChanged: (bool value) {
                         setState(() {
@@ -208,6 +199,7 @@ class _RankState extends State<Rank> {
               ),
             ],
           ),
+          leadingWidth: 1.0,
         ),
         backgroundColor: backgroundColor,
         body: Container(

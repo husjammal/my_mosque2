@@ -14,6 +14,9 @@ class WeekResult extends StatefulWidget {
 class _WeekResultState extends State<WeekResult> {
   bool isLoading = false;
 
+  String? user_subGroup = sharedPref.getString("subGroup");
+  String? user_myGroup = sharedPref.getString("myGroup");
+
   rest_isWeeklyChange() async {
     // calculate the total score
     // save the database
@@ -46,17 +49,22 @@ class _WeekResultState extends State<WeekResult> {
     print("get the badge");
     isLoading = true;
     setState(() {});
-    var response1 = await postRequest(linkViewBadge, {"badge": "1"});
+    var response1 = await postRequest(linkViewBadge,
+        {"badge": "1", "subGroup": user_subGroup, "myGroup": user_myGroup});
     var userDataBadge1List = response1['data'] as List;
     userBadge1 = userDataBadge1List
         .map<UserModel>((json) => UserModel.fromJson(json))
         .toList();
-    var response2 = await postRequest(linkViewBadge, {"badge": "2"});
+    var response2 = await postRequest(
+      linkViewBadge,
+      {"badge": "2", "subGroup": user_subGroup, "myGroup": user_myGroup},
+    );
     var userDataBadge2List = response2['data'] as List;
     userBadge2 = userDataBadge2List
         .map<UserModel>((json) => UserModel.fromJson(json))
         .toList();
-    var response3 = await postRequest(linkViewBadge, {"badge": "3"});
+    var response3 = await postRequest(linkViewBadge,
+        {"badge": "3", "subGroup": user_subGroup, "myGroup": user_myGroup});
     var userDataBadge3List = response3['data'] as List;
     userBadge3 = userDataBadge3List
         .map<UserModel>((json) => UserModel.fromJson(json))
@@ -69,17 +77,20 @@ class _WeekResultState extends State<WeekResult> {
     print("get the pray badge");
     isLoading = true;
     setState(() {});
-    var response4 = await postRequest(linkViewprayBadge, {"badge": "1"});
+    var response4 = await postRequest(linkViewprayBadge,
+        {"badge": "1", "subGroup": user_subGroup, "myGroup": user_myGroup});
     var userDataBadge4List = response4['data'] as List;
     userprayBadge1 = userDataBadge4List
         .map<UserModel>((json) => UserModel.fromJson(json))
         .toList();
-    var response5 = await postRequest(linkViewprayBadge, {"badge": "2"});
+    var response5 = await postRequest(linkViewprayBadge,
+        {"badge": "2", "subGroup": user_subGroup, "myGroup": user_myGroup});
     var userDataBadge5List = response5['data'] as List;
     userprayBadge2 = userDataBadge5List
         .map<UserModel>((json) => UserModel.fromJson(json))
         .toList();
-    var response6 = await postRequest(linkViewprayBadge, {"badge": "3"});
+    var response6 = await postRequest(linkViewprayBadge,
+        {"badge": "3", "subGroup": user_subGroup, "myGroup": user_myGroup});
     var userDataBadge6List = response6['data'] as List;
     userprayBadge3 = userDataBadge6List
         .map<UserModel>((json) => UserModel.fromJson(json))
@@ -92,17 +103,20 @@ class _WeekResultState extends State<WeekResult> {
     print("get quran the badge");
     isLoading = true;
     setState(() {});
-    var response7 = await postRequest(linkViewquranBadge, {"badge": "1"});
+    var response7 = await postRequest(linkViewquranBadge,
+        {"badge": "1", "subGroup": user_subGroup, "myGroup": user_myGroup});
     var userDataBadge7List = response7['data'] as List;
     userquranBadge1 = userDataBadge7List
         .map<UserModel>((json) => UserModel.fromJson(json))
         .toList();
-    var response8 = await postRequest(linkViewquranBadge, {"badge": "2"});
+    var response8 = await postRequest(linkViewquranBadge,
+        {"badge": "2", "subGroup": user_subGroup, "myGroup": user_myGroup});
     var userDataBadge8List = response8['data'] as List;
     userquranBadge2 = userDataBadge8List
         .map<UserModel>((json) => UserModel.fromJson(json))
         .toList();
-    var response9 = await postRequest(linkViewquranBadge, {"badge": "3"});
+    var response9 = await postRequest(linkViewquranBadge,
+        {"badge": "3", "subGroup": user_subGroup, "myGroup": user_myGroup});
     var userDataBadge9List = response9['data'] as List;
     userquranBadge3 = userDataBadge9List
         .map<UserModel>((json) => UserModel.fromJson(json))

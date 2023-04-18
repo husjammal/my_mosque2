@@ -61,8 +61,9 @@ class CardUsers extends StatelessWidget {
                     // ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(100.0),
-                      child: Image.network(
-                        "$linkImageRoot/${usermodel!.usersImage}",
+                      child: FadeInImage.assetNetwork(
+                        image: "$linkImageRoot/${usermodel!.usersImage}",
+                        placeholder: "assets/images/avatar.png",
                         width: 60,
                         height: 60,
                         fit: BoxFit.fill,

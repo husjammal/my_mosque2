@@ -65,7 +65,7 @@ class _CompareScreenState extends State<CompareScreen> {
     // isLoading = true;
     // setState(() {});
     print("getScore");
-    var response = await postRequest(linkViewNotes,
+    var response = await postRequest(linkViewActions,
         {"user_id": sharedPref.get("id").toString(), "day_number": "ALL"});
     print("getScore response:  $response");
 
@@ -86,7 +86,7 @@ class _CompareScreenState extends State<CompareScreen> {
     // isLoading = true;
     // setState(() {});
     print("getScore");
-    var response = await postRequest(linkViewNotes,
+    var response = await postRequest(linkViewActions,
         {"user_id": widget.userID2.toString(), "day_number": "ALL"});
     print("getScore response:  $response");
 

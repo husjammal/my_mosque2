@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mymosque/components/statusrequest.dart';
 import 'package:path/path.dart';
@@ -16,16 +17,17 @@ getRequest(String url) async {
       print("Error ${response.statusCode}");
     }
   } catch (e) {
-    print("Error Catch $e");
+    print("Error Catch $e @@ $url");
+    debugPrint("Error Catch $e @@ $url");
   }
 }
 
 postRequest(String url, Map data) async {
   try {
-    print(data);
+    // print(data);
     print(json.encode(data));
     print('Uri ${Uri.parse(url)}');
-    print('today is ${data['day_number']}');
+    // print('today is ${data['day_number']}');
     var response = await http.post(Uri.parse(url), body: data);
     // print(response.body);
     print('response statusCode ${response.statusCode}');
@@ -41,7 +43,9 @@ postRequest(String url, Map data) async {
       return response.statusCode;
     }
   } catch (e) {
-    print("Error Catch postRequest $e");
+    // print("Error Catch postRequest $e");
+    print("Error Catch postRequest $e @@ $url");
+    debugPrint("Error Catch postRequest $e @@ $url");
     return "Error";
   }
 }

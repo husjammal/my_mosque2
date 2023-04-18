@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/about.dart';
+import 'package:mymosque/app/admin/adminhome.dart';
 import 'package:mymosque/app/auth/login.dart';
 import 'package:mymosque/app/auth/signup.dart';
 import 'package:mymosque/app/auth/success.dart';
@@ -20,13 +21,13 @@ late SharedPreferences sharedPref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPref = await SharedPreferences.getInstance();
-  bool isSwitched = false;
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  late bool isSwitched = false;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,12 +38,16 @@ class MyApp extends StatelessWidget {
       // you want
 
       theme: ThemeData(
-        brightness: isSwitched ? Brightness.dark : Brightness.light,
+        brightness: Brightness.light,
         primaryColor: buttonColor,
         primarySwatch: Colors.green,
       ),
       // A widget which will be started on application startup
-      initialRoute: sharedPref.getString("id") == null ? "login" : "splash",
+      initialRoute: sharedPref.getString("id") == null
+          ? "login"
+          : sharedPref.getString("userType") == "admin"
+              ? "adminhome"
+              : "splash",
       routes: {
         'login': (context) => const Login(),
         'signup': (context) => const SignUp(),
@@ -57,6 +62,7 @@ class MyApp extends StatelessWidget {
         'setting': (context) => SettingPage(),
         'weekresult': (context) => WeekResult(),
         'version': (context) => Version(),
+        'adminhome': (context) => AdminHome(),
       },
     );
   }

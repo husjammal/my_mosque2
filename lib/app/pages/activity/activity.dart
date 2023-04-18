@@ -103,7 +103,7 @@ class _ActivityState extends State<Activity> {
   }
 
   getActivityNotes() async {
-    var response = await postRequest(linkViewNotes, {
+    var response = await postRequest(linkViewActions, {
       "user_id": sharedPref.getString("id"),
       "day_number": dt.weekday.toString(),
     });

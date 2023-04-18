@@ -44,8 +44,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     isLoading = true;
     setState(() {});
     // print("getScore");
-    var response = await postRequest(
-        linkViewNotes, {"user_id": userID, "day_number": "ALL"});
+    var response = await postRequest(linkViewActions, {
+      "user_id": userID,
+      "day_number": "ALL",
+    });
     // print("getScore response:  $response");
 
     var scorelist = response['data'] as List;
@@ -129,8 +131,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(width: 10),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(100.0),
-                          child: Image.network(
-                            "$linkImageRoot/${userData[0].usersImage}",
+                          child: FadeInImage.assetNetwork(
+                            image: "$linkImageRoot/${userData[0].usersImage}",
+                            placeholder: "assets/images/avatar.png",
                             width: 100,
                             height: 100,
                             fit: BoxFit.fill,

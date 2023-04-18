@@ -68,7 +68,7 @@ class _OtherDuaaState extends State<OtherDuaa> {
   }
 
   getDuaaScore() async {
-    var response = await postRequest(linkViewNotes, {
+    var response = await postRequest(linkViewActions, {
       "user_id": sharedPref.getString("id"),
       "day_number": dt.weekday.toString(),
     });

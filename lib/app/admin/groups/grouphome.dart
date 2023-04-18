@@ -1,22 +1,22 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/compare.dart';
-import 'package:mymosque/components/carduser.dart';
+import 'package:mymosque/components/cardgroup.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
 import 'package:mymosque/main.dart';
-import 'package:mymosque/model/usermodel.dart';
+import 'package:mymosque/model/groupmodel.dart';
 import 'package:lottie/lottie.dart';
 
-class Rank extends StatefulWidget {
-  const Rank({Key? key}) : super(key: key);
-  _RankState createState() => _RankState();
+class Group extends StatefulWidget {
+  const Group({Key? key}) : super(key: key);
+  _GroupState createState() => _GroupState();
 }
 
-class _RankState extends State<Rank> {
+class _GroupState extends State<Group> {
   getUsers() async {
-    var response = await postRequest(linkViewUsers, {
+    var response = await postRequest(linkViewGroups, {
       "subGroup": "ALL",
       "myGroup": sharedPref.getString("myGroup"),
     });
@@ -24,7 +24,7 @@ class _RankState extends State<Rank> {
   }
 
   late List userData;
-  String sortColumn = "finalScore";
+  String sortColumn = "subGroup";
   String rankName = "كلي";
 
   bool _isSwitchedOn = false;
@@ -51,163 +51,16 @@ class _RankState extends State<Rank> {
           actions: const [],
           title: Column(
             children: [
-              Image.asset(
-                'assets/images/compare_bannar.png',
-                height: 50.0,
-                width: double.infinity,
-                fit: BoxFit.fill,
-              ),
-              SizedBox(
-                height: 3.0,
-              ),
               Text(
-                "باقي لنهاية تحدي الاسبوع ${8 - int.parse(dt.weekday.toString())} يوم!",
+                "قائمة باسماء الحلقات",
                 style: TextStyle(
                     color: textColor2,
                     fontSize: 15.0,
                     fontWeight: FontWeight.bold),
               ),
-              SizedBox(
-                height: 5.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  InkWell(
-                    child: Column(
-                      children: [
-                        Icon(Icons.star, size: 15.0, color: Colors.yellow),
-                        Text(
-                          "كلي",
-                          style: TextStyle(fontSize: 15.0),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      sortColumn = 'finalScore';
-                      rankName = "كلي";
-                      setState(() {});
-                    },
-                  ),
-                  InkWell(
-                    child: Column(
-                      children: [
-                        Icon(Icons.star, size: 15.0, color: Colors.yellow),
-                        Text(
-                          "صلاة",
-                          style: TextStyle(fontSize: 15.0),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      sortColumn = 'finalprayScore';
-                      rankName = "صلاة";
-                      setState(() {});
-                    },
-                  ),
-                  InkWell(
-                    child: Column(
-                      children: [
-                        Icon(Icons.star, size: 15.0, color: Colors.yellow),
-                        Text(
-                          "سنن",
-                          style: TextStyle(fontSize: 15.0),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      sortColumn = 'finalsunahScore';
-                      rankName = "سنن";
-                      setState(() {});
-                    },
-                  ),
-                  InkWell(
-                    child: Column(
-                      children: [
-                        Icon(Icons.star, size: 15.0, color: Colors.yellow),
-                        Text(
-                          "نوافل",
-                          style: TextStyle(fontSize: 15.0),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      sortColumn = 'finalnuafelScore';
-                      rankName = "نوافل";
-                      setState(() {});
-                    },
-                  ),
-                  InkWell(
-                    child: Column(
-                      children: [
-                        Icon(Icons.star, size: 15.0, color: Colors.yellow),
-                        Text(
-                          "قران",
-                          style: TextStyle(fontSize: 15.0),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      sortColumn = 'finalquranScore';
-                      rankName = "قران";
-                      setState(() {});
-                    },
-                  ),
-                  InkWell(
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.star,
-                          size: 15.0,
-                          color: Colors.yellow,
-                        ),
-                        Text(
-                          "نشاط",
-                          style: TextStyle(fontSize: 15.0),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      sortColumn = 'finalactivityScore';
-                      rankName = "نشاط";
-                      setState(() {});
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    " التصنيف حسب",
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                  Text(
-                    "$rankName",
-                    style: TextStyle(fontSize: 18.0, color: textColor),
-                  ),
-                  SizedBox(
-                    width: 40.0,
-                  ),
-                  SizedBox(
-                    width: 150.0,
-                    child: SwitchListTile(
-                      title: Text(_isSwitchedOn ? 'حلقتي' : "مسجدي",
-                          style: TextStyle(color: buttonColor, fontSize: 12.0)),
-                      value: _isSwitchedOn,
-                      onChanged: (bool value) {
-                        setState(() {
-                          _isSwitchedOn = value;
-                        });
-                      },
-                      // subtitle: Text(_isSwitchedOn ? "مسجدي" : "حلقتي"),
-                      // secondary: const Icon(Icons.filter),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
+          // leadingWidth: 1.0,
         ),
         backgroundColor: backgroundColor,
         body: Container(
@@ -237,8 +90,8 @@ class _RankState extends State<Rank> {
                         int cmp = int.parse(b[sortColumn])
                             .compareTo(int.parse(a[sortColumn]));
                         if (cmp != 0) return cmp;
-                        return int.parse(b['totalScore'])
-                            .compareTo(int.parse(a['totalScore']));
+                        return int.parse(b['myGroup'])
+                            .compareTo(int.parse(a['myGroup']));
                       });
                       if (snapshot.data['status'] == 'fail')
                         return Center(
@@ -252,7 +105,7 @@ class _RankState extends State<Rank> {
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, i) {
-                            return CardUsers(
+                            return CardGroup(
                               ontap: () {
                                 print(userData[i]['id']);
                                 Navigator.of(context).push(MaterialPageRoute(
@@ -260,7 +113,7 @@ class _RankState extends State<Rank> {
                                           userID2: userData[i]['id'],
                                         )));
                               },
-                              usermodel: UserModel.fromJson(userData[i]),
+                              groupmodel: GroupModel.fromJson(userData[i]),
                               rank_index: i,
                               sortColumn: sortColumn,
                             );

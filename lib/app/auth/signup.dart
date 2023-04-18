@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
@@ -5,6 +8,7 @@ import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/components/valid.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
+import 'package:mymosque/model/groupmodel.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -65,6 +69,79 @@ class _SignUpState extends State<SignUp> {
     'حلقة 19',
     'حلقة 20'
   ];
+  List<String> myGroup = <String>[];
+
+  getmyGroup() async {
+    isLoading = true;
+    setState(() {});
+    var response = await postRequest(linkmyGroups, {});
+    if (response['status'] == "success") {
+      // convert each item to a string by using JSON encoding
+      final jsonList =
+          response['data'].map((item) => jsonEncode(item)).toList();
+      // using toSet - toList strategy
+      final uniqueJsonList = jsonList.toSet().toList();
+      // convert each item back to the original form using JSON decoding
+      final result = uniqueJsonList.map((item) => jsonDecode(item)).toList();
+      // for loop with item index
+      for (var i = 0; i < result.length; i++) {
+        myGroup.add(result[i]["myGroup"].toString());
+      }
+      mosquedropdownItems = myGroup;
+      // isLoading = false;
+      setState(() {});
+      return response;
+    } else {
+      // isLoading = false;
+      setState(() {});
+      return response;
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.INFO,
+        animType: AnimType.SCALE,
+        title: 'خطأ',
+        desc: 'هناك خطأ في التحميل',
+        autoHide: Duration(seconds: 2),
+      )..show();
+    }
+  }
+
+  List<String> subGroup = <String>[];
+
+  getsubGroup() async {
+    isLoading = true;
+    setState(() {});
+    var response2 = await postRequest(linksubGroups, {});
+    if (response2['status'] == "success") {
+      // convert each item to a string by using JSON encoding
+      final jsonList2 =
+          response2['data'].map((item) => jsonEncode(item)).toList();
+      // using toSet - toList strategy
+      final uniqueJsonList2 = jsonList2.toSet().toList();
+      // convert each item back to the original form using JSON decoding
+      final result2 = uniqueJsonList2.map((item) => jsonDecode(item)).toList();
+      // for loop with item index
+      for (var i = 0; i < result2.length; i++) {
+        subGroup.add(result2[i]["subGroup"].toString());
+      }
+      dropdownItems = subGroup;
+      isLoading = false;
+      setState(() {});
+      return response2;
+    } else {
+      isLoading = false;
+      setState(() {});
+      return response2;
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.INFO,
+        animType: AnimType.SCALE,
+        title: 'خطأ',
+        desc: 'هناك خطأ في التحميل',
+        autoHide: Duration(seconds: 2),
+      )..show();
+    }
+  }
 
   TextEditingController username = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -91,8 +168,8 @@ class _SignUpState extends State<SignUp> {
         "email": email.text,
         "password": password.text,
         "week": weekNumber,
-        "subGroup": mosqueDropdownValue,
-        "myGroup": dropdownValue,
+        "subGroup": dropdownValue,
+        "myGroup": mosqueDropdownValue,
       });
       isLoading = false;
       print('isLoading $isLoading');
@@ -100,11 +177,11 @@ class _SignUpState extends State<SignUp> {
       setState(() {});
 
       if (response['status'] == "success") {
-        var response2 = await postRequest(
+        var response3 = await postRequest(
             linkLogin, {"email": email.text, "password": password.text});
-        String user_id = response2['data']['id'].toString();
-        print(response2['status']);
-        print(response2);
+        String user_id = response3['data']['id'].toString();
+        print(response3['status']);
+        print(response3);
         print('user id for ini_val $user_id');
         print("set ini");
         await ini_val(user_id);
@@ -123,6 +200,8 @@ class _SignUpState extends State<SignUp> {
     setState(() {});
     var response = await postRequest(linkInitual, {
       "user_id": user_id,
+      "subGroup": dropdownValue,
+      "myGroup": mosqueDropdownValue,
       "score": "0",
       "subuh": "0",
       "zhur": "0",
@@ -164,6 +243,14 @@ class _SignUpState extends State<SignUp> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getmyGroup();
+    getsubGroup();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -173,7 +260,7 @@ class _SignUpState extends State<SignUp> {
                   backgroundColor: backgroundColor,
                   body: InkWell(
                     onTap: () {
-                      signUp();
+                      initState();
                     },
                     child: Center(
                       child: Lottie.asset(

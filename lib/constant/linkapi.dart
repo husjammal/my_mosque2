@@ -4,6 +4,7 @@ const String linkImageRoot =
 //Auth
 const String linkSignUp = '$linkServerName/auth/signup.php';
 const String linkLogin = '$linkServerName/auth/login.php';
+const String linkAdminLogin = '$linkServerName/auth/adminlogin.php';
 // initual values for all actions
 const String linkInitual = '$linkServerName/actions/ini_val.php';
 const String linkIniWeekly = '$linkServerName/actions/int_weekly.php';
@@ -22,8 +23,16 @@ const String linkViewquranBadge = '$linkServerName/actions/viewquranBadge.php';
 //const String linkAddNotes = '$linkServerName/crud/add.php';
 const String linkDeleteUsers = '$linkServerName/actions/delete.php';
 const String linkEditUsers = '$linkServerName/actions/edit.php';
-const String linkViewNotes = '$linkServerName/actions/view.php';
+const String linkViewActions = '$linkServerName/actions/view.php';
 const String linkViewUsers = '$linkServerName/actions/viewUsers.php';
+
+const String linkViewAdmins = '$linkServerName/admin/viewAdmins.php';
+const String linkViewGroups = '$linkServerName/admin/viewGroups.php';
+const String linkmyGroups = '$linkServerName/admin/myGroups.php';
+const String linksubGroups = '$linkServerName/admin/subGroups.php';
+const String linkViewRaces = '$linkServerName/admin/viewRaces.php';
+const String linkViewNotes = '$linkServerName/admin/viewNotes.php';
+
 const String linkViewOneUser = '$linkServerName/actions/viewOneUser.php';
 const String linkScoreUsers = '$linkServerName/actions/total_score.php';
 

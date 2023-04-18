@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mymosque/components/crud.dart';
@@ -64,18 +65,71 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             myfile!);
       }
       print('linkEditUsers $linkEditUsers');
-      // print("note.id ${widget.note['notes_id'].toString()}");
-      // print("title ${title.text}");
-      // print("content ${content.text}");
       print(response);
       isLoading = false;
       setState(() {});
       if (response['status'] == 'success') {
-        Navigator.of(context).pushReplacementNamed("initialScreen");
+        sharedPref.setString("username", username.text);
+        sharedPref.setString("email", email.text);
+        AwesomeDialog(
+          context: context,
+          animType: AnimType.LEFTSLIDE,
+          headerAnimationLoop: false,
+          dialogType: DialogType.SUCCES,
+          title: 'تم',
+          desc: 'تم تحديث البيانات بنجاح',
+          btnOkOnPress: () {
+            debugPrint('OnClcik');
+          },
+          btnOkIcon: Icons.check_circle,
+          // onDissmissCallback: () {
+          //   debugPrint('Dialog Dissmiss from callback');
+          // },
+        )..show();
       } else {
-        // to Add code
+        AwesomeDialog(
+            context: context,
+            dialogType: DialogType.ERROR,
+            animType: AnimType.RIGHSLIDE,
+            headerAnimationLoop: false,
+            title: 'خطأ',
+            desc: 'يوجد خطأ بتحديث المعلومات',
+            btnOkOnPress: () {},
+            btnOkIcon: Icons.cancel,
+            btnOkColor: Colors.red)
+          ..show();
       }
     }
+  }
+
+  onDelete() async {
+    AwesomeDialog(
+        context: context,
+        dialogType: DialogType.WARNING,
+        headerAnimationLoop: false,
+        animType: AnimType.TOPSLIDE,
+        showCloseIcon: true,
+        closeIcon: Icon(Icons.close_fullscreen_outlined),
+        title: 'تنبية',
+        desc: 'هل تريد بالفعل حذف حسابك ؟ \n سوف تخسر جميع نقاطك!',
+        btnCancelOnPress: () {},
+        btnOkOnPress: () async {
+          var response = await postRequest(linkDeleteUsers, {
+            "userid": sharedPref.getString("id"),
+            "image": sharedPref.getString("image"),
+          });
+          print('linkDeleteNotes $linkDeleteUsers');
+          print("user.id ${sharedPref.getString("id")}");
+          print("user.image ${sharedPref.getString("image")}");
+          print(response);
+          if (response['status'] == 'success') {
+            sharedPref.clear();
+            Navigator.of(context).pushReplacementNamed("login");
+          } else {
+            //
+          }
+        })
+      ..show();
   }
 
   @override
@@ -133,19 +187,25 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       SizedBox(
                           child: ClipRRect(
                         borderRadius: BorderRadius.circular(100.0),
-                        child: ischanged
-                            ? Image.file(
-                                myfile!,
-                                width: 120,
-                                height: 120,
-                                fit: BoxFit.fill,
-                              )
-                            : Image.network(
-                                "$linkImageRoot/${widget.user['image'].toString()}",
-                                width: 120,
-                                height: 120,
-                                fit: BoxFit.fill,
-                              ),
+                        child:
+                            ///////
+                            //  ischanged
+                            //     ? Image.file(
+                            //         myfile!,
+                            //         width: 120,
+                            //         height: 120,
+                            //         fit: BoxFit.fill,
+                            //       )
+                            //     :
+                            /////
+                            FadeInImage.assetNetwork(
+                          image:
+                              "$linkImageRoot/${widget.user['image'].toString()}",
+                          width: 120,
+                          height: 120,
+                          fit: BoxFit.fill,
+                          placeholder: 'assets/images/avatar.png',
+                        ),
                       )),
                       Positioned(
                         bottom: 0,
@@ -230,7 +290,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       children: [
                         TextFormField(
                           validator: (val) {
-                            return validInput(val!, 1, 40);
+                            return validInput(val!, 1, 10);
                           },
                           controller: username,
                           decoration: const InputDecoration(
@@ -240,7 +300,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         const SizedBox(height: 30 - 20),
                         TextFormField(
                           validator: (val) {
-                            return validInput(val!, 1, 10);
+                            return validInput(val!, 1, 250);
                           },
                           controller: email,
                           decoration: const InputDecoration(
@@ -289,8 +349,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               print("edit user");
                               print("myfile $myfile");
                               await editUser();
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  "initialScreen", (route) => false);
+                              // Navigator.of(context).pushNamedAndRemoveUntil(
+                              //     "initialScreen", (route) => false);
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: buttonColor,
@@ -324,7 +384,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                await onDelete();
+                              },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       Colors.redAccent.withOpacity(0.1),
