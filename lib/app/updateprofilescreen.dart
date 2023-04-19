@@ -117,6 +117,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           var response = await postRequest(linkDeleteUsers, {
             "userid": sharedPref.getString("id"),
             "image": sharedPref.getString("image"),
+            "defualtimage": "user.png"
           });
           print('linkDeleteNotes $linkDeleteUsers');
           print("user.id ${sharedPref.getString("id")}");
@@ -141,7 +142,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     email.text = widget.user['email'];
     password.text = widget.user['password'];
     phone.text = widget.user['phone'];
-    joinedAt = widget.user['joinedAt'];
+    joinedAt = widget.user['joinedAt'].toString();
 
     // userImage = widget.user['image'];
 
@@ -188,24 +189,25 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           child: ClipRRect(
                         borderRadius: BorderRadius.circular(100.0),
                         child:
-                            ///////
-                            //  ischanged
-                            //     ? Image.file(
-                            //         myfile!,
-                            //         width: 120,
-                            //         height: 120,
-                            //         fit: BoxFit.fill,
-                            //       )
-                            //     :
                             /////
-                            FadeInImage.assetNetwork(
-                          image:
-                              "$linkImageRoot/${widget.user['image'].toString()}",
-                          width: 120,
-                          height: 120,
-                          fit: BoxFit.fill,
-                          placeholder: 'assets/images/avatar.png',
-                        ),
+                            ischanged
+                                ? Image.file(
+                                    myfile!,
+                                    width: 120,
+                                    height: 120,
+                                    fit: BoxFit.fill,
+                                  )
+                                :
+
+                                ///
+                                FadeInImage.assetNetwork(
+                                    image:
+                                        "$linkImageRoot/${widget.user['image'].toString()}",
+                                    width: 120,
+                                    height: 120,
+                                    fit: BoxFit.fill,
+                                    placeholder: 'assets/images/avatar.png',
+                                  ),
                       )),
                       Positioned(
                         bottom: 0,
@@ -370,7 +372,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text.rich(
+                            Text.rich(
                               TextSpan(
                                 text: "انضممت",
                                 style: TextStyle(fontSize: 12),
@@ -379,7 +381,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                       text: "في ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12))
+                                          fontSize: 12)),
+                                  TextSpan(
+                                      text: joinedAt,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12)),
                                 ],
                               ),
                             ),

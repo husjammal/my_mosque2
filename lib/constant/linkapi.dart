@@ -32,6 +32,7 @@ const String linkmyGroups = '$linkServerName/admin/myGroups.php';
 const String linksubGroups = '$linkServerName/admin/subGroups.php';
 const String linkViewRaces = '$linkServerName/admin/viewRaces.php';
 const String linkViewNotes = '$linkServerName/admin/viewNotes.php';
+const String linkViewMarks = '$linkServerName/admin/viewMarks.php';
 
 const String linkViewOneUser = '$linkServerName/actions/viewOneUser.php';
 const String linkScoreUsers = '$linkServerName/actions/total_score.php';

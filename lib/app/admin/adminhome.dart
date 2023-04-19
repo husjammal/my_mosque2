@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mymosque/app/admin/groups/grouphome.dart';
+import 'package:mymosque/app/admin/marks/markhome.dart';
 import 'package:mymosque/app/admin/notification/notehome.dart';
 import 'package:mymosque/app/admin/users/initusers.dart';
 import 'package:mymosque/app/admin/races/racehome.dart';
@@ -336,7 +337,7 @@ class _AdminHomeState extends State<AdminHome> {
                               ),
                               onTap: (() {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Group()));
+                                    builder: (context) => SimpleTable()));
                               }),
                             ),
                             Text(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mymosque/app/admin/races/racehome.dart';
+import 'package:mymosque/app/userrace.dart';
 import 'package:mymosque/app/home.dart';
 import 'package:mymosque/app/notification.dart';
 import 'package:mymosque/app/profilescreen.dart';
@@ -37,7 +37,7 @@ class _InitialScreenState extends State<InitialScreen> {
     Home(),
     Rank(),
     ProfileScreen(),
-    Race(),
+    UserRace(),
     MyNotification(),
   ];
 

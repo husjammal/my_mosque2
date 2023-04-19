@@ -1,29 +1,30 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/compare.dart';
-import 'package:mymosque/components/cardnote.dart';
+
+import 'package:mymosque/components/cardrace.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
 import 'package:mymosque/main.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mymosque/model/notemodel.dart';
+import 'package:mymosque/model/racemodel.dart';
 
-class MyNotification extends StatefulWidget {
-  const MyNotification({Key? key}) : super(key: key);
-  _RaceState createState() => _RaceState();
+class UserRace extends StatefulWidget {
+  const UserRace({Key? key}) : super(key: key);
+  _UserRaceState createState() => _UserRaceState();
 }
 
-class _RaceState extends State<MyNotification> {
+class _UserRaceState extends State<UserRace> {
   getUsers() async {
-    var response = await postRequest(linkViewNotes, {
+    var response = await postRequest(linkViewRaces, {
       "subGroup": "ALL",
       "myGroup": sharedPref.getString("myGroup"),
     });
     return response;
   }
 
-  late List noteData;
+  late List raceData;
   String sortColumn = "startDate";
   String rankName = "كلي";
 
@@ -52,7 +53,7 @@ class _RaceState extends State<MyNotification> {
           title: Column(
             children: [
               Text(
-                "الاشعارات",
+                "بطاقات المسابقات",
                 style: TextStyle(
                     color: textColor2,
                     fontSize: 15.0,
@@ -77,13 +78,13 @@ class _RaceState extends State<MyNotification> {
                       //     .compareTo(int.parse(a['finalScore'])));
                       // /////////////////////////////
                       if (_isSwitchedOn == true) {
-                        noteData = snapshot.data['data']
+                        raceData = snapshot.data['data']
                             .where((o) =>
                                 o['subGroup'] ==
                                 sharedPref.getString("subGroup"))
                             .toList();
                       } else {
-                        noteData = snapshot.data['data'];
+                        raceData = snapshot.data['data'];
                       }
 
                       // raceData.sort((a, b) {
@@ -96,24 +97,24 @@ class _RaceState extends State<MyNotification> {
                       if (snapshot.data['status'] == 'fail')
                         return Center(
                             child: Text(
-                          "لايوجد اشعارات",
+                          "لايوجد مسابقات",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ));
                       return ListView.builder(
-                          itemCount: noteData.length,
+                          itemCount: raceData.length,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, i) {
-                            return CardNotes(
+                            return CardRace(
                               ontap: () {
-                                print(noteData[i]['id']);
+                                print(raceData[i]['id']);
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => CompareScreen(
-                                          userID2: noteData[i]['id'],
+                                          userID2: raceData[i]['id'],
                                         )));
                               },
-                              notemodel: NoteModel.fromJson(noteData[i]),
+                              racemodel: RaceModel.fromJson(raceData[i]),
                               rank_index: i,
                               sortColumn: sortColumn,
                             );
