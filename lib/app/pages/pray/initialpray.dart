@@ -29,11 +29,7 @@ class _InitialPrayState extends State<InitialPray> {
           title: Text('جدول صلاتي'),
           centerTitle: true,
           backgroundColor: buttonColor,
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            tooltip: 'قائمة',
-            onPressed: () {},
-          ),
+          leadingWidth: 0.0,
           actions: [
             IconButton(
               onPressed: () {

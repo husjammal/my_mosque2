@@ -1,14 +1,13 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:mymosque/app/compare.dart';
+import 'package:mymosque/app/admin/users/teacheradd.dart';
+import 'package:mymosque/app/admin/users/teacherview.dart';
 import 'package:mymosque/components/cardAdmin.dart';
-import 'package:mymosque/components/carduser.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
 import 'package:mymosque/main.dart';
 import 'package:mymosque/model/adminmodel.dart';
-import 'package:mymosque/model/usermodel.dart';
 import 'package:lottie/lottie.dart';
 
 class Teacher extends StatefulWidget {
@@ -49,7 +48,8 @@ class _TeacherState extends State<Teacher> {
           toolbarHeight: 80.0,
           backgroundColor: buttonColor2,
           centerTitle: true,
-          actions: const [],
+          leadingWidth: 0.0,
+          actions: [],
           title: Column(
             children: [
               Row(
@@ -72,7 +72,6 @@ class _TeacherState extends State<Teacher> {
               ),
             ],
           ),
-          leadingWidth: 1.0,
         ),
         backgroundColor: backgroundColor,
         body: Container(
@@ -116,8 +115,8 @@ class _TeacherState extends State<Teacher> {
                               ontap: () {
                                 print(adminData[i]['id']);
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CompareScreen(
-                                          userID2: adminData[i]['id'],
+                                    builder: (context) => TeacherView(
+                                          admin: adminData[i],
                                         )));
                               },
                               adminmodel: AdminModel.fromJson(adminData[i]),
@@ -164,40 +163,15 @@ class _TeacherState extends State<Teacher> {
         floatingActionButton: FloatingActionButton(
           mini: true,
           child: Icon(Icons.filter),
-          tooltip: "مسجد/حلقة",
+          tooltip: "اضافة مشرف",
           elevation: 12,
           splashColor: textColor2,
           hoverColor: buttonColor,
           highlightElevation: 50,
           hoverElevation: 50,
           onPressed: () {
-            AwesomeDialog(
-              context: context,
-              animType: AnimType.SCALE,
-              dialogType: DialogType.INFO,
-              keyboardAware: true,
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'اختار الحلقة!',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    /////
-
-                    ///
-                    SizedBox(
-                      height: 10,
-                    ),
-                    AnimatedButton(text: 'تم', pressEvent: () {})
-                  ],
-                ),
-              ),
-            )..show();
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => AdminAdd()));
           },
         ),
       ),

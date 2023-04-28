@@ -45,7 +45,6 @@ class CardAdmins extends StatelessWidget {
                         width: 60,
                         height: 60,
                         fit: BoxFit.fill,
-                        
                       ),
                     ),
                   ],
@@ -59,11 +58,6 @@ class CardAdmins extends StatelessWidget {
                         "${adminmodel!.username}",
                         style: TextStyle(
                             fontSize: 15.0, fontWeight: FontWeight.bold),
-                      ),
-                      Text("  "),
-                      Text(
-                        rank_index! <= 2 ? "الاوائل" : "",
-                        style: TextStyle(fontSize: 8.0, color: textColor2),
                       ),
                     ],
                   ),

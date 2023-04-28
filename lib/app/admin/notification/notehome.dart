@@ -50,7 +50,17 @@ class _RaceState extends State<Note> {
           toolbarHeight: 160.0,
           backgroundColor: buttonColor2,
           centerTitle: true,
-          actions: const [],
+          leadingWidth: 0.0,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("adminhome", (route) => false);
+              },
+              icon: Icon(Icons.exit_to_app),
+              tooltip: 'رجوع',
+            )
+          ],
           title: Column(
             children: [
               Text(
@@ -110,10 +120,10 @@ class _RaceState extends State<Note> {
                             return CardNotes(
                               ontap: () {
                                 print(noteData[i]['id']);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CompareScreen(
-                                          userID2: noteData[i]['id'],
-                                        )));
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) => CompareScreen(
+                                //           userID2: noteData[i]['id'],
+                                //         )));
                               },
                               notemodel: NoteModel.fromJson(noteData[i]),
                               rank_index: i,
@@ -155,46 +165,46 @@ class _RaceState extends State<Note> {
             ],
           ),
         ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-        // floatingActionButton: FloatingActionButton(
-        //   mini: true,
-        //   child: Icon(Icons.filter),
-        //   tooltip: "مسجد/حلقة",
-        //   elevation: 12,
-        //   splashColor: textColor2,
-        //   hoverColor: buttonColor,
-        //   highlightElevation: 50,
-        //   hoverElevation: 50,
-        //   onPressed: () {
-        //     AwesomeDialog(
-        //       context: context,
-        //       animType: AnimType.SCALE,
-        //       dialogType: DialogType.INFO,
-        //       keyboardAware: true,
-        //       body: Padding(
-        //         padding: const EdgeInsets.all(8.0),
-        //         child: Column(
-        //           children: <Widget>[
-        //             Text(
-        //               'اختار الحلقة!',
-        //               style: Theme.of(context).textTheme.headline6,
-        //             ),
-        //             SizedBox(
-        //               height: 10,
-        //             ),
-        //             /////
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+        floatingActionButton: FloatingActionButton(
+          mini: true,
+          child: Icon(Icons.filter),
+          tooltip: "مسجد/حلقة",
+          elevation: 12,
+          splashColor: textColor2,
+          hoverColor: buttonColor,
+          highlightElevation: 50,
+          hoverElevation: 50,
+          onPressed: () {
+            AwesomeDialog(
+              context: context,
+              animType: AnimType.SCALE,
+              dialogType: DialogType.INFO,
+              keyboardAware: true,
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'اختار الحلقة!',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    /////
 
-        //             ///
-        //             SizedBox(
-        //               height: 10,
-        //             ),
-        //             AnimatedButton(text: 'تم', pressEvent: () {})
-        //           ],
-        //         ),
-        //       ),
-        //     )..show();
-        //   },
-        // ),
+                    ///
+                    SizedBox(
+                      height: 10,
+                    ),
+                    AnimatedButton(text: 'تم', pressEvent: () {})
+                  ],
+                ),
+              ),
+            )..show();
+          },
+        ),
       ),
     );
   }

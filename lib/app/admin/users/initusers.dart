@@ -41,16 +41,16 @@ class _InitUsersState extends State<InitUsers> {
         appBar: AppBar(
           backgroundColor: buttonColor,
           centerTitle: true,
+          leadingWidth: 0.0,
           actions: [
             IconButton(
               onPressed: () {
-                sharedPref.clear();
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil("login", (route) => false);
+                    .pushNamedAndRemoveUntil("adminhome", (route) => false);
               },
               icon: Icon(Icons.exit_to_app),
-              tooltip: 'تسجيل خروج',
-            ),
+              tooltip: 'رجوع',
+            )
           ],
           title: Text(
             "ادارة المستخدمين",

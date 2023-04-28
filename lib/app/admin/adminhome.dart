@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mymosque/app/admin/QLearn/qlearningapp.dart';
 import 'package:mymosque/app/admin/groups/grouphome.dart';
 import 'package:mymosque/app/admin/marks/markhome.dart';
 import 'package:mymosque/app/admin/notification/notehome.dart';
@@ -329,7 +330,7 @@ class _AdminHomeState extends State<AdminHome> {
                                   ],
                                 ),
                                 child: Image.asset(
-                                  'assets/images/adminMosques.png',
+                                  'assets/images/adminMarks.png',
                                   width: 70,
                                   height: 70,
                                   fit: BoxFit.cover,
@@ -375,7 +376,7 @@ class _AdminHomeState extends State<AdminHome> {
                                   ],
                                 ),
                                 child: Image.asset(
-                                  'assets/images/adminUsers.png',
+                                  'assets/images/adminQLearn.png',
                                   width: 70,
                                   height: 70,
                                   fit: BoxFit.cover,
@@ -383,7 +384,7 @@ class _AdminHomeState extends State<AdminHome> {
                               ),
                               onTap: (() {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => InitUsers()));
+                                    builder: (context) => QLearnApp()));
                               }),
                             ),
                             Text(

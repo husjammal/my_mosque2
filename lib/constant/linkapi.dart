@@ -25,7 +25,8 @@ const String linkDeleteUsers = '$linkServerName/actions/delete.php';
 const String linkEditUsers = '$linkServerName/actions/edit.php';
 const String linkViewActions = '$linkServerName/actions/view.php';
 const String linkViewUsers = '$linkServerName/actions/viewUsers.php';
-
+//// Admin
+//// View
 const String linkViewAdmins = '$linkServerName/admin/viewAdmins.php';
 const String linkViewGroups = '$linkServerName/admin/viewGroups.php';
 const String linkmyGroups = '$linkServerName/admin/myGroups.php';
@@ -33,6 +34,22 @@ const String linksubGroups = '$linkServerName/admin/subGroups.php';
 const String linkViewRaces = '$linkServerName/admin/viewRaces.php';
 const String linkViewNotes = '$linkServerName/admin/viewNotes.php';
 const String linkViewMarks = '$linkServerName/admin/viewMarks.php';
+const String linkViewQLearnApp = '$linkServerName/admin/viewquranLearn_app.php';
+//// Edit
+const String linkEditGroups = '$linkServerName/admin/groupedit.php';
+const String linkAdminEditUsers = '$linkServerName/admin/useredit.php';
+const String linkAdminEditAdmins = '$linkServerName/admin/adminedit.php';
+
+/// Add
+const String linkAddGroups = '$linkServerName/admin/groupadd.php';
+const String linkStudentAdd = '$linkServerName/admin/useradd.php';
+const String linkAdminAdd = '$linkServerName/admin/adminadd.php';
+
+/// Delete
+const String linkDeleteGroups = '$linkServerName/admin/groupdel.php';
+const String linkDeleteAdmins = '$linkServerName/admin/admindel.php';
+
+////////////////////////////////
 
 const String linkViewOneUser = '$linkServerName/actions/viewOneUser.php';
 const String linkScoreUsers = '$linkServerName/actions/total_score.php';

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/about.dart';
 import 'package:mymosque/app/admin/adminhome.dart';
+import 'package:mymosque/app/admin/groups/grouphome.dart';
+import 'package:mymosque/app/admin/users/initusers.dart';
 import 'package:mymosque/app/auth/login.dart';
 import 'package:mymosque/app/auth/signup.dart';
 import 'package:mymosque/app/auth/success.dart';
@@ -63,6 +65,8 @@ class MyApp extends StatelessWidget {
         'weekresult': (context) => WeekResult(),
         'version': (context) => Version(),
         'adminhome': (context) => AdminHome(),
+        'group': (context) => Group(),
+        "intiuser": (context) => InitUsers(),
       },
     );
   }

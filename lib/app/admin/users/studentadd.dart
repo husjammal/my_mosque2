@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -8,17 +7,18 @@ import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/components/valid.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
-import 'package:mymosque/model/groupmodel.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
-  _SignUpState createState() => _SignUpState();
+class StudentAdd extends StatefulWidget {
+  const StudentAdd({Key? key}) : super(key: key);
+  _StudentAddState createState() => _StudentAddState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _StudentAddState extends State<StudentAdd> {
   GlobalKey<FormState> formstate = GlobalKey();
   String? user_id;
   bool isLoading = false;
+  bool isLoading1 = false;
+  bool isLoading2 = false;
   bool pinWasObscured = true;
 
   String? mosqueDropdownValue = 'الكل';
@@ -72,7 +72,7 @@ class _SignUpState extends State<SignUp> {
   List<String> myGroup = <String>[];
 
   getmyGroup() async {
-    isLoading = true;
+    isLoading1 = true;
     setState(() {});
     var response = await postRequest(linkmyGroups, {});
     if (response['status'] == "success") {
@@ -88,11 +88,11 @@ class _SignUpState extends State<SignUp> {
         myGroup.add(result[i]["myGroup"].toString());
       }
       mosquedropdownItems = myGroup;
-      // isLoading = false;
+      isLoading1 = false;
       setState(() {});
       return response;
     } else {
-      // isLoading = false;
+      isLoading1 = false;
       setState(() {});
       return response;
       AwesomeDialog(
@@ -109,7 +109,7 @@ class _SignUpState extends State<SignUp> {
   List<String> subGroup = <String>[];
 
   getsubGroup() async {
-    isLoading = true;
+    isLoading2 = true;
     setState(() {});
     var response2 =
         await postRequest(linksubGroups, {"myGroup": mosqueDropdownValue});
@@ -126,11 +126,11 @@ class _SignUpState extends State<SignUp> {
         subGroup.add(result2[i]["subGroup"].toString());
       }
       dropdownItems = subGroup;
-      isLoading = false;
+      isLoading2 = false;
       setState(() {});
       return response2;
     } else {
-      isLoading = false;
+      isLoading2 = false;
       setState(() {});
       return response2;
       AwesomeDialog(
@@ -157,14 +157,14 @@ class _SignUpState extends State<SignUp> {
   String weekNumber = "0";
   final now = DateTime.now();
 
-  signUp() async {
+  studentAdd() async {
     final firstJan = DateTime(now.year, 1, 1);
     weekNumber = (weeksBetween(firstJan, now)).toString();
 
     if (formstate.currentState!.validate()) {
       isLoading = true;
       setState(() {});
-      var response = await postRequest(linkSignUp, {
+      var response = await postRequest(linkStudentAdd, {
         "username": username.text,
         "email": email.text,
         "password": password.text,
@@ -188,10 +188,39 @@ class _SignUpState extends State<SignUp> {
         await ini_val(user_id);
         await ini_weekly(user_id);
         // close sign up
+        AwesomeDialog(
+          context: context,
+          animType: AnimType.SCALE,
+          dialogType: DialogType.INFO,
+          keyboardAware: true,
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'تمت اضافة المستخدم بنجاح!',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                /////
+
+                ///
+                SizedBox(
+                  height: 10,
+                ),
+                AnimatedButton(text: 'تم', pressEvent: () {})
+              ],
+            ),
+          ),
+        )..show();
+
+        ///
         Navigator.of(context)
-            .pushNamedAndRemoveUntil("success", (route) => false);
+            .pushNamedAndRemoveUntil("intiuser", (route) => false);
       } else {
-        print("SignUp Fail");
+        print("StudentAdd Fail");
       }
     }
   }
@@ -256,6 +285,24 @@ class _SignUpState extends State<SignUp> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: buttonColor,
+            centerTitle: true,
+            leadingWidth: 0.0,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil("intiuser", (route) => false);
+                },
+                icon: Icon(Icons.exit_to_app),
+                tooltip: 'رجوع',
+              )
+            ],
+            title: Text(
+              "اضافة مستخدمين",
+            ),
+          ),
           body: isLoading == true
               ? Scaffold(
                   backgroundColor: backgroundColor,
@@ -354,28 +401,34 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width - 61,
-                                  child: DropdownButton<String>(
-                                    isExpanded: true,
-                                    focusColor: buttonColor,
-                                    value: mosqueDropdownValue,
-                                    icon: Icon(Icons.arrow_drop_down),
-                                    iconSize: 36,
-                                    elevation: 10,
-                                    // style: TextStyle(color: textColor, fontSize: 36),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        mosqueDropdownValue = newValue;
-                                      });
-                                    },
-                                    items: mosquedropdownItems
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  ),
+                                  child: isLoading1
+                                      ? Center(
+                                          child: CircularProgressIndicator())
+                                      : DropdownButton<String>(
+                                          isExpanded: true,
+                                          focusColor: buttonColor,
+                                          value: mosqueDropdownValue,
+                                          icon: Icon(Icons.arrow_drop_down),
+                                          iconSize: 36,
+                                          elevation: 10,
+                                          // style: TextStyle(color: textColor, fontSize: 36),
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              subGroup = [""];
+                                              mosqueDropdownValue = newValue;
+                                              getsubGroup();
+                                              dropdownValue = "";
+                                            });
+                                          },
+                                          items: mosquedropdownItems
+                                              .map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                        ),
                                 ),
                               ],
                             ),
@@ -395,28 +448,31 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width - 61,
-                                  child: DropdownButton<String>(
-                                    isExpanded: true,
-                                    focusColor: buttonColor,
-                                    value: dropdownValue,
-                                    icon: Icon(Icons.arrow_drop_down),
-                                    iconSize: 36,
-                                    elevation: 10,
-                                    // style: TextStyle(color: textColor, fontSize: 36),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        dropdownValue = newValue;
-                                      });
-                                    },
-                                    items: dropdownItems
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  ),
+                                  child: isLoading2
+                                      ? Center(
+                                          child: CircularProgressIndicator())
+                                      : DropdownButton<String>(
+                                          isExpanded: true,
+                                          focusColor: buttonColor,
+                                          value: dropdownValue,
+                                          icon: Icon(Icons.arrow_drop_down),
+                                          iconSize: 36,
+                                          elevation: 10,
+                                          // style: TextStyle(color: textColor, fontSize: 36),
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              dropdownValue = newValue;
+                                            });
+                                          },
+                                          items: dropdownItems
+                                              .map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                        ),
                                 ),
                               ],
                             ),
@@ -429,21 +485,13 @@ class _SignUpState extends State<SignUp> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 70, vertical: 15),
                               onPressed: () async {
-                                await signUp();
+                                await studentAdd();
                               },
                               child: Text("انشاء حساب",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18.0)),
                             ),
                             Container(height: 10),
-                            InkWell(
-                              child: Text("تسجيل دخول",
-                                  style: TextStyle(color: Colors.black)),
-                              onTap: () {
-                                Navigator.of(context)
-                                    .pushReplacementNamed("login");
-                              },
-                            )
                           ],
                         ),
                       ),

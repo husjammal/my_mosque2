@@ -1,6 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:mymosque/app/compare.dart';
+import 'package:mymosque/app/admin/users/studentadd.dart';
+import 'package:mymosque/app/admin/users/studentedit.dart';
+import 'package:mymosque/app/admin/users/studentview.dart';
 import 'package:mymosque/components/carduser.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -48,7 +50,8 @@ class _StudentState extends State<Student> {
           toolbarHeight: 160.0,
           backgroundColor: buttonColor2,
           centerTitle: true,
-          actions: const [],
+          leadingWidth: 0.0,
+          actions: [],
           title: Column(
             children: [
               Text(
@@ -184,7 +187,7 @@ class _StudentState extends State<Student> {
                     width: 150.0,
                     child: SwitchListTile(
                       title: Text(_isSwitchedOn ? 'حلقتي' : "مسجدي",
-                          style: TextStyle(color: buttonColor, fontSize: 15.0)),
+                          style: TextStyle(color: buttonColor, fontSize: 12.0)),
                       value: _isSwitchedOn,
                       onChanged: (bool value) {
                         setState(() {
@@ -199,7 +202,6 @@ class _StudentState extends State<Student> {
               ),
             ],
           ),
-          leadingWidth: 1.0,
         ),
         backgroundColor: backgroundColor,
         body: Container(
@@ -248,8 +250,8 @@ class _StudentState extends State<Student> {
                               ontap: () {
                                 print(userData[i]['id']);
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CompareScreen(
-                                          userID2: userData[i]['id'],
+                                    builder: (context) => StudentView(
+                                          user: userData[i],
                                         )));
                               },
                               usermodel: UserModel.fromJson(userData[i]),
@@ -292,46 +294,21 @@ class _StudentState extends State<Student> {
             ],
           ),
         ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-        // floatingActionButton: FloatingActionButton(
-        //   mini: true,
-        //   child: Icon(Icons.filter),
-        //   tooltip: "مسجد/حلقة",
-        //   elevation: 12,
-        //   splashColor: textColor2,
-        //   hoverColor: buttonColor,
-        //   highlightElevation: 50,
-        //   hoverElevation: 50,
-        //   onPressed: () {
-        //     AwesomeDialog(
-        //       context: context,
-        //       animType: AnimType.SCALE,
-        //       dialogType: DialogType.INFO,
-        //       keyboardAware: true,
-        //       body: Padding(
-        //         padding: const EdgeInsets.all(8.0),
-        //         child: Column(
-        //           children: <Widget>[
-        //             Text(
-        //               'اختار الحلقة!',
-        //               style: Theme.of(context).textTheme.headline6,
-        //             ),
-        //             SizedBox(
-        //               height: 10,
-        //             ),
-        //             /////
-
-        //             ///
-        //             SizedBox(
-        //               height: 10,
-        //             ),
-        //             AnimatedButton(text: 'تم', pressEvent: () {})
-        //           ],
-        //         ),
-        //       ),
-        //     )..show();
-        //   },
-        // ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+        floatingActionButton: FloatingActionButton(
+          mini: true,
+          child: Icon(Icons.filter),
+          tooltip: "اضافة مستخدم",
+          elevation: 12,
+          splashColor: textColor2,
+          hoverColor: buttonColor,
+          highlightElevation: 50,
+          hoverElevation: 50,
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => StudentAdd()));
+          },
+        ),
       ),
     );
   }

@@ -49,7 +49,17 @@ class _RaceState extends State<Race> {
           toolbarHeight: 160.0,
           backgroundColor: buttonColor2,
           centerTitle: true,
-          actions: const [],
+          leadingWidth: 0.0,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("adminhome", (route) => false);
+              },
+              icon: Icon(Icons.exit_to_app),
+              tooltip: 'رجوع',
+            )
+          ],
           title: Column(
             children: [
               Text(
@@ -97,7 +107,7 @@ class _RaceState extends State<Race> {
                       if (snapshot.data['status'] == 'fail')
                         return Center(
                             child: Text(
-                          "لايوجد مشتركين",
+                          "لايوجد مسابقات",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ));
@@ -109,10 +119,10 @@ class _RaceState extends State<Race> {
                             return CardRace(
                               ontap: () {
                                 print(raceData[i]['id']);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CompareScreen(
-                                          userID2: raceData[i]['id'],
-                                        )));
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) => CompareScreen(
+                                //           userID2: raceData[i]['id'],
+                                //         )));
                               },
                               racemodel: RaceModel.fromJson(raceData[i]),
                               rank_index: i,
@@ -154,46 +164,46 @@ class _RaceState extends State<Race> {
             ],
           ),
         ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-        // floatingActionButton: FloatingActionButton(
-        //   mini: true,
-        //   child: Icon(Icons.filter),
-        //   tooltip: "مسجد/حلقة",
-        //   elevation: 12,
-        //   splashColor: textColor2,
-        //   hoverColor: buttonColor,
-        //   highlightElevation: 50,
-        //   hoverElevation: 50,
-        //   onPressed: () {
-        //     AwesomeDialog(
-        //       context: context,
-        //       animType: AnimType.SCALE,
-        //       dialogType: DialogType.INFO,
-        //       keyboardAware: true,
-        //       body: Padding(
-        //         padding: const EdgeInsets.all(8.0),
-        //         child: Column(
-        //           children: <Widget>[
-        //             Text(
-        //               'اختار الحلقة!',
-        //               style: Theme.of(context).textTheme.headline6,
-        //             ),
-        //             SizedBox(
-        //               height: 10,
-        //             ),
-        //             /////
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+        floatingActionButton: FloatingActionButton(
+          mini: true,
+          child: Icon(Icons.filter),
+          tooltip: "اضافة مسابقة",
+          elevation: 12,
+          splashColor: textColor2,
+          hoverColor: buttonColor,
+          highlightElevation: 50,
+          hoverElevation: 50,
+          onPressed: () {
+            AwesomeDialog(
+              context: context,
+              animType: AnimType.SCALE,
+              dialogType: DialogType.INFO,
+              keyboardAware: true,
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'اضافة مسابقة!',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    /////
 
-        //             ///
-        //             SizedBox(
-        //               height: 10,
-        //             ),
-        //             AnimatedButton(text: 'تم', pressEvent: () {})
-        //           ],
-        //         ),
-        //       ),
-        //     )..show();
-        //   },
-        // ),
+                    ///
+                    SizedBox(
+                      height: 10,
+                    ),
+                    AnimatedButton(text: 'تم', pressEvent: () {})
+                  ],
+                ),
+              ),
+            )..show();
+          },
+        ),
       ),
     );
   }

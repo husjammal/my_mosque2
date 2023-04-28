@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:mymosque/app/compare.dart';
+import 'package:mymosque/app/admin/groups/groupadd.dart';
+import 'package:mymosque/app/admin/groups/groupupdate.dart';
 import 'package:mymosque/components/cardgroup.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -15,15 +16,15 @@ class Group extends StatefulWidget {
 }
 
 class _GroupState extends State<Group> {
-  getUsers() async {
+  getGroups() async {
     var response = await postRequest(linkViewGroups, {
       "subGroup": "ALL",
-      "myGroup": sharedPref.getString("myGroup"),
+      "myGroup": "ALL",
     });
     return response;
   }
 
-  late List userData;
+  late List groupData;
   String sortColumn = "subGroup";
   String rankName = "كلي";
 
@@ -48,7 +49,18 @@ class _GroupState extends State<Group> {
           toolbarHeight: 160.0,
           backgroundColor: buttonColor2,
           centerTitle: true,
-          actions: const [],
+          leadingWidth: 0.0,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("adminhome", (route) => false);
+              },
+              icon: Icon(Icons.exit_to_app),
+              tooltip: 'رجوع',
+            )
+          ], //IconButton
+
           title: Column(
             children: [
               Text(
@@ -57,6 +69,21 @@ class _GroupState extends State<Group> {
                     color: textColor2,
                     fontSize: 15.0,
                     fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                width: 150.0,
+                child: SwitchListTile(
+                  title: Text(_isSwitchedOn ? 'مسجدي' : "الكل",
+                      style: TextStyle(color: buttonColor, fontSize: 12.0)),
+                  value: _isSwitchedOn,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _isSwitchedOn = value;
+                    });
+                  },
+                  // subtitle: Text(_isSwitchedOn ? "مسجدي" : "حلقتي"),
+                  // secondary: const Icon(Icons.filter),
+                ),
               ),
             ],
           ),
@@ -68,52 +95,50 @@ class _GroupState extends State<Group> {
           child: ListView(
             children: [
               FutureBuilder(
-                  future: getUsers(),
+                  future: getGroups(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       // sort the score
-                      // List userData = snapshot.data['data'];
-                      // userData.sort((a, b) => int.parse(b['finalScore'])
+                      // List groupData = snapshot.data['data'];
+                      // groupData.sort((a, b) => int.parse(b['finalScore'])
                       //     .compareTo(int.parse(a['finalScore'])));
                       // /////////////////////////////
                       if (_isSwitchedOn == true) {
-                        userData = snapshot.data['data']
+                        groupData = snapshot.data['data']
                             .where((o) =>
-                                o['subGroup'] ==
-                                sharedPref.getString("subGroup"))
+                                o['myGroup'] == sharedPref.getString("myGroup"))
                             .toList();
                       } else {
-                        userData = snapshot.data['data'];
+                        groupData = snapshot.data['data'];
                       }
 
-                      userData.sort((a, b) {
-                        int cmp = int.parse(b[sortColumn])
-                            .compareTo(int.parse(a[sortColumn]));
-                        if (cmp != 0) return cmp;
-                        return int.parse(b['myGroup'])
-                            .compareTo(int.parse(a['myGroup']));
-                      });
+                      // groupData.sort((a, b) {
+                      //   int cmp = int.parse(b[sortColumn])
+                      //       .compareTo(int.parse(a[sortColumn]));
+                      //   if (cmp != 0) return cmp;
+                      //   return int.parse(b['myGroup'])
+                      //       .compareTo(int.parse(a['myGroup']));
+                      // });
                       if (snapshot.data['status'] == 'fail')
                         return Center(
                             child: Text(
-                          "لايوجد مشتركين",
+                          "لايوجد مجموعات",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ));
                       return ListView.builder(
-                          itemCount: userData.length,
+                          itemCount: groupData.length,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, i) {
                             return CardGroup(
                               ontap: () {
-                                print(userData[i]['id']);
+                                print(groupData[i]['id']);
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CompareScreen(
-                                          userID2: userData[i]['id'],
-                                        )));
+                                    builder: (context) =>
+                                        GroupUpdate(group: groupData[i])));
                               },
-                              groupmodel: GroupModel.fromJson(userData[i]),
+                              groupmodel: GroupModel.fromJson(groupData[i]),
                               rank_index: i,
                               sortColumn: sortColumn,
                             );
@@ -153,46 +178,48 @@ class _GroupState extends State<Group> {
             ],
           ),
         ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-        // floatingActionButton: FloatingActionButton(
-        //   mini: true,
-        //   child: Icon(Icons.filter),
-        //   tooltip: "مسجد/حلقة",
-        //   elevation: 12,
-        //   splashColor: textColor2,
-        //   hoverColor: buttonColor,
-        //   highlightElevation: 50,
-        //   hoverElevation: 50,
-        //   onPressed: () {
-        //     AwesomeDialog(
-        //       context: context,
-        //       animType: AnimType.SCALE,
-        //       dialogType: DialogType.INFO,
-        //       keyboardAware: true,
-        //       body: Padding(
-        //         padding: const EdgeInsets.all(8.0),
-        //         child: Column(
-        //           children: <Widget>[
-        //             Text(
-        //               'اختار الحلقة!',
-        //               style: Theme.of(context).textTheme.headline6,
-        //             ),
-        //             SizedBox(
-        //               height: 10,
-        //             ),
-        //             /////
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+        floatingActionButton: FloatingActionButton(
+          mini: true,
+          child: Icon(Icons.filter),
+          tooltip: "مسجد/حلقة",
+          elevation: 12,
+          splashColor: textColor2,
+          hoverColor: buttonColor,
+          highlightElevation: 50,
+          hoverElevation: 50,
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => GroupAdd()));
+            // AwesomeDialog(
+            //   context: context,
+            //   animType: AnimType.SCALE,
+            //   dialogType: DialogType.INFO,
+            //   keyboardAware: true,
+            //   body: Padding(
+            //     padding: const EdgeInsets.all(8.0),
+            //     child: Column(
+            //       children: <Widget>[
+            //         Text(
+            //           'اختار الحلقة!',
+            //           style: Theme.of(context).textTheme.headline6,
+            //         ),
+            //         SizedBox(
+            //           height: 10,
+            //         ),
+            //         /////
 
-        //             ///
-        //             SizedBox(
-        //               height: 10,
-        //             ),
-        //             AnimatedButton(text: 'تم', pressEvent: () {})
-        //           ],
-        //         ),
-        //       ),
-        //     )..show();
-        //   },
-        // ),
+            //         ///
+            //         SizedBox(
+            //           height: 10,
+            //         ),
+            //         AnimatedButton(text: 'تم', pressEvent: () {})
+            //       ],
+            //     ),
+            //   ),
+            // )..show();
+          },
+        ),
       ),
     );
   }

@@ -108,10 +108,10 @@ class _RaceState extends State<MyNotification> {
                             return CardNotes(
                               ontap: () {
                                 print(noteData[i]['id']);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CompareScreen(
-                                          userID2: noteData[i]['id'],
-                                        )));
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) => CompareScreen(
+                                //           userID2: noteData[i]['id'],
+                                //         )));
                               },
                               notemodel: NoteModel.fromJson(noteData[i]),
                               rank_index: i,

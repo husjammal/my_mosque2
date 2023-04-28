@@ -1,43 +1,48 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:mymosque/app/compare.dart';
-
-import 'package:mymosque/components/cardrace.dart';
+import 'package:lottie/lottie.dart';
+import 'package:mymosque/components/carduser.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
 import 'package:mymosque/main.dart';
-import 'package:lottie/lottie.dart';
-import 'package:mymosque/model/racemodel.dart';
+import 'package:mymosque/model/usermodel.dart';
 
-class UserRace extends StatefulWidget {
-  const UserRace({Key? key}) : super(key: key);
-  _UserRaceState createState() => _UserRaceState();
+class QLearnApp extends StatefulWidget {
+  const QLearnApp({Key? key}) : super(key: key);
+  _QLearnAppState createState() => _QLearnAppState();
 }
 
-class _UserRaceState extends State<UserRace> {
-  getUsers() async {
-    var response = await postRequest(linkViewRaces, {
+class _QLearnAppState extends State<QLearnApp> {
+  getHafatheh() async {
+    var response = await postRequest(linkViewQLearnApp, {
       "subGroup": "ALL",
       "myGroup": sharedPref.getString("myGroup"),
     });
     return response;
   }
 
-  late List raceData;
-  String sortColumn = "startDate";
-  String rankName = "كلي";
+  late List hafathehData;
 
   bool _isSwitchedOn = false;
 
-  var dt = DateTime.now();
-  var now = DateTime.now();
+  List<UserModel> userData = [];
+  List userDataList = [];
+  bool isLoading = false;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print('rank initState');
+  void getOneUser(String userID) async {
+    isLoading = true;
+    var response = await postRequest(linkViewOneUser, {
+      "id": userID,
+    });
+    userDataList = response['data'] as List;
+    userData = userDataList
+        .map<UserModel>((json) => UserModel.fromJson(json))
+        .toList();
+    // userData = response['data'];
+    isLoading = false;
+    setState(() {});
+    // print("userOneData $userData");
   }
 
   @override
@@ -49,19 +54,48 @@ class _UserRaceState extends State<UserRace> {
           toolbarHeight: 160.0,
           backgroundColor: buttonColor2,
           centerTitle: true,
-          actions: const [],
+          leadingWidth: 0.0,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("adminhome", (route) => false);
+              },
+              icon: Icon(Icons.exit_to_app),
+              tooltip: 'رجوع',
+            )
+          ],
           title: Column(
             children: [
               Text(
-                "بطاقات المسابقات",
+                "قائمة الحفظة",
                 style: TextStyle(
                     color: textColor2,
                     fontSize: 15.0,
                     fontWeight: FontWeight.bold),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 150.0,
+                    child: SwitchListTile(
+                      title: Text(_isSwitchedOn ? 'حلقتي' : "مسجدي",
+                          style: TextStyle(color: buttonColor, fontSize: 12.0)),
+                      value: _isSwitchedOn,
+                      onChanged: (bool value) {
+                        setState(() {
+                          _isSwitchedOn = value;
+                        });
+                      },
+                      // subtitle: Text(_isSwitchedOn ? "مسجدي" : "حلقتي"),
+                      // secondary: const Icon(Icons.filter),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-          // leadingWidth: 1.0,
         ),
         backgroundColor: backgroundColor,
         body: Container(
@@ -69,54 +103,88 @@ class _UserRaceState extends State<UserRace> {
           child: ListView(
             children: [
               FutureBuilder(
-                  future: getUsers(),
+                  future: getHafatheh(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       // sort the score
-                      // List raceData = snapshot.data['data'];
-                      // raceData.sort((a, b) => int.parse(b['finalScore'])
+                      // List userData = snapshot.data['data'];
+                      // userData.sort((a, b) => int.parse(b['finalScore'])
                       //     .compareTo(int.parse(a['finalScore'])));
                       // /////////////////////////////
                       if (_isSwitchedOn == true) {
-                        raceData = snapshot.data['data']
+                        hafathehData = snapshot.data['data']
                             .where((o) =>
                                 o['subGroup'] ==
                                 sharedPref.getString("subGroup"))
                             .toList();
                       } else {
-                        raceData = snapshot.data['data'];
+                        hafathehData = snapshot.data['data'];
                       }
 
-                      // raceData.sort((a, b) {
+                      // userData.sort((a, b) {
                       //   int cmp = int.parse(b[sortColumn])
                       //       .compareTo(int.parse(a[sortColumn]));
                       //   if (cmp != 0) return cmp;
-                      //   return int.parse(b['myGroup'])
-                      //       .compareTo(int.parse(a['myGroup']));
+                      //   return int.parse(b['totalScore'])
+                      //       .compareTo(int.parse(a['totalScore']));
                       // });
                       if (snapshot.data['status'] == 'fail')
                         return Center(
                             child: Text(
-                          "لايوجد مسابقات",
+                          "لايوجد حفظة",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ));
                       return ListView.builder(
-                          itemCount: raceData.length,
+                          itemCount: hafathehData.length,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, i) {
-                            return CardRace(
-                              ontap: () {
-                                print(raceData[i]['id']);
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => CompareScreen(
-                                //           userID2: raceData[i]['id'],
-                                //         )));
-                              },
-                              racemodel: RaceModel.fromJson(raceData[i]),
-                              rank_index: i,
-                              sortColumn: sortColumn,
+                            getOneUser(hafathehData[i]["user_id"]);
+                            return InkWell(
+                              onTap: () {},
+                              child: Card(
+                                color: backgroundColor,
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 5.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100.0),
+                                        child: Image.asset(
+                                          'assets/images/badge.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: ListTile(
+                                        leading: FlutterLogo(),
+                                        title: Column(
+                                          children: [
+                                            Text(
+                                              "${hafathehData[i]["user_id"]}",
+                                              style: TextStyle(
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              "${userData[0].usersName}",
+                                              style: TextStyle(
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             );
                           });
                     }
