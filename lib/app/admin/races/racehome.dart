@@ -1,5 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:mymosque/app/admin/races/raceadd.dart';
+import 'package:mymosque/app/admin/races/raceupdate.dart';
 import 'package:mymosque/app/compare.dart';
 
 import 'package:mymosque/components/cardrace.dart';
@@ -119,10 +121,10 @@ class _RaceState extends State<Race> {
                             return CardRace(
                               ontap: () {
                                 print(raceData[i]['id']);
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => CompareScreen(
-                                //           userID2: raceData[i]['id'],
-                                //         )));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => RaceUpdate(
+                                          race: raceData[i],
+                                        )));
                               },
                               racemodel: RaceModel.fromJson(raceData[i]),
                               rank_index: i,
@@ -175,33 +177,8 @@ class _RaceState extends State<Race> {
           highlightElevation: 50,
           hoverElevation: 50,
           onPressed: () {
-            AwesomeDialog(
-              context: context,
-              animType: AnimType.SCALE,
-              dialogType: DialogType.INFO,
-              keyboardAware: true,
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'اضافة مسابقة!',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    /////
-
-                    ///
-                    SizedBox(
-                      height: 10,
-                    ),
-                    AnimatedButton(text: 'تم', pressEvent: () {})
-                  ],
-                ),
-              ),
-            )..show();
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => RaceAdd()));
           },
         ),
       ),

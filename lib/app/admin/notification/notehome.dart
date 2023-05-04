@@ -1,9 +1,7 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:mymosque/app/compare.dart';
+import 'package:mymosque/app/admin/notification/noteadd.dart';
+import 'package:mymosque/app/admin/notification/noteupdate.dart';
 import 'package:mymosque/components/cardnote.dart';
-
-import 'package:mymosque/components/cardrace.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
@@ -26,7 +24,7 @@ class _RaceState extends State<Note> {
   }
 
   late List noteData;
-  String sortColumn = "startDate";
+  String sortColumn = "date";
   String rankName = "كلي";
 
   bool _isSwitchedOn = false;
@@ -108,7 +106,7 @@ class _RaceState extends State<Note> {
                       if (snapshot.data['status'] == 'fail')
                         return Center(
                             child: Text(
-                          "لايوجد مشتركين",
+                          "لايوجد اشعارات",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ));
@@ -120,10 +118,10 @@ class _RaceState extends State<Note> {
                             return CardNotes(
                               ontap: () {
                                 print(noteData[i]['id']);
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => CompareScreen(
-                                //           userID2: noteData[i]['id'],
-                                //         )));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => NoteUpdate(
+                                          note: noteData[i],
+                                        )));
                               },
                               notemodel: NoteModel.fromJson(noteData[i]),
                               rank_index: i,
@@ -176,33 +174,8 @@ class _RaceState extends State<Note> {
           highlightElevation: 50,
           hoverElevation: 50,
           onPressed: () {
-            AwesomeDialog(
-              context: context,
-              animType: AnimType.SCALE,
-              dialogType: DialogType.INFO,
-              keyboardAware: true,
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'اختار الحلقة!',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    /////
-
-                    ///
-                    SizedBox(
-                      height: 10,
-                    ),
-                    AnimatedButton(text: 'تم', pressEvent: () {})
-                  ],
-                ),
-              ),
-            )..show();
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => NoteAdd()));
           },
         ),
       ),

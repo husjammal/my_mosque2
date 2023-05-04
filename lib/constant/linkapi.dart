@@ -39,15 +39,23 @@ const String linkViewQLearnApp = '$linkServerName/admin/viewquranLearn_app.php';
 const String linkEditGroups = '$linkServerName/admin/groupedit.php';
 const String linkAdminEditUsers = '$linkServerName/admin/useredit.php';
 const String linkAdminEditAdmins = '$linkServerName/admin/adminedit.php';
+const String linkAdminEditRaces = '$linkServerName/admin/raceedit.php';
+const String linkAdminEditNotes = '$linkServerName/admin/noteedit.php';
+const String linkAdminEditMark = '$linkServerName/admin/markedit.php';
 
 /// Add
 const String linkAddGroups = '$linkServerName/admin/groupadd.php';
 const String linkStudentAdd = '$linkServerName/admin/useradd.php';
 const String linkAdminAdd = '$linkServerName/admin/adminadd.php';
+const String linkAddRaces = '$linkServerName/admin/raceadd.php';
+const String linkAddNotes = '$linkServerName/admin/noteadd.php';
+const String linkAddMark = '$linkServerName/admin/markadd.php';
 
 /// Delete
 const String linkDeleteGroups = '$linkServerName/admin/groupdel.php';
 const String linkDeleteAdmins = '$linkServerName/admin/admindel.php';
+const String linkDeleteRaces = '$linkServerName/admin/racedel.php';
+const String linkDeleteNotes = '$linkServerName/admin/notedel.php';
 
 ////////////////////////////////
 

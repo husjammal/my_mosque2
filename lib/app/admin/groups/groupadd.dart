@@ -101,6 +101,7 @@ class _GroupAddState extends State<GroupAdd> {
           //   debugPrint('Dialog Dissmiss from callback');
           // },
         )..show();
+        markAdd();
       } else {
         AwesomeDialog(
             context: context,
@@ -114,6 +115,22 @@ class _GroupAddState extends State<GroupAdd> {
             btnOkColor: Colors.red)
           ..show();
       }
+    }
+  }
+
+  markAdd() async {
+    isLoading = true;
+    setState(() {});
+    var response1 = await postRequest(linkAddMark, {
+      "myGroup": myGroup.text,
+      "subGroup": subGroup.text,
+    });
+    isLoading = false;
+    setState(() {});
+    if (response1['status'] == 'success') {
+      print("ADD MARK SUCCESS");
+    } else {
+      print("ADD MARK FAIL");
     }
   }
 

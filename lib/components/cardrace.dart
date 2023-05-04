@@ -84,6 +84,7 @@ class CardRace extends StatelessWidget {
                       ),
                       Text(
                         "${racemodel!.mark}",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ],
                   ),

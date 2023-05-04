@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:json_table/json_table.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mymosque/app/admin/marks/Markview.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
 import 'package:mymosque/main.dart';
+import 'package:mymosque/model/mosquemodel.dart';
 
 class SimpleTable extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class SimpleTable extends StatefulWidget {
 
 class _SimpleTableState extends State<SimpleTable> {
   String jsonSample = "";
-  List<dynamic> json = [];
+  List<MosqueData> mosqueDataList = [];
 
   ///
   bool isLoading = false;
@@ -31,8 +33,14 @@ class _SimpleTableState extends State<SimpleTable> {
         response['data'].map((item) => jsonEncode(item)).toList();
     print("jsonSample1 $jsonSample1");
     jsonSample = jsonSample1.toString();
-    json = jsonDecode(jsonSample);
+    //json = jsonDecode(jsonSample);
     print("object");
+
+    var userDataBadge1List = response['data'] as List;
+    mosqueDataList = userDataBadge1List
+        .map<MosqueData>((json) => MosqueData.fromJson(json))
+        .toList();
+
     isLoading = false;
     setState(() {});
     return response;
@@ -94,35 +102,37 @@ class _SimpleTableState extends State<SimpleTable> {
                   ],
                 ),
               )
-            : SingleChildScrollView(
+            : Container(
                 padding: EdgeInsets.all(16.0),
-                child: Container(
-                  child: toggle
-                      ? Column(
-                          children: [
-                            JsonTable(
-                              json,
-                              showColumnToggle: true,
-                              allowRowHighlight: true,
-                              rowHighlightColor:
-                                  Colors.yellow[500]!.withOpacity(0.7),
-                              paginationRowCount: 6,
-                              onRowSelect: (index, map) {
-                                print(index);
-                                print(map);
-                              },
-                            ),
-                            SizedBox(
-                              height: 40.0,
-                            ),
-                            Text(
-                                "Simple table which creates table direclty from json")
-                          ],
-                        )
-                      : Center(
-                          child: Text(getPrettyJSONString(jsonSample)),
-                        ),
-                ),
+                child: DataGrid(dataList: mosqueDataList),
+
+                //  Container(
+                //   child: toggle
+                //       ? Column(
+                //           children: [
+                //             JsonTable(
+                //               json,
+                //               showColumnToggle: true,
+                //               allowRowHighlight: true,
+                //               rowHighlightColor:
+                //                   Colors.yellow[500]!.withOpacity(0.7),
+                //               paginationRowCount: 6,
+                //               onRowSelect: (index, map) {
+                //                 print(index);
+                //                 print(map);
+                //               },
+                //             ),
+                //             SizedBox(
+                //               height: 40.0,
+                //             ),
+                //             Text(
+                //                 "Simple table which creates table direclty from json")
+                //           ],
+                //         )
+                //       : Center(
+                //           child: Text(getPrettyJSONString(jsonSample)),
+                //         ),
+                // ),
               ),
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.grid_on),

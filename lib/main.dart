@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:mymosque/app/about.dart';
 import 'package:mymosque/app/admin/adminhome.dart';
 import 'package:mymosque/app/admin/groups/grouphome.dart';
+import 'package:mymosque/app/admin/notification/notehome.dart';
+import 'package:mymosque/app/admin/races/racehome.dart';
 import 'package:mymosque/app/admin/users/initusers.dart';
 import 'package:mymosque/app/auth/login.dart';
 import 'package:mymosque/app/auth/signup.dart';
@@ -16,6 +19,7 @@ import 'package:mymosque/app/splash.dart';
 import 'package:mymosque/app/version.dart';
 import 'package:mymosque/app/weekresult.dart';
 import 'package:mymosque/constant/colorConfig.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences sharedPref;
@@ -67,6 +71,8 @@ class MyApp extends StatelessWidget {
         'adminhome': (context) => AdminHome(),
         'group': (context) => Group(),
         "intiuser": (context) => InitUsers(),
+        "race": (context) => Race(),
+        "note": (context) => Note(),
       },
     );
   }
