@@ -1,28 +1,35 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:mymosque/constant/colorConfig.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
+import 'dart:convert';
+
 import 'package:mymosque/model/azkarModel.dart';
 
-class OtherDuaa extends StatefulWidget {
-  const OtherDuaa({super.key});
-
+class AzkarPage extends StatefulWidget {
   @override
-  _OtherDuaaState createState() => _OtherDuaaState();
+  _AzkarPageState createState() => _AzkarPageState();
 }
 
-class _OtherDuaaState extends State<OtherDuaa> {
-////////////
+class _AzkarPageState extends State<AzkarPage> {
   List imgList = [
-    'assets/images/duaaQuran.png',
-    'assets/images/duaaNabaue.png',
+    'assets/images/AzkarSabah.png',
+    'assets/images/AzkarMasaa.png',
+    'assets/images/AzkarPray.png'
   ];
 
   int _index = 0;
+  String _url = "";
 
-  String _duaa = "";
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('azkar initState');
+
+    _url = linkAzkarSabahJSON;
+  }
 
   Future<List<AzkarModel>> _fetchAzkar(List az) async {
     return az.map((azkar) => AzkarModel.fromJson(azkar)).toList();
@@ -43,16 +50,6 @@ class _OtherDuaaState extends State<OtherDuaa> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print('azkar initState');
-
-    _duaa = linkDuaaQuranJSON;
-  }
-
-// App widget tree
-  @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -63,7 +60,7 @@ class _OtherDuaaState extends State<OtherDuaa> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              children: <Widget>[
+              children: [
                 Expanded(
                   flex: 2,
                   child: CarouselSlider.builder(
@@ -73,9 +70,11 @@ class _OtherDuaaState extends State<OtherDuaa> {
                         onTap: () {
                           print("Tapped  " + imgList[index]);
                           if (index == 0) {
-                            _duaa = linkDuaaQuranJSON;
+                            _url = linkAzkarSabahJSON;
+                          } else if (index == 1) {
+                            _url = linkAzkarMasaaJSON;
                           } else {
-                            _duaa = linkDuaaNabaueJSON;
+                            _url = linkAzkarPrayJSON;
                           }
                           _index = index;
                           setState(() {});
@@ -118,7 +117,11 @@ class _OtherDuaaState extends State<OtherDuaa> {
                       color: backgroundColor,
                     ),
                     child: Text(
-                      (_index == 0) ? "ادعية من القران" : "ادعية نبوية",
+                      (_index == 0)
+                          ? "أذكار الصباح والمساء"
+                          : (_index == 1)
+                              ? "أذكار النوم"
+                              : "الأذكار بعد السلام من الصلاة",
                       style: TextStyle(color: textColor),
                     ),
                   ),
@@ -126,7 +129,7 @@ class _OtherDuaaState extends State<OtherDuaa> {
                 Expanded(
                   flex: 8,
                   child: FutureBuilder<List<AzkarModel>>(
-                    future: _fetchAzkar2(_duaa),
+                    future: _fetchAzkar2(_url),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         List<AzkarModel> azkarList = snapshot.data!;
@@ -159,10 +162,10 @@ class _OtherDuaaState extends State<OtherDuaa> {
                   ),
                 ),
               ],
-            ), //Container
-          ), //Padding
+            ),
+          ),
         ),
       ),
-    ); //MaterialApp
+    );
   }
 }

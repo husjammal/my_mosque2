@@ -1,6 +1,14 @@
 const String linkServerName = "https://husapps.000webhostapp.com/mosqueapi";
 const String linkImageRoot =
     "https://husapps.000webhostapp.com/mosqueapi/upload";
+
+///JSON files
+const String linkJSON = '$linkServerName/adhkar.json';
+const String linkAzkarSabahJSON = '$linkServerName/azkarSabah.json';
+const String linkAzkarMasaaJSON = '$linkServerName/azkarMasaa.json';
+const String linkAzkarPrayJSON = '$linkServerName/azkarPray.json';
+const String linkDuaaNabaueJSON = '$linkServerName/duaaNabaue.json';
+const String linkDuaaQuranJSON = '$linkServerName/duaaQuran.json';
 //Auth
 const String linkSignUp = '$linkServerName/auth/signup.php';
 const String linkLogin = '$linkServerName/auth/login.php';
@@ -42,6 +50,7 @@ const String linkAdminEditAdmins = '$linkServerName/admin/adminedit.php';
 const String linkAdminEditRaces = '$linkServerName/admin/raceedit.php';
 const String linkAdminEditNotes = '$linkServerName/admin/noteedit.php';
 const String linkAdminEditMark = '$linkServerName/admin/markedit.php';
+const String linkEditQLearnApp = '$linkServerName/admin/quranLearnedit.php';
 
 /// Add
 const String linkAddGroups = '$linkServerName/admin/groupadd.php';

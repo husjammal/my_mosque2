@@ -255,10 +255,10 @@ class _RankState extends State<Rank> {
                             return CardUsers(
                               ontap: () {
                                 print(userData[i]['id']);
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => CompareScreen(
-                                //           userID2: userData[i]['id'],
-                                //         )));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CompareScreen(
+                                          userID2: userData[i]['id'],
+                                        )));
                               },
                               usermodel: UserModel.fromJson(userData[i]),
                               rank_index: i,

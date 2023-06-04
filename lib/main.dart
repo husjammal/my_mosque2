@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:mymosque/app/about.dart';
 import 'package:mymosque/app/admin/adminhome.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       // Application name
       title: 'My Mosque',
@@ -74,6 +75,28 @@ class MyApp extends StatelessWidget {
         "race": (context) => Race(),
         "note": (context) => Note(),
       },
+
+      //  home: ,
+      getPages: [
+        GetPage(name: '/login', page: () => const Login()),
+        GetPage(name: '/signup', page: () => const SignUp()),
+        GetPage(name: '/initialScreen', page: () => const InitialScreen()),
+        GetPage(name: '/success', page: () => const Success()),
+        GetPage(name: '/profilescreen', page: () => const ProfileScreen()),
+        GetPage(name: '/splash', page: () => SplashPage()),
+        GetPage(name: '/boarding', page: () => Boarding()),
+        GetPage(name: '/about', page: () => AboutUsPage()),
+        GetPage(name: '/quran', page: () => Quran()),
+        GetPage(name: '/home', page: () => Home()),
+        GetPage(name: '/setting', page: () => SettingPage()),
+        GetPage(name: '/weekresult', page: () => WeekResult()),
+        GetPage(name: '/version', page: () => Version()),
+        GetPage(name: '/adminhome', page: () => AdminHome()),
+        GetPage(name: '/group', page: () => Group()),
+        GetPage(name: '/intiuser', page: () => InitUsers()),
+        GetPage(name: '/race', page: () => Race()),
+        GetPage(name: '/note', page: () => Note()),
+      ],
     );
   }
 }

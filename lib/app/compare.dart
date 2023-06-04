@@ -64,7 +64,8 @@ class _CompareScreenState extends State<CompareScreen> {
   void getScore1() async {
     // isLoading = true;
     // setState(() {});
-    print("getScore");
+    print("getScore 1");
+    print("the id is ${sharedPref.get("id").toString()}");
     var response = await postRequest(linkViewActions,
         {"user_id": sharedPref.get("id").toString(), "day_number": "ALL"});
     print("getScore response:  $response");
@@ -179,7 +180,7 @@ class _CompareScreenState extends State<CompareScreen> {
                                   child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100.0),
                                 child: Image.network(
-                                  "$linkImageRoot/${userData1[0].usersImage}",
+                                  "$linkImageRoot/${userData1[0].usersImage.toString()}",
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.fill,

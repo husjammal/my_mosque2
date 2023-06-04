@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mymosque/app/userrace.dart';
 import 'package:mymosque/app/home.dart';
 import 'package:mymosque/app/notification.dart';
@@ -29,7 +30,6 @@ class _InitialScreenState extends State<InitialScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -50,19 +50,11 @@ class _InitialScreenState extends State<InitialScreen> {
           appBar: AppBar(
             backgroundColor: buttonColor,
             centerTitle: true,
-            // leading: IconButton(
-            //   icon: Icon(Icons.menu),
-            //   tooltip: 'القائمة',
-            //   onPressed: () {
-
-            //   },
-            // ),
             actions: [
               IconButton(
                 onPressed: () {
                   sharedPref.clear();
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil("login", (route) => false);
+                  Get.offNamedUntil("login", (route) => false);
                 },
                 icon: Icon(Icons.exit_to_app),
                 tooltip: 'تسجيل خروج',
@@ -158,7 +150,7 @@ class _InitialScreenState extends State<InitialScreen> {
                   onTap: () {
                     _selectedIndex = 0;
                     setState(() {});
-                    Navigator.pop(context);
+                    Get.back();
                   },
                 ),
                 ListTile(
@@ -167,7 +159,7 @@ class _InitialScreenState extends State<InitialScreen> {
                   onTap: () {
                     _selectedIndex = 1;
                     setState(() {});
-                    Navigator.pop(context);
+                    Get.back();
                   },
                 ),
                 ListTile(
@@ -176,7 +168,7 @@ class _InitialScreenState extends State<InitialScreen> {
                   onTap: () {
                     _selectedIndex = 2;
                     setState(() {});
-                    Navigator.pop(context);
+                    Get.back();
                   },
                 ),
                 ListTile(
@@ -185,7 +177,7 @@ class _InitialScreenState extends State<InitialScreen> {
                   onTap: () {
                     _selectedIndex = 3;
                     setState(() {});
-                    Navigator.pop(context);
+                    Get.back();
                   },
                 ),
                 ListTile(
@@ -194,15 +186,14 @@ class _InitialScreenState extends State<InitialScreen> {
                   onTap: () {
                     _selectedIndex = 4;
                     setState(() {});
-                    Navigator.pop(context);
+                    Get.back();
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.list),
                   title: const Text('نتائج سابقة'),
                   onTap: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        "weekresult", (route) => false);
+                    Get.offNamedUntil('weekresult', (route) => false);
                   },
                 ),
                 Divider(
@@ -216,27 +207,21 @@ class _InitialScreenState extends State<InitialScreen> {
                   leading: Icon(Icons.settings),
                   title: const Text('اعدادات التطبيق'),
                   onTap: () {
-                    // Navigator.pop(context);
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil("setting", (route) => false);
+                    Get.offNamedUntil("setting", (route) => false);
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.help),
                   title: const Text('حول التطبيق'),
                   onTap: () {
-                    // Navigator.pop(context);
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil("boarding", (route) => false);
+                    Get.offNamedUntil("boarding", (route) => false);
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.update),
                   title: const Text('تحديث التطبيق'),
                   onTap: () {
-                    // Navigator.pop(context);
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil("version", (route) => false);
+                    Get.offNamedUntil("version", (route) => false);
                   },
                 ),
                 Divider(
@@ -250,9 +235,7 @@ class _InitialScreenState extends State<InitialScreen> {
                   leading: Icon(Icons.info),
                   title: const Text('من نحن'),
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil("about", (route) => false);
+                    Get.offNamedUntil("about", (route) => false);
                   },
                 ),
                 Divider(
@@ -267,9 +250,7 @@ class _InitialScreenState extends State<InitialScreen> {
                   title: const Text('تسجيل خروج'),
                   onTap: () {
                     sharedPref.clear();
-                    Navigator.pop(context);
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil("login", (route) => false);
+                    Get.offNamedUntil("login", (route) => false);
                   },
                 ),
               ],

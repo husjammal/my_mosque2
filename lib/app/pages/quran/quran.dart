@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymosque/app/pages/quran/quranlearning.dart';
 import 'package:mymosque/app/pages/quran/quranlistening.dart';
 import 'package:mymosque/app/pages/quran/quranreading.dart';
@@ -33,11 +34,12 @@ class _QuranState extends State<Quran> {
   String _prayScore = "0";
   String _quranScore = "0";
   String _activityScore = "0";
+  String _quranLearn_app = "0";
 
   save_quran(String user_id) async {
     // calculate the quranScore
     quranScore = (int.parse(_quranRead.text)) +
-        (int.parse(_quranLearn.text)) +
+        (int.parse(_quranLearn_app)) +
         (int.parse(_quranListen.text));
     _score = (int.parse(_prayScore) +
             quranScore +
@@ -96,21 +98,27 @@ class _QuranState extends State<Quran> {
   }
 
   getQuranNotes() async {
+    isLoading = true;
     var response = await postRequest(linkViewActions, {
       "user_id": sharedPref.getString("id"),
       "day_number": dt.weekday.toString(),
     });
-    print(response);
-    _quranRead.text = response['data'][0]['quranRead'].toString();
-    _quranLearn.text = response['data'][0]['quranLearn'].toString();
-    _quranListen.text = response['data'][0]['quranListen'].toString();
-    _score = response['data'][0]['score'].toString();
-    _duaaScore = response['data'][0]['duaaScore'].toString();
-    _prayScore = response['data'][0]['prayScore'].toString();
-    _quranScore = response['data'][0]['quranScore'].toString();
-    _activityScore = response['data'][0]['activityScore'].toString();
 
-    setState(() {});
+    if (response['status'] == "success") {
+      print(response);
+      _quranRead.text = response['data'][0]['quranRead'].toString();
+      _quranLearn.text = response['data'][0]['quranLearn'].toString();
+      _quranLearn_app = response['data'][0]['quranLearn_app'].toString();
+      _quranListen.text = response['data'][0]['quranListen'].toString();
+      _score = response['data'][0]['score'].toString();
+      _duaaScore = response['data'][0]['duaaScore'].toString();
+      _prayScore = response['data'][0]['prayScore'].toString();
+      _quranScore = response['data'][0]['quranScore'].toString();
+      _activityScore = response['data'][0]['activityScore'].toString();
+
+      isLoading = false;
+      setState(() {});
+    } else {}
     return response;
   }
 
@@ -219,354 +227,421 @@ class _QuranState extends State<Quran> {
             )
           ], //IconButton
         ), //AppBar
-        body: SingleChildScrollView(
-          child: Container(
-            color: backgroundColor,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    //height: 45.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.0),
-                      color: buttonColor,
-                    ),
-                    child: Image.asset(
-                      'assets/images/BasmAllah_green.png',
-                      width: double.infinity,
-                      height: 50,
-                      fit: BoxFit.cover,
+        body: isLoading
+            ? Scaffold(
+                backgroundColor: backgroundColor,
+                body: InkWell(
+                  onTap: () {
+                    getQuranNotes();
+                  },
+                  child: Center(
+                    child: Lottie.asset(
+                      'assets/lottie/60089-eid-mubarak.json',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height - 80,
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.0),
-                      color: buttonColor,
-                      image: const DecorationImage(
-                        image:
-                            AssetImage('assets/images/Quran_layout_green.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    /////////////////////////////////////////////
-                    // the code of the imput form of the quran///
-                    ////////////////////////////////////////////
-                    child: ListView(
-                      children: [
-                        Form(
-                          key: formstate,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                'قراءة',
-                                style:
-                                    TextStyle(fontSize: 22.0, color: textColor),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(
-                                    width: (MediaQuery.of(context).size.width *
-                                            3 /
-                                            4) -
-                                        20,
-                                    child: TextFormField(
-                                      validator: (val) {
-                                        return validInput(val!, 1, 3);
-                                      },
-                                      keyboardType: TextInputType.number,
-                                      controller: _quranRead,
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 8, horizontal: 10),
-                                        labelText: "عدد صفحات القراءة",
-                                        labelStyle:
-                                            const TextStyle(color: textColor2),
-                                        hintText: "عدد صفحات القراءة",
-                                        errorStyle:
-                                            const TextStyle(color: textColor2),
-                                        enabledBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: buttonColor, width: 1),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        focusedBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: buttonColor2, width: 1),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                      ),
+                ),
+              )
+            : SingleChildScrollView(
+                child: Container(
+                  color: backgroundColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          //height: 45.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            color: buttonColor,
+                          ),
+                          child: Image.asset(
+                            'assets/images/BasmAllah_green.png',
+                            width: double.infinity,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height - 80,
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            color: buttonColor,
+                            image: const DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/Quran_layout_green.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          /////////////////////////////////////////////
+                          // the code of the imput form of the quran///
+                          ////////////////////////////////////////////
+                          child: ListView(
+                            children: [
+                              Form(
+                                key: formstate,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      'قراءة',
+                                      style: TextStyle(
+                                          fontSize: 22.0, color: textColor),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 15.0,
-                                  ),
-                                  InkWell(
-                                    child: Container(
-                                      width:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        SizedBox(
+                                          width: (MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  3 /
                                                   4) -
-                                              50,
-                                      height:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
-                                                  4) -
-                                              50,
-                                      padding: const EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                        color: buttonColor,
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        boxShadow: [
-                                          const BoxShadow(
-                                            color: Colors.black,
-                                            offset: Offset(
-                                              3.0,
-                                              3.0,
-                                            ), //Offset
-                                            blurRadius: 10.0,
-                                            spreadRadius: 2.0,
-                                          ), //BoxShadow
-                                          const BoxShadow(
-                                            color: Colors.white,
-                                            offset: Offset(0.0, 0.0),
-                                            blurRadius: 0.0,
-                                            spreadRadius: 0.0,
-                                          ), //BoxShadow
-                                        ],
-                                      ),
-                                      child: Image.asset(
-                                        'assets/images/praying.png',
-                                        width: 30,
-                                        height: 30,
-                                        fit: BoxFit.cover,
-                                      ),
+                                              20,
+                                          child: TextFormField(
+                                            validator: (val) {
+                                              return validInput(val!, 1, 3);
+                                            },
+                                            keyboardType: TextInputType.number,
+                                            controller: _quranRead,
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8,
+                                                      horizontal: 10),
+                                              labelText: "عدد صفحات القراءة",
+                                              labelStyle: const TextStyle(
+                                                  color: textColor2),
+                                              hintText: "عدد صفحات القراءة",
+                                              errorStyle: const TextStyle(
+                                                  color: textColor2),
+                                              enabledBorder:
+                                                  const OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: buttonColor,
+                                                          width: 1),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: buttonColor2,
+                                                          width: 1),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 15.0,
+                                        ),
+                                        InkWell(
+                                          child: Container(
+                                            width: (MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    1 /
+                                                    4) -
+                                                50,
+                                            height: (MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    1 /
+                                                    4) -
+                                                50,
+                                            padding: const EdgeInsets.all(5.0),
+                                            decoration: BoxDecoration(
+                                              color: buttonColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(15.0),
+                                              boxShadow: [
+                                                const BoxShadow(
+                                                  color: Colors.black,
+                                                  offset: Offset(
+                                                    3.0,
+                                                    3.0,
+                                                  ), //Offset
+                                                  blurRadius: 10.0,
+                                                  spreadRadius: 2.0,
+                                                ), //BoxShadow
+                                                const BoxShadow(
+                                                  color: Colors.white,
+                                                  offset: Offset(0.0, 0.0),
+                                                  blurRadius: 0.0,
+                                                  spreadRadius: 0.0,
+                                                ), //BoxShadow
+                                              ],
+                                            ),
+                                            child: Image.asset(
+                                              'assets/images/praying.png',
+                                              width: 30,
+                                              height: 30,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          onTap: (() {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        QuranReading()));
+                                          }),
+                                        ),
+                                      ],
                                     ),
-                                    onTap: (() {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  QuranReading()));
-                                    }),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                'حفظ',
-                                style:
-                                    TextStyle(fontSize: 22.0, color: textColor),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(
-                                    width: (MediaQuery.of(context).size.width *
-                                            3 /
-                                            4) -
-                                        20,
-                                    child: TextFormField(
-                                      validator: (val) {
-                                        return validInput(val!, 1, 3);
-                                      },
-                                      keyboardType: TextInputType.number,
-                                      controller: _quranLearn,
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 8, horizontal: 10),
-                                        labelText: "عدد صفحات الحفظ",
-                                        labelStyle:
-                                            const TextStyle(color: textColor2),
-                                        hintText: "عدد صفحات الحفظ",
-                                        errorStyle:
-                                            const TextStyle(color: textColor2),
-                                        enabledBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: buttonColor, width: 1),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        focusedBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: buttonColor2, width: 1),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                      ),
+                                    Text(
+                                      'حفظ',
+                                      style: TextStyle(
+                                          fontSize: 22.0, color: textColor),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 15.0,
-                                  ),
-                                  InkWell(
-                                    child: Container(
-                                      width:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        SizedBox(
+                                          width: (MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  3 /
                                                   4) -
-                                              50,
-                                      height:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
-                                                  4) -
-                                              50,
-                                      padding: const EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                        color: buttonColor,
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        boxShadow: [
-                                          const BoxShadow(
-                                            color: Colors.black,
-                                            offset: Offset(
-                                              3.0,
-                                              3.0,
-                                            ), //Offset
-                                            blurRadius: 10.0,
-                                            spreadRadius: 2.0,
-                                          ), //BoxShadow
-                                          const BoxShadow(
-                                            color: Colors.white,
-                                            offset: Offset(0.0, 0.0),
-                                            blurRadius: 0.0,
-                                            spreadRadius: 0.0,
-                                          ), //BoxShadow
-                                        ],
-                                      ),
-                                      child: Image.asset(
-                                        'assets/images/praying.png',
-                                        width: 30,
-                                        height: 30,
-                                        fit: BoxFit.cover,
-                                      ),
+                                              20,
+                                          child: TextFormField(
+                                            validator: (val) {
+                                              return validInput(val!, 1, 3);
+                                            },
+                                            keyboardType: TextInputType.number,
+                                            controller: _quranLearn,
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8,
+                                                      horizontal: 10),
+                                              labelText: "عدد صفحات الحفظ",
+                                              labelStyle: const TextStyle(
+                                                  color: textColor2),
+                                              hintText: "عدد صفحات الحفظ",
+                                              errorStyle: const TextStyle(
+                                                  color: textColor2),
+                                              enabledBorder:
+                                                  const OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: buttonColor,
+                                                          width: 1),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: buttonColor2,
+                                                          width: 1),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 15.0,
+                                        ),
+                                        InkWell(
+                                          child: Container(
+                                            width: (MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    1 /
+                                                    4) -
+                                                50,
+                                            height: (MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    1 /
+                                                    4) -
+                                                50,
+                                            padding: const EdgeInsets.all(5.0),
+                                            decoration: BoxDecoration(
+                                              color: buttonColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(15.0),
+                                              boxShadow: [
+                                                const BoxShadow(
+                                                  color: Colors.black,
+                                                  offset: Offset(
+                                                    3.0,
+                                                    3.0,
+                                                  ), //Offset
+                                                  blurRadius: 10.0,
+                                                  spreadRadius: 2.0,
+                                                ), //BoxShadow
+                                                const BoxShadow(
+                                                  color: Colors.white,
+                                                  offset: Offset(0.0, 0.0),
+                                                  blurRadius: 0.0,
+                                                  spreadRadius: 0.0,
+                                                ), //BoxShadow
+                                              ],
+                                            ),
+                                            child: Image.asset(
+                                              'assets/images/praying.png',
+                                              width: 30,
+                                              height: 30,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          onTap: (() {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        QuranLearning()));
+                                          }),
+                                        ),
+                                      ],
                                     ),
-                                    onTap: (() {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  QuranLearning()));
-                                    }),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                'استماع',
-                                style:
-                                    TextStyle(fontSize: 22.0, color: textColor),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(
-                                    width: (MediaQuery.of(context).size.width *
-                                            3 /
-                                            4) -
-                                        20,
-                                    child: TextFormField(
-                                      validator: (val) {
-                                        return validInput(val!, 1, 3);
-                                      },
-                                      keyboardType: TextInputType.number,
-                                      controller: _quranListen,
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 8, horizontal: 10),
-                                        labelText: "عدد صفحات الاستماع",
-                                        labelStyle:
-                                            const TextStyle(color: textColor2),
-                                        hintText: "عدد صفحات الاستماع",
-                                        errorStyle:
-                                            const TextStyle(color: textColor2),
-                                        enabledBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: buttonColor, width: 1),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        focusedBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: buttonColor2, width: 1),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                      ),
+
+                                    ///
+                                    Text(
+                                        _quranLearn.text != _quranLearn_app
+                                            ? "الحفظ تحت مراجعة المشرف"
+                                            : "",
+                                        style: TextStyle(
+                                            color: Colors.yellow,
+                                            fontSize: 12.0)),
+
+                                    ///
+                                    Text(
+                                      'استماع',
+                                      style: TextStyle(
+                                          fontSize: 22.0, color: textColor),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 15.0,
-                                  ),
-                                  InkWell(
-                                    child: Container(
-                                      width:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        SizedBox(
+                                          width: (MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  3 /
                                                   4) -
-                                              50,
-                                      height:
-                                          (MediaQuery.of(context).size.width *
-                                                  1 /
-                                                  4) -
-                                              50,
-                                      padding: const EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                        color: buttonColor,
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        boxShadow: [
-                                          const BoxShadow(
-                                            color: Colors.black,
-                                            offset: Offset(
-                                              3.0,
-                                              3.0,
-                                            ), //Offset
-                                            blurRadius: 10.0,
-                                            spreadRadius: 2.0,
-                                          ), //BoxShadow
-                                          const BoxShadow(
-                                            color: Colors.white,
-                                            offset: Offset(0.0, 0.0),
-                                            blurRadius: 0.0,
-                                            spreadRadius: 0.0,
-                                          ), //BoxShadow
-                                        ],
-                                      ),
-                                      child: Image.asset(
-                                        'assets/images/praying.png',
-                                        width: 30,
-                                        height: 30,
-                                        fit: BoxFit.cover,
-                                      ),
+                                              20,
+                                          child: TextFormField(
+                                            validator: (val) {
+                                              return validInput(val!, 1, 3);
+                                            },
+                                            keyboardType: TextInputType.number,
+                                            controller: _quranListen,
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8,
+                                                      horizontal: 10),
+                                              labelText: "عدد صفحات الاستماع",
+                                              labelStyle: const TextStyle(
+                                                  color: textColor2),
+                                              hintText: "عدد صفحات الاستماع",
+                                              errorStyle: const TextStyle(
+                                                  color: textColor2),
+                                              enabledBorder:
+                                                  const OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: buttonColor,
+                                                          width: 1),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: buttonColor2,
+                                                          width: 1),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 15.0,
+                                        ),
+                                        InkWell(
+                                          child: Container(
+                                            width: (MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    1 /
+                                                    4) -
+                                                50,
+                                            height: (MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    1 /
+                                                    4) -
+                                                50,
+                                            padding: const EdgeInsets.all(5.0),
+                                            decoration: BoxDecoration(
+                                              color: buttonColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(15.0),
+                                              boxShadow: [
+                                                const BoxShadow(
+                                                  color: Colors.black,
+                                                  offset: Offset(
+                                                    3.0,
+                                                    3.0,
+                                                  ), //Offset
+                                                  blurRadius: 10.0,
+                                                  spreadRadius: 2.0,
+                                                ), //BoxShadow
+                                                const BoxShadow(
+                                                  color: Colors.white,
+                                                  offset: Offset(0.0, 0.0),
+                                                  blurRadius: 0.0,
+                                                  spreadRadius: 0.0,
+                                                ), //BoxShadow
+                                              ],
+                                            ),
+                                            child: Image.asset(
+                                              'assets/images/praying.png',
+                                              width: 30,
+                                              height: 30,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          onTap: (() {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        QuranListening()));
+                                          }),
+                                        ),
+                                      ],
                                     ),
-                                    onTap: (() {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  QuranListening()));
-                                    }),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                ],
-              ), //Container
-            ), //Padding
-          ),
-        ),
+                    ), //Container
+                  ), //Padding
+                ),
+              ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             //() => setState(() => _count++),

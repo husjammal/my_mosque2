@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mymosque/app/pages/duaa/azkar.dart';
+import 'package:mymosque/app/pages/duaa/azkar2.dart';
 import 'package:mymosque/app/pages/duaa/duaa.dart';
 import 'package:mymosque/app/pages/duaa/otherDuaa.dart';
 import 'package:mymosque/constant/colorConfig.dart';
@@ -54,7 +54,8 @@ class _InitialDuaaState extends State<InitialDuaa> {
                 child: Container(
                   child: TabBarView(children: [
                     Duaa(),
-                    Azkar(),
+                    AzkarPage(),
+                    // Azkar(),
                     OtherDuaa(),
                   ]),
                 ),

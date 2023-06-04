@@ -117,13 +117,13 @@ class _HomeState extends State<Home> {
               int.parse(totalScore[5]['nuafelScore']) +
               int.parse(totalScore[6]['nuafelScore']))
           .toString();
-      _FinalquranScore = (int.parse(totalScore[0]['quranScore']) +
-              int.parse(totalScore[1]['quranScore']) +
-              int.parse(totalScore[2]['quranScore']) +
-              int.parse(totalScore[3]['quranScore']) +
-              int.parse(totalScore[4]['quranScore']) +
-              int.parse(totalScore[5]['quranScore']) +
-              int.parse(totalScore[6]['quranScore']))
+      _FinalquranScore = (int.parse(totalScore[0]['quranLearn_app']) +
+              int.parse(totalScore[1]['quranLearn_app']) +
+              int.parse(totalScore[2]['quranLearn_app']) +
+              int.parse(totalScore[3]['quranLearn_app']) +
+              int.parse(totalScore[4]['quranLearn_app']) +
+              int.parse(totalScore[5]['quranLearn_app']) +
+              int.parse(totalScore[6]['quranLearn_app']))
           .toString();
       _FinalactivityScore = (int.parse(totalScore[0]['activityScore']) +
               int.parse(totalScore[1]['activityScore']) +
@@ -176,6 +176,7 @@ class _HomeState extends State<Home> {
     });
     isLoading = false;
     setState(() {});
+    return response;
   }
 
   save_weekly() async {
@@ -216,6 +217,7 @@ class _HomeState extends State<Home> {
       "actList": "0,0,0,0,0,0,0",
       "quranRead": "0",
       "quranLearn": "0",
+      "quranLearn_app": "0",
       "quranListen": "0",
       "duaaScore": "0",
       "prayScore": "0",

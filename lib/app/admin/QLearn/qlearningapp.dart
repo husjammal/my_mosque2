@@ -1,12 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mymosque/components/carduser.dart';
 import 'package:mymosque/components/crud.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/constant/linkapi.dart';
 import 'package:mymosque/main.dart';
-import 'package:mymosque/model/usermodel.dart';
+import 'package:date_format/date_format.dart';
 
 class QLearnApp extends StatefulWidget {
   const QLearnApp({Key? key}) : super(key: key);
@@ -14,6 +14,8 @@ class QLearnApp extends StatefulWidget {
 }
 
 class _QLearnAppState extends State<QLearnApp> {
+  TextEditingController _quranLearn_app = TextEditingController();
+
   getHafatheh() async {
     var response = await postRequest(linkViewQLearnApp, {
       "subGroup": "ALL",
@@ -22,28 +24,18 @@ class _QLearnAppState extends State<QLearnApp> {
     return response;
   }
 
+  saveHafathed(String user_id, String day_number, String quranLearn_app) async {
+    var response = await postRequest(linkEditQLearnApp, {
+      "user_id": user_id,
+      "day_number": day_number,
+      "quranLearn_app": quranLearn_app
+    });
+    return response;
+  }
+
   late List hafathehData;
 
   bool _isSwitchedOn = false;
-
-  List<UserModel> userData = [];
-  List userDataList = [];
-  bool isLoading = false;
-
-  void getOneUser(String userID) async {
-    isLoading = true;
-    var response = await postRequest(linkViewOneUser, {
-      "id": userID,
-    });
-    userDataList = response['data'] as List;
-    userData = userDataList
-        .map<UserModel>((json) => UserModel.fromJson(json))
-        .toList();
-    // userData = response['data'];
-    isLoading = false;
-    setState(() {});
-    // print("userOneData $userData");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,9 +132,84 @@ class _QLearnAppState extends State<QLearnApp> {
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, i) {
-                            getOneUser(hafathehData[i]["user_id"]);
+                            DateTime date = DateTime.utc(2022).add(Duration(
+                                days: (int.parse(hafathehData[i]["week"]) - 1) *
+                                        7 +
+                                    (int.parse(
+                                        hafathehData[i]["day_number"]))));
+                            print(
+                                'Date for week ${hafathehData[i]["week"]}, day ${hafathehData[i]["day_number"]}: ${date.year}-${date.month}-${date.day}');
+                            String formattedDate =
+                                formatDate(date, [yyyy, '/', mm, '/', dd]);
+
+                            print('Date: $formattedDate');
+
                             return InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                _quranLearn_app.text =
+                                    hafathehData[i]["quranLearn"];
+                                AwesomeDialog(
+                                  context: context,
+                                  animType: AnimType.scale,
+                                  dialogType: DialogType.infoReverse,
+                                  keyboardAware: true,
+                                  body: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          'تاكيد حفظ',
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          'في تاريخ $formattedDate',
+                                          style: TextStyle(fontSize: 12.0),
+                                        ),
+                                        Text(
+                                          'حفظ ${hafathehData[i]["username"]} مقدار  ${hafathehData[i]["quranLearn"]} صفحة و تم التاكد من ؟',
+                                          style: TextStyle(fontSize: 12.0),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Material(
+                                          elevation: 0,
+                                          color: Colors.blueGrey.withAlpha(40),
+                                          child: TextFormField(
+                                            textDirection: TextDirection.rtl,
+                                            autofocus: true,
+                                            keyboardType: TextInputType.number,
+                                            controller: _quranLearn_app,
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              labelText: 'عدد الصفحات',
+                                              prefixIcon:
+                                                  Icon(Icons.layers_rounded),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        AnimatedButton(
+                                            text: 'تاكيد',
+                                            pressEvent: () async {
+                                              await saveHafathed(
+                                                  hafathehData[i]["user_id"],
+                                                  hafathehData[i]["day_number"],
+                                                  _quranLearn_app.text);
+                                              Navigator.of(context).pop();
+                                            })
+                                      ],
+                                    ),
+                                  ),
+                                )..show();
+                              },
                               child: Card(
                                 color: backgroundColor,
                                 margin: EdgeInsets.symmetric(
@@ -154,26 +221,46 @@ class _QLearnAppState extends State<QLearnApp> {
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(100.0),
-                                        child: Image.asset(
-                                          'assets/images/badge.png',
-                                          fit: BoxFit.cover,
+                                        child: FadeInImage.assetNetwork(
+                                          image:
+                                              "$linkImageRoot/${hafathehData[i]["image"]}",
+                                          width: 50,
+                                          height: 50,
+                                          fit: BoxFit.contain,
+                                          placeholder:
+                                              'assets/images/avatar.png',
                                         ),
                                       ),
                                     ),
                                     Expanded(
                                       flex: 2,
                                       child: ListTile(
-                                        leading: FlutterLogo(),
+                                        leading: Column(
+                                          children: [
+                                            Text(
+                                              "$formattedDate",
+                                              style: TextStyle(
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              "week ${hafathehData[i]["week"]}",
+                                              style: TextStyle(
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
                                         title: Column(
                                           children: [
                                             Text(
-                                              "${hafathehData[i]["user_id"]}",
+                                              "${hafathehData[i]["username"]}",
                                               style: TextStyle(
                                                   fontSize: 15.0,
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Text(
-                                              "${userData[0].usersName}",
+                                              "حفظ ${hafathehData[i]["quranLearn"]}",
                                               style: TextStyle(
                                                   fontSize: 15.0,
                                                   fontWeight: FontWeight.bold),
