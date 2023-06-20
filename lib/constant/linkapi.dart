@@ -3,12 +3,18 @@ const String linkImageRoot =
     "https://husapps.000webhostapp.com/mosqueapi/upload";
 
 ///JSON files
-const String linkJSON = '$linkServerName/adhkar.json';
-const String linkAzkarSabahJSON = '$linkServerName/azkarSabah.json';
-const String linkAzkarMasaaJSON = '$linkServerName/azkarMasaa.json';
-const String linkAzkarPrayJSON = '$linkServerName/azkarPray.json';
-const String linkDuaaNabaueJSON = '$linkServerName/duaaNabaue.json';
-const String linkDuaaQuranJSON = '$linkServerName/duaaQuran.json';
+const String linkJSON = '$linkServerName/json/adhkar.json';
+const String linkAzkarSabahJSON = '$linkServerName/json/azkarSabah.json';
+const String linkAzkarMasaaJSON = '$linkServerName/json/azkarMasaa.json';
+const String linkAzkarPrayJSON = '$linkServerName/json/azkarPray.json';
+const String linkDuaaNabaueJSON = '$linkServerName/json/duaaNabaue.json';
+const String linkDuaaQuranJSON = '$linkServerName/json/duaaQuran.json';
+
+/// CSV files upload
+const String linkUserAddCSV = '$linkServerName/admin/useraddCSV.php';
+const String linkUserAddCSV2 = '$linkServerName/admin/useraddCSV2.php';
+const String linkUserTemoCSV = '$linkServerName/csv/use_tamplate.csv';
+
 //Auth
 const String linkSignUp = '$linkServerName/auth/signup.php';
 const String linkLogin = '$linkServerName/auth/login.php';

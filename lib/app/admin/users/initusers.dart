@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymosque/app/admin/users/student.dart';
+import 'package:mymosque/app/admin/users/studentAddCSV2.dart';
+import 'package:mymosque/app/admin/users/studentaddCSV.dart';
 import 'package:mymosque/app/admin/users/teachers.dart';
 import 'package:mymosque/constant/colorConfig.dart';
 import 'package:mymosque/main.dart';
@@ -30,6 +32,8 @@ class _InitUsersState extends State<InitUsers> {
   static const List<Widget> _pages = <Widget>[
     Student(),
     Teacher(),
+    // CSVUploader(),
+    CSVImportScreen(),
   ];
 
   @override
@@ -82,6 +86,10 @@ class _InitUsersState extends State<InitUsers> {
             BottomNavigationBarItem(
               icon: Icon(Icons.score),
               label: 'المشرفين',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.file_copy),
+              label: 'استيراد',
             ),
           ],
         ),

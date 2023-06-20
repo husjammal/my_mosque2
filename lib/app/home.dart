@@ -140,6 +140,8 @@ class _HomeState extends State<Home> {
       if (oldFinalScore == _FinalScore) {
         newTotalScore = _TotalScore;
         sharedPref.setString("totalScore", newTotalScore!);
+        save_TotalScore();
+        save_weekly();
       } else {
         newTotalScore = (int.parse(_TotalScore!) +
                 int.parse(_FinalScore!) -
@@ -258,6 +260,7 @@ class _HomeState extends State<Home> {
     });
     isLoading = false;
     setState(() {});
+    return response;
   }
 
   save_badges() async {

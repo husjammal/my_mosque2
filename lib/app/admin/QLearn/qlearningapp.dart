@@ -24,11 +24,14 @@ class _QLearnAppState extends State<QLearnApp> {
     return response;
   }
 
-  saveHafathed(String user_id, String day_number, String quranLearn_app) async {
+  saveHafathed(String user_id, String day_number, String quranLearn_app,
+      String quranScore, String score) async {
     var response = await postRequest(linkEditQLearnApp, {
       "user_id": user_id,
       "day_number": day_number,
-      "quranLearn_app": quranLearn_app
+      "quranLearn_app": quranLearn_app,
+      "quranScore": quranScore,
+      "score": score,
     });
     return response;
   }
@@ -199,11 +202,29 @@ class _QLearnAppState extends State<QLearnApp> {
                                         AnimatedButton(
                                             text: 'تاكيد',
                                             pressEvent: () async {
+                                              int _quranScore = int.parse(
+                                                      hafathehData[i]
+                                                          ["duaaScore"]) +
+                                                  int.parse(
+                                                      _quranLearn_app.text) +
+                                                  int.parse(hafathehData[i]
+                                                      ["prayScore"]);
+                                              int _score = int.parse(
+                                                      hafathehData[i]
+                                                          ["sunahScore"]) +
+                                                  int.parse(hafathehData[i]
+                                                      ["nuafelScore"]) +
+                                                  int.parse(hafathehData[i]
+                                                      ["activityScore"]) +
+                                                  _quranScore;
                                               await saveHafathed(
                                                   hafathehData[i]["user_id"],
                                                   hafathehData[i]["day_number"],
-                                                  _quranLearn_app.text);
+                                                  _quranLearn_app.text,
+                                                  _quranScore.toString(),
+                                                  _score.toString());
                                               Navigator.of(context).pop();
+                                              setState(() {});
                                             })
                                       ],
                                     ),
